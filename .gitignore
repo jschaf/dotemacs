@@ -1,0 +1,18 @@
+# I see you like version control in your version control
+.svn/
+CVS/
+.bzr/
+.hg/
+
+# Personal files
+auto-save-list/
+.w3m/
+.emacs-w3m
+private/
+
+# Large files
+emacs-w3m/
+
+# Unnecessary files
+*.elc
+Session*
