@@ -67,19 +67,6 @@
 ;; so I don't have to worry about not enough colors.
 (color-theme-wombat)
 
-;; Yet Another Snippet package
-(require 'yasnippet)
-(yas/initialize)
-(yas/load-directory "~/.emacs.d/extras/yasnippet/snippets/")
-
-;; Use easier to hit keys for yasnippet
-(setq yas/trigger-key [(meta j)])
-(define-key yas/keymap [(\;)] 'yas/next-field-group)
-(define-key yas/keymap [(meta \;)] 'yas/prev-field-group)
-
-;; icicles - too intruisive for my tastes
-;;(autoload 'icy-mode "icicles.el" "completions for everything" t)
-
 (require 'magit)                        ;another git interface
 (global-set-key [(control c) (g)] 'magit-status)
 
