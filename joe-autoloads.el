@@ -4,10 +4,6 @@
 (require 'uniquify)
 (toggle-uniquify-buffer-names)
 
-;; Template-mode for editing ELSE templates
-(autoload 'template-mode "template-mode" "Template Mode for ELSE templates" t)
-(add-to-list 'auto-mode-alist '("\\.lse$" . template-mode))
-
 ;; Fancy symbol completion with a dropdown list
 (require 'auto-complete)
 (require 'auto-complete-config)
@@ -52,14 +48,6 @@
 (key-chord-define emacs-lisp-mode-map "wh"
                   (lambda () (interactive) (insert "hudson-mode-")))
 
-;;;; BBDB
-;; (require 'bbdb)
-;; (bbdb-initialize 'gnus 'message 'w3)
-
-;; (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
-;; (add-hook 'mh-folder-mode-hook 'bbdb-insinuate-mh)
-;; (bbdb-insinuate-message)
-
 ;; I <3 pretty colors
 (require 'color-theme)
 (color-theme-initialize)
@@ -67,15 +55,16 @@
 ;; so I don't have to worry about not enough colors.
 (color-theme-wombat)
 
-(require 'magit)                        ;another git interface
+;; Another git interface
+(require 'magit)                        
 (global-set-key [(control c) (g)] 'magit-status)
 
-;; w3m is a webrowser emacs interfaces that uses a w3 backend
-(require 'w3m-load)                     ;this is all autoloads
+;; w3m is an emacs interface to the w3 backend
+(require 'w3m-load)
 (setq browse-url-browser-function 'w3m-browse-url)
 (global-set-key [(control c)(control u)] 'browse-url-at-point)
 
-;; binary movement with chop
+;; Binary movement with chop
 (autoload 'chop-move-up "chop.el"
   "Use binary movement up (successively move the point half the
   remaining buffer up)" t)
@@ -93,6 +82,10 @@
              '("\\.wikipedia\\.org.*\\.txt\\'" . wikipedia-mode))
 (add-to-list 'auto-mode-alist
              '("\\.wikibooks\\.org.*\\.txt\\'" . wikipedia-mode))
+
+;; Template-mode for editing ELSE templates
+(autoload 'template-mode "template-mode" "Template Mode for ELSE templates" t)
+(add-to-list 'auto-mode-alist '("\\.lse$" . template-mode))
 
 ;; Markdown mode
 (autoload 'markdown-mode "markdown-mode"
@@ -178,7 +171,6 @@ Keys are sorted by their complexity; `key-complexity' determines
 (global-set-key "\C-cj" 'delete-indentation)
 (global-set-key "\M-g\M-f" 'next-error)
 (global-set-key "\M-g\M-d" 'prev-error)
-(global-set-key (kbd "C-s-h") 'delete-backward-char)
 (global-set-key "\C-h\M-f" 'describe-face)
 
 ;; Recognize gnat project files using the gpr-mode.el from ada-mode
@@ -188,16 +180,6 @@ Keys are sorted by their complexity; `key-complexity' determines
 (autoload 'goto-last-change "goto-last-change"
   "Set point to the position of the last change." t)
 (key-chord-define-global "/c" 'goto-last-change)
-
-;; CEDET
-;; (load "~/.emacs.d/cedet/common/cedet.el")
-;; (semantic-load-enable-code-helpers)
-
-;; Emacs Code Browser
-;;(require 'ecb-autoloads)
-
-;; useful stuff for webdev nxhtml
-;;;;(load "~/.emacs.d/nxhtml/autostart.el")
 
 ;; M-x enhancement for emacs
 (require 'smex)
