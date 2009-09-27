@@ -16,3 +16,6 @@
 [submodule "./packages/magit"]
 	path = ./packages/magit
 	url = git://github.com/technomancy/magit.git
+[submodule "./packages/mozrepl"]
+	path = ./packages/mozrepl
+	url = git://github.com/bard/mozrepl.git
