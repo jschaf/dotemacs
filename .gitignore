@@ -12,3 +12,4 @@ emacs-w3m/
 
 # Unnecessary files
 *.elc
+tramp
