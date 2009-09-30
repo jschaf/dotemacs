@@ -9,7 +9,8 @@ private/
 
 # Large files
 emacs-w3m/
-
+packages/ropemacs/
+packages/ropemode/
 # Unnecessary files
 *.elc
 tramp
