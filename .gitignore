@@ -11,6 +11,8 @@ private/
 emacs-w3m/
 packages/ropemacs/
 packages/ropemode/
+packages/rope/
+
 # Unnecessary files
 *.elc
 tramp
