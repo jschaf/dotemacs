@@ -71,7 +71,7 @@
  '(jde-complete-function (quote jde-complete-ido))
  '(jde-ecj-command-line-args (quote ("-d" "none" "-1.5" "-warn:-serial")))
  '(jde-enable-abbrev-mode t)
- '(jde-gen-class-buffer-template (quote ("(funcall jde-gen-boilerplate-function)" "(jde-gen-get-package-statement)" "(progn (require 'jde-javadoc) (jde-javadoc-insert-start-block))" "\" * Describe class \"" "(file-name-sans-extension (file-name-nondirectory buffer-file-name))" "\" here.\" 'n" "\" \" (jde-javadoc-insert-empty-line)" "\" \" (jde-javadoc-insert-empty-line)" "\" \" (jde-gen-save-excursion (jde-javadoc-insert 'tempo-template-jde-javadoc-author-tag))" "\" \" (jde-javadoc-insert-end-block)" "\"public class \"" "(file-name-sans-extension (file-name-nondirectory buffer-file-name))" "\" \" (jde-gen-get-extend-class)" "(jde-gen-electric-brace)" "'p'n" "\"}\">" "(if jde-gen-comments (concat \" // \"" "  (file-name-sans-extension (file-name-nondirectory buffer-file-name))))" "'>'n" ";; Here comes the stuff that needs a fully generated class." ";; We jump back and add those things retrospectively." "(progn (tempo-backward-mark)" " (jde-gen-save-excursion" "  (jde-gen-get-interface-implementation t))" " (jde-gen-save-excursion" "  (jde-wiz-gen-method \"public\" \"\"" "   (file-name-sans-extension (file-name-nondirectory buffer-file-name)) \"\" \"\" \"\")))" ";; Move to constructor body. Set tempo-marks to nil in order to prevent tempo moving to mark." "(progn (re-search-forward \"^[ \\t]*$\") (setq tempo-marks nil) nil)")))
+ '(jde-gen-class-buffer-template (quote ("(funcall jde-gen-boilerplate-function)" "(jde-gen-get-package-statement)" "(progn (require 'jde-javadoc) (jde-javadoc-insert-start-block))" "\" * Describe class \"" "(file-name-sans-extension (file-name-nondirectory buffer-file-name))" "\" here.\" 'n" "\" \" (jde-javadoc-insert-empty-line)" "\" \" (jde-javadoc-insert-empty-line)" "\" \" (jde-gen-save-excursion (jde-javadoc-insert 'tempo-template-jde-javadoc-author-tag))" "\" \" (jde-javadoc-insert-end-block)" "\"public class \"" "(file-name-sans-extension (file-name-nondirectory buffer-file-name))" \.\.\.)))
  '(jde-help-docsets (quote (("JDK API" "/usr/share/doc/sun-java6-jdk/html/api" nil) ("User (javadoc)" "/usr/local/share/doc/java/java3d-1_5-spec") ("User (javadoc)" "/usr/local/share/doc/java/jmf20-apidocs") ("User (javadoc)" "/usr/local/share/doc/java/jogl-1.1.2") ("User (javadoc)" "/usr/local/share/doc/java/jama"))))
  '(jde-help-use-frames nil)
  '(jde-javadoc-author-tag-template "\"* @author:\" user-full-name n>
@@ -90,8 +90,7 @@
  '(mumamo-chunk-coloring (quote submode-colored))
  '(nglobal-hl-line-mode t)
  '(nxhtml-skip-welcome t)
- '(org-agenda-custom-commands (quote (("d" todo "DELEGATED" nil) ("c" todo "DONE|DEFERRED|CANCELLED" nil) ("w" todo "WAITING" nil) ("W" agenda "" ((org-agenda-ndays 21))) ("A" agenda "" ((org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote notregexp) "\\=.*\\[#A\\]"))) (org-agenda-ndays 1) (org-agenda-overriding-header "Today's Priority #A tasks: "))) ("u" alltodo "" ((org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline) (quote regexp) "<[^>
-]+>"))) (org-agenda-overriding-header "Unscheduled TODO entries: "))))))
+ '(org-agenda-custom-commands (quote (("d" todo "DELEGATED" nil) ("c" todo "DONE|DEFERRED|CANCELLED" nil) ("w" todo "WAITING" nil) ("W" agenda "" (\.\.\.)) ("A" agenda "" (\.\.\. \.\.\. \.\.\.)) ("u" alltodo "" (\.\.\. \.\.\.)))))
  '(org-agenda-files (quote ("~/org/todo.org")))
  '(org-agenda-ndays 7)
  '(org-agenda-show-all-dates t)
@@ -109,7 +108,7 @@
  '(org-reverse-note-order t)
  '(preview-icon-specs nil)
  '(ps-font-family (quote Courier))
- '(python-python-command "python3")
+ '(python-python-command "python2.6")
  '(quack-fontify-style nil)
  '(quack-global-menu-p nil)
  '(quack-pretty-lambda-p t)
