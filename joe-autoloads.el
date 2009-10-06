@@ -213,3 +213,9 @@ Keys are sorted by their complexity; `key-complexity' determines
 ;; This is the old M-x.
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 (global-set-key "\C-h\M-c" 'describe-char)
+
+
+;; (setq ropemacs-global-prefix "\C-cr")
+;; (require 'pymacs)
+;; (pymacs-load  "ropemacs" "rope-")
+
