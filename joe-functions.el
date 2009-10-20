@@ -188,6 +188,14 @@ found. Trivial modification of zap-to-char from GNU Emacs
   (search-forward (char-to-string char) nil nil arg)
   (goto-char (1+ (match-beginning 0))))
 
+(defun toggle-line-spacing ()
+  "Toggle line spacing between 1 and 5 pixels."
+  (interactive)
+  (if (not (eq line-spacing nil))
+      (setq-default line-spacing nil)
+    (setq-default line-spacing 7))
+  )
+
 
 (global-set-key "\C-x\;" 'joe/comment-or-uncomment-line)
 (global-set-key "\C-w" 'my-smart-kill)
