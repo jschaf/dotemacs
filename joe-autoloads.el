@@ -20,7 +20,6 @@
 (key-chord-define-global "5j" 'other-frame)
 (key-chord-define-global "js" 'isearch-forward)
 (key-chord-define-global "jr" 'isearch-backward)
-(key-chord-define-global "jf" 'flymake-mode)
 (key-chord-define-global "fh" 'windmove-left)
 (key-chord-define-global "fj" 'windmove-down)
 (key-chord-define-global "fk" 'windmove-up)
@@ -31,22 +30,15 @@
 (key-chord-define-global "j0" 'delete-window)
 (key-chord-define-global "jx" 'smex)
 (key-chord-define-global "kx" 'smex-major-mode-commands)
-(key-chord-define-global "jg" 'abort-recursive-edit)
 (key-chord-define-global "xb" 'ido-switch-buffer)
 (key-chord-define-global "/s" 'save-buffer)
 (key-chord-define-global "/f" 'ido-find-file)
-(key-chord-define-global "/w" 'ido-write-file)
 (key-chord-define-global "nb" 'bookmark-jump)
 (key-chord-define-global "nm" 'bookmark-set)
 (key-chord-define-global "nl" 'bookmark-bmenu-list)
 (key-chord-define-global "z," 'beginning-of-buffer)
 (key-chord-define-global "z." 'end-of-buffer)
-(key-chord-define-global "jk" 'undo)
 (key-chord-define-global "/z" 'move-to-char)
-(key-chord-define emacs-lisp-mode-map "qh"
-                  (lambda () (interactive) (insert "hudson")))
-(key-chord-define emacs-lisp-mode-map "wh"
-                  (lambda () (interactive) (insert "hudson-mode-")))
 
 ;; I <3 pretty colors
 (require 'color-theme)
@@ -132,18 +124,36 @@
 (add-hook 'javascript-mode-hook 'javascript-custom-setup)
 (defun javascript-custom-setup ()
   (moz-minor-mode 1))
+
+(defun send-to-moz-repl ()
+  (interactive)
+  (comint-send-string (inferior-moz-process)
+                      "setTimeout(BrowserReload(), \"1000\");"))
+
 (defun auto-reload-firefox-on-after-save-hook ()         
   (add-hook 'after-save-hook
-            '(lambda ()
-               (interactive)
-               (comint-send-string (inferior-moz-process)
-                                   "setTimeout(BrowserReload(), \"1000\");"))
+            'send-to-moz-repl
             'append 'local)) ; buffer-local
 
 ;; Example - you may want to add hooks for your own modes.
 ;; I also add this to python-mode when doing django development.
-(add-hook 'html-mode-hook 'auto-reload-firefox-on-after-save-hook)
-(add-hook 'css-mode-hook 'auto-reload-firefox-on-after-save-hook)
+(setq reload-firefox-on-css-html-save nil)
+(defun toggle-firefox-reload ()
+  "Toggle the auto-reload via moz-repl on html/css save."
+  (interactive)
+  (if reload-firefox-on-css-html-save
+      (progn
+        (remove-hook 'after-save-hook 'send-to-moz-repl)
+        (remove-hook 'html-mode-hook 'auto-reload-firefox-on-after-save-hook)
+        (remove-hook 'css-mode-hook 'auto-reload-firefox-on-after-save-hook)
+        (setq reload-firefox-on-css-html-save nil)
+        (message "Firefox reload disabled."))
+    (progn
+      (add-hook 'after-save-hook 'send-to-moz-repl)
+      (add-hook 'html-mode-hook 'auto-reload-firefox-on-after-save-hook)
+      (add-hook 'css-mode-hook 'auto-reload-firefox-on-after-save-hook)
+      (setq reload-firefox-on-css-html-save t)
+      (message "Firefox reload enabled."))))
 
 ;; (add-hook 'espresso-mode-hook 'espresso-custom-setup)
 ;; (defun espresso-custom-setup ()
