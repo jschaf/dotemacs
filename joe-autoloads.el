@@ -56,6 +56,10 @@
 (setq browse-url-browser-function 'w3m-browse-url)
 (global-set-key [(control c)(control u)] 'browse-url-at-point)
 
+;; js2 mode by Steve Yegge
+(autoload 'js2-mode "js2-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+
 ;; Binary movement with chop
 (autoload 'chop-move-up "chop.el"
   "Use binary movement up (successively move the point half the
@@ -118,6 +122,8 @@
           (lambda ()
             (local-set-key [(control c)(control c)] 'compile)))
 
+
+(autoload 'ebib "ebib" "Ebib, a BibTeX databse manager." t)
 (autoload 'inferior-moz-mode "moz" "Major mode for interacting with Mozilla" t)
 (autoload 'inferior-moz-process "moz" "Process to interact with Mozilla" t)
 (autoload 'moz-minor-mode "moz" "Mozilla Minor and Inferior Mozilla Modes" t)
