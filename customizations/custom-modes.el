@@ -8,12 +8,6 @@
   (let ((hook (intern (concat mode "-mode-hook"))))
     (add-hook hook 'hs-minor-mode)))
 
-;; (defun ttn-hs-hide-level-1 ()
-;;   (hs-hide-level 1)
-;;   (forward-sexp 1))
-;; (setq hs-hide-all-non-comment-function 'ttn-hs-hide-level-1)
-
-
 (add-hook 'hs-minor-mode-hook
           (lambda ()
             (local-set-key "\M-=" 'hs-toggle-hiding)
@@ -51,10 +45,6 @@
 (global-set-key "\C-ha" 'apropos)
 (global-set-key (kbd "<f1>") 'menu-bar-mode)
 (global-set-key [(super meta /)] (lambda () (interactive) (kill-buffer nil)))
-
-;; Flymake
-(global-set-key "\M-gf" 'flymake-goto-next-error)
-(global-set-key "\M-gd" 'flymake-goto-prev-error)
 
 ;; Help-mode
 (define-key help-mode-map "j" (lambda () (interactive) (scroll-up 1)))
@@ -260,6 +250,10 @@ highlighting is done"
             (local-set-key "\M-k" 'else-kill-placeholder)
             (local-set-key "\M-'" 'else-kill-proceed-to-next-placeholder)))
 
+(add-hook 'rst-mode-hook
+          (lambda ()
+            (local-set-key "\M-n" 'rst-forward-section)
+            (local-set-key "\M-p" 'rst-backward-section)))
 
 ;; Haskell
 
@@ -312,6 +306,8 @@ highlighting is done"
 (eval-after-load "w3m"
   '(progn
      (joe/w3m-setup-keymap)))
+
+
 
 ;; ERC
 (remove-hook 'erc-echo-notice-always-hook 'erc-echo-notice-in-default-buffer)
