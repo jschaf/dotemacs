@@ -16,3 +16,4 @@ packages/rope/
 # Unnecessary files
 *.elc
 tramp
+session*
