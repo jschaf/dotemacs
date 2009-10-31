@@ -294,7 +294,7 @@ placed at beginning of first match."
 (define-key ada-mode-map [f5] 'misc-compile)
 (define-key ada-mode-map [M-f5] 'ada-compile-current)
 (define-key ada-mode-map [C-f5] 'ada-compile-application)
-(define-key ada-mode-map [(meta g) (meta d)] 'gnat-fix-compiler-error)
+(define-key ada-mode-map [(meta g) (meta s)] 'gnat-fix-compiler-error)
 (define-key ada-mode-map [f7] 'ada-find-references)
 ;; f8 free
 (define-key ada-mode-map [f9] nil); ada-mode: 'ada-compile-application
