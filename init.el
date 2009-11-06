@@ -2,7 +2,7 @@
 
 ;; Use a decent font
 (modify-all-frames-parameters
- '((font . "-microsoft-consolas-medium-r-*-*-*-140-*-*-*-*-iso8859-1")
+ '((font . "Consolas 14")
    (menu-bar-lines . 0)
    (tool-bar-lines . 0)))
 
@@ -12,6 +12,7 @@
   (normal-top-level-add-subdirs-to-load-path))
 
 (setq default-directory "~/")
+
 ;;; Initial Code Load
 (setq custom-file "~/.emacs.d/.emacs-custom.el")
 (load custom-file)
