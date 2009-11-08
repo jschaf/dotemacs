@@ -200,15 +200,11 @@ Keys are sorted by their complexity; `key-complexity' determines
   "Cycle backward allowing *buffers*." t)
 (autoload 'cycle-buffer-toggle-interesting "cycle-buffer"
   "Toggle if this buffer will be considered." t)
+
 (global-set-key (kbd "M-s-n") 'cycle-buffer)
 (global-set-key (kbd "M-s-p") 'cycle-buffer-backward)
-(global-set-key (kbd "M-s-m") 'cycle-buffer-permissive)
-(global-set-key (kbd "M-s-o") 'cycle-buffer-backward-permissive)
-(global-set-key (kbd "M-s-/") 'kill-current-buffer-no-prompt)
-
-(defun kill-current-buffer-no-prompt ()
-  (interactive)
-  (kill-buffer (current-buffer)))
+(global-set-key (kbd "M-n") 'cycle-buffer)
+(global-set-key (kbd "M-p") 'cycle-buffer-backward)
 
 (global-set-key "\C-xp" 'find-file-at-point)
 (global-set-key "\C-x\C-b" 'ido-switch-buffer)
