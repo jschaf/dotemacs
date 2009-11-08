@@ -75,18 +75,16 @@
 ;; Set dired-x global variables here.  For example:
 ;; (setq dired-guess-shell-gnutar "gtar")
 ;; (setq dired-x-hands-off-my-keys nil)
-(if (not (string= system-type "windows-nt"))
-    (add-hook 'dired-load-hook
-              (lambda ()
-                (load "dired-x")
-                ;; Don't show dot files in dired
-                (setq dired-omit-files
-                      (concat dired-omit-files "\\|^\\..+$"))))
-  (add-hook 'dired-mode-hook
-            (lambda ()
-              ;; Set dired-x buffer-local variables here.  For example:
-              (dired-omit-mode 1)
-              )))
+(add-hook 'dired-load-hook
+          (lambda ()
+            (load "dired-x")
+            ;; Don't show dot files in dired
+            (setq dired-omit-files
+                  (concat dired-omit-files "\\|^\\..+$"))))
+(add-hook 'dired-mode-hook
+          (lambda ()
+            ;; Set dired-x buffer-local variables here.  For example:
+            (dired-omit-mode 1)))
 
 ;; C type languages
 (add-hook 'c-mode-common-hook
