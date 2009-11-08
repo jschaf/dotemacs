@@ -47,14 +47,14 @@
 ;; so I don't have to worry about not enough colors.
 (color-theme-wombat)
 
-;; Another git interface
+Another git interface
 (require 'magit)                        
 (global-set-key [(control c) (g)] 'magit-status)
 
 ;; w3m is an emacs interface to the w3 backend
-(require 'w3m-load)
-(setq browse-url-browser-function 'w3m-browse-url)
-(global-set-key [(control c)(control u)] 'browse-url-at-point)
+;; (require 'w3m-load)
+;; (setq browse-url-browser-function 'w3m-browse-url)
+;; (global-set-key [(control c)(control u)] 'browse-url-at-point)
 
 ;; js2 mode by Steve Yegge
 (autoload 'js2-mode "js2-mode" nil t)
@@ -70,6 +70,10 @@
 (global-set-key [(super meta u)] 'chop-move-up)
 (global-set-key [(super meta i)] 'chop-move-down)
 
+;; Haskell mode
+(load "haskell-site-file")
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
 ;; Wikipedia Mode
 (autoload 'wikipedia-mode "wikipedia-mode.el"
