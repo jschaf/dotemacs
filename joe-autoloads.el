@@ -47,9 +47,10 @@
 ;; so I don't have to worry about not enough colors.
 (color-theme-wombat)
 
-Another git interface
-(require 'magit)                        
+;; Another git interface
+(require 'magit)
 (global-set-key [(control c) (g)] 'magit-status)
+(setq magit)
 
 ;; w3m is an emacs interface to the w3 backend
 ;; (require 'w3m-load)
@@ -140,7 +141,7 @@ Another git interface
   (comint-send-string (inferior-moz-process)
                       "setTimeout(BrowserReload(), \"1000\");"))
 
-(defun auto-reload-firefox-on-after-save-hook ()         
+(defun auto-reload-firefox-on-after-save-hook ()
   (add-hook 'after-save-hook
             'send-to-moz-repl
             'append 'local)) ; buffer-local
