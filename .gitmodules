@@ -1,3 +1,4 @@
+# don't use ./ prefixes
 [submodule "./packages/campfire-mode"]
 	path = packages/campfire-mode
 	url = git://github.com/rubyist/campfire-mode.git
