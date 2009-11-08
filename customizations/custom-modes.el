@@ -27,13 +27,7 @@
 (add-to-list 'auto-mode-alist '("\\.java\\'" . jde-mode))
 (eval-after-load 'jde
   '(progn
-     (load "custom-java")
-     ;; Xrefactory
-     ;; some Xrefactory defaults can be set here
-     (defvar xref-current-project nil) ;; can be also "my_project_name"
-     (defvar xref-key-binding 'global) ;; can be also 'local or 'none
-     (load "xrefactory")
-     ))
+     (load "custom-java")))
 
 ;; Python
 (eval-after-load 'python-mode
