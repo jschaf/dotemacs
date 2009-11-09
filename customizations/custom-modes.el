@@ -2,6 +2,8 @@
 (add-hook 'hudson-mode-hook
           (lambda ()
             (local-set-key "\C-m" 'hudson-newline-and-indent)))
+;; (setq hudson-jar-file "E:\\Users\\joe\\prog\\hudson\\hudson.jar")
+(setq hudson-jar-file (expand-file-name "~/prog/hudson/hudson.jar"))
 
 ;; Hideshow support
 (dolist (mode '("emacs-lisp" "hudson" "jde"))
@@ -46,9 +48,6 @@
 (define-key help-mode-map "k" (lambda () (interactive) (scroll-down 1)))
 (define-key help-mode-map "l" 'help-go-back)
 (define-key help-mode-map "h" 'help-go-forward)
-(define-key help-mode-map "\M-n" 'forward-button)
-(define-key help-mode-map "\M-p" 'backward-button)
-
 
 ;; VHDL
 (defun vhdl-ghdl-check-syntax (&optional arg)
@@ -243,10 +242,9 @@ highlighting is done"
             (local-set-key "\M-k" 'else-kill-placeholder)
             (local-set-key "\M-'" 'else-kill-proceed-to-next-placeholder)))
 
-(add-hook 'rst-mode-hook
-          (lambda ()
-            (local-set-key "\M-n" 'rst-forward-section)
-            (local-set-key "\M-p" 'rst-backward-section)))
+;; (add-hook 'rst-mode-hook
+;;           (lambda ()
+;;             ))
 
 ;; Haskell
 
@@ -288,8 +286,8 @@ highlighting is done"
   (define-key w3m-mode-map "y" 'w3m-print-this-url)
   (define-key w3m-mode-map "o" 'w3m-goto-url)
   (define-key w3m-mode-map "t" 'w3m-goto-url-new-session)
-  (define-key w3m-mode-map "\M-n" 'w3m-next-anchor)
-  (define-key w3m-mode-map "\M-p" 'w3m-previous-anchor)
+  ;; (define-key w3m-mode-map "\M-n" 'w3m-next-anchor)
+  ;; (define-key w3m-mode-map "\M-p" 'w3m-previous-anchor)
   (define-key w3m-mode-map "t" 'w3m-goto-url-new-session)
   (define-key w3m-mode-map "f" 'w3m-view-this-url-new-session)
   (define-key w3m-mode-map "F" 'w3m-view-this-url)
