@@ -59,7 +59,6 @@
  '(global-font-lock-mode t)
  '(graphviz-dot-auto-indent-on-semi nil)
  '(graphviz-dot-indent-width 3)
- '(hudson-jar-file "/usr/local/lib/java/lib/ext/hudson.jar")
  '(icicle-apropos-cycle-next-keys (quote ([next] [(control n)])))
  '(icicle-apropos-cycle-previous-keys (quote ([prior] [(control p)])))
  '(icicle-reminder-prompt-flag nil)
