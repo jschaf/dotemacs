@@ -25,4 +25,9 @@
 ;; update M-x command cache
 (smex-update)
 
+
+; Suppress error "directory ~/.emacs.d/server is unsafe" on windows.
+(require 'server)
+(when (and (= emacs-major-version 23) (equal window-system 'w32))
+  (defun server-ensure-safe-dir (dir) "Noop" t)) 
 (server-start)
