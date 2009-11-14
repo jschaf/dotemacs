@@ -4,14 +4,14 @@
 ;; Created: Apr 2009
 ;; Keywords: hudson languages functional oop
 
-(defconst hudson-version "0.10"
+(defconst hudson-version "0.30"
   "`hudson-mode' version number.")
 
 ;;; Commentary:
 
 ;; This is a major mode for editing Hudson programs.  Most of the
-;; functionality is ported from python.el.  There is support for
-;; imenu, compilation, and hideshow.
+;; functionality is ported/stolen from python.el.  There is support
+;; for imenu, compilation, and hideshow.
 
 ;;; Installation:
 
