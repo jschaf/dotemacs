@@ -51,6 +51,7 @@
  '(erc-nick "joesmoe")
  '(erc-port 8001)
  '(erc-server "irc.freenode.net")
+ '(eshell-directory-name "~\\.emacs.d\\private\\.eshell\\")
  '(face-font-family-alternatives (quote (("Monospace" "DejaVu Sans Mono" "courier" "fixed") ("courier" "fixed") ("Sans Serif" "helv" "helvetica" "arial" "fixed") ("helv" "helvetica" "arial" "fixed"))))
  '(flymake-gui-warnings-enabled nil)
  '(frame-background-mode (quote dark))
@@ -89,7 +90,8 @@
  '(mumamo-chunk-coloring (quote submode-colored))
  '(nglobal-hl-line-mode t)
  '(nxhtml-skip-welcome t)
- '(org-agenda-custom-commands (quote (("d" todo "DELEGATED" nil) ("c" todo "DONE|DEFERRED|CANCELLED" nil) ("w" todo "WAITING" nil) ("W" agenda "" (\.\.\.)) ("A" agenda "" (\.\.\. \.\.\. \.\.\.)) ("u" alltodo "" (\.\.\. \.\.\.)))))
+ '(org-agenda-custom-commands (quote (("d" todo "DELEGATED" nil) ("c" todo "DONE|DEFERRED|CANCELLED" nil) ("w" todo "WAITING" nil) ("W" agenda "" ((org-agenda-ndays 21))) ("A" agenda "" ((org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote notregexp) "\\=.*\\[#A\\]"))) (org-agenda-ndays 1) (org-agenda-overriding-header "Today's Priority #A tasks: "))) ("u" alltodo "" ((org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline) (quote regexp) "<[^>
+]+>"))) (org-agenda-overriding-header "Unscheduled TODO entries: "))))))
  '(org-agenda-files (quote ("~/org/todo.org")))
  '(org-agenda-ndays 7)
  '(org-agenda-show-all-dates t)
