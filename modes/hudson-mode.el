@@ -1013,20 +1013,28 @@ Use `hudson-version' to find out what version this is.
          space (group (1+ digit)) (group (opt "-" (1+ digit))) "]")
     1 2))
 
-(defun hudson-get-includes ()
-  "Return all files that should be included in compilation."
+(defun hudson-get-directives ()
+  "Return all directives as an alist of (#directive . value)."
   (interactive)
-  (let (includes '())
-    (save-excursion
-      (goto-char (point-min))
-      (while (re-search-forward
-              (rx line-start  "#include" (1+ space)
-                  (group (1+ (or alnum "-" "_" "."))))
-              nil t)
-        (push (buffer-substring-no-properties (match-beginning 1)
-                                              (match-end 1))
-              includes)))
-    includes))
+  (flet ((bs-noProps (n) (buffer-substring-no-properties (match-beginning n)
+                                                         (match-end n))))
+    (let (directives '())
+      (save-excursion
+        (goto-char (point-min))
+        (while (re-search-forward
+                (rx line-start (group "#" (1+ alnum)) (1+ space)
+                    (group (1+ (or alnum "/" "-" "_" "."))))
+                nil t)
+          (push (cons (bs-noProps 1) (bs-noProps 2)) directives)))
+      directives)))
+
+(defun hudson-get-specific-directives (directiveName)
+  "Return all directives matching directiveName."
+  (delq nil
+        (mapcar (lambda (x)
+                  (and (funcall 'equal directiveName (car x)) (cdr x)))
+                (hudson-get-directives))))
+
 
 (defun hudson-compile-and-run (&optional arg)
   "Compile and run the Hudson file.
@@ -1038,92 +1046,101 @@ If ARG is non-nil, ask for user confirmation"
     (error "hudson-jar-file is not set."))
 
   (let* ((filename (file-name-sans-extension (buffer-name)))
-         (includes (reverse (cons filename (hudson-get-includes))))
+         (includes (reverse (hudson-get-specific-directives "#include")))
          (includes-str (mapconcat 'identity includes " "))
-         (command (concat "java -classpath " hudson-jar-file
-                          " hudson.Interp " includes-str))
+         (ant-directive (car (hudson-get-specific-directives "#ant")))
+         (cmd-prefix (concat "java -classpath " hudson-jar-file
+                             " hudson.Interp "))
          (compilation-error-regexp-alist
           (cons hudson-compilation-error-regexp
                 compilation-error-regexp-alist)))
-    (compilation-start command))
+
+    (compilation-start
+     (concat cmd-prefix
+             (if ant-directive
+                 (mapconcat 'identity
+                            (list includes-str "awbase.hux" filename
+                                  ant-directive "awplay.hux")
+                            " ")
+               (mapconcat 'identity (list includes-str filename) " ")
+               )))))
 
 
 ;;;; Miscellany.
-  (defun hudson-fill-paragraph (&optional justify)
-    "`fill-paragraph-function' handling multi-line strings and possibly comments.
+(defun hudson-fill-paragraph (&optional justify)
+  "`fill-paragraph-function' handling multi-line strings and possibly comments.
 If any of the current line is in or at the end of a multi-line string,
 fill the string or the paragraph of it that point is in, preserving
 the string's indentation."
-    (interactive "P")
-    (or (fill-comment-paragraph justify)
-        (save-excursion
-          (end-of-line)
-          (let* ((syntax (syntax-ppss))
-                 (orig (point))
-                 start end)
-            (cond ((nth 4 syntax) ; comment.   fixme: loses with trailing one
-                   (let (fill-paragraph-function)
-                     (fill-paragraph justify)))
-                  ;; The `paragraph-start' and `paragraph-separate'
-                  ;; variables don't allow us to delimit the last
-                  ;; paragraph in a multi-line string properly, so narrow
-                  ;; to the string and then fill around (the end of) the
-                  ;; current line.
-                  ((eq t (nth 3 syntax))    ; in fenced string
-                   (goto-char (nth 8 syntax)) ; string start
-                   (setq start (line-beginning-position))
-                   (setq end (condition-case () ; for unbalanced quotes
-                                 (progn (forward-sexp)
-                                        (- (point) 3))
-                               (error (point-max)))))
-                  ((re-search-backward "\\s|\\s-*\\=" nil t) ; end of fenced string
-                   (forward-char)
-                   (setq end (point))
-                   (condition-case ()
-                       (progn (backward-sexp)
-                              (setq start (line-beginning-position)))
-                     (error nil))))
-            (when end
-              (save-restriction
-                (narrow-to-region start end)
-                (goto-char orig)
-                ;; Avoid losing leading and trailing newlines in doc
-                ;; strings written like:
-                ;;   """
-                ;;   ...
-                ;;   """
-                (let ((paragraph-separate
-                       ;; Note that the string could be part of an
-                       ;; expression, so it can have preceding and
-                       ;; trailing non-whitespace.
-                       (concat
-                        (rx (or
-                             ;; Opening triple quote without following text.
-                             (and (* nonl)
-                                  (group (syntax string-delimiter))
-                                  (repeat 2 (backref 1))
-                                  ;; Fixme:  Not sure about including
-                                  ;; trailing whitespace.
-                                  (* (any " \t"))
-                                  eol)
-                             ;; Closing trailing quote without preceding text.
-                             (and (group (any ?\" ?')) (backref 2)
-                                  (syntax string-delimiter))))
-                        "\\(?:" paragraph-separate "\\)"))
-                      fill-paragraph-function)
-                  (fill-paragraph justify))))))) t)
+  (interactive "P")
+  (or (fill-comment-paragraph justify)
+      (save-excursion
+        (end-of-line)
+        (let* ((syntax (syntax-ppss))
+               (orig (point))
+               start end)
+          (cond ((nth 4 syntax) ; comment.   fixme: loses with trailing one
+                 (let (fill-paragraph-function)
+                   (fill-paragraph justify)))
+                ;; The `paragraph-start' and `paragraph-separate'
+                ;; variables don't allow us to delimit the last
+                ;; paragraph in a multi-line string properly, so narrow
+                ;; to the string and then fill around (the end of) the
+                ;; current line.
+                ((eq t (nth 3 syntax))    ; in fenced string
+                 (goto-char (nth 8 syntax)) ; string start
+                 (setq start (line-beginning-position))
+                 (setq end (condition-case () ; for unbalanced quotes
+                               (progn (forward-sexp)
+                                      (- (point) 3))
+                             (error (point-max)))))
+                ((re-search-backward "\\s|\\s-*\\=" nil t) ; end of fenced string
+                 (forward-char)
+                 (setq end (point))
+                 (condition-case ()
+                     (progn (backward-sexp)
+                            (setq start (line-beginning-position)))
+                   (error nil))))
+          (when end
+            (save-restriction
+              (narrow-to-region start end)
+              (goto-char orig)
+              ;; Avoid losing leading and trailing newlines in doc
+              ;; strings written like:
+              ;;   """
+              ;;   ...
+              ;;   """
+              (let ((paragraph-separate
+                     ;; Note that the string could be part of an
+                     ;; expression, so it can have preceding and
+                     ;; trailing non-whitespace.
+                     (concat
+                      (rx (or
+                           ;; Opening triple quote without following text.
+                           (and (* nonl)
+                                (group (syntax string-delimiter))
+                                (repeat 2 (backref 1))
+                                ;; Fixme:  Not sure about including
+                                ;; trailing whitespace.
+                                (* (any " \t"))
+                                eol)
+                           ;; Closing trailing quote without preceding text.
+                           (and (group (any ?\" ?')) (backref 2)
+                                (syntax string-delimiter))))
+                      "\\(?:" paragraph-separate "\\)"))
+                    fill-paragraph-function)
+                (fill-paragraph justify))))))) t)
 
+(defun hudson-mode-version ()
+  "Return `hudson-mode' version."
+  (interactive)
+  (if (interactive-p)
+      (message hudson-version)
+    hudson-version))
 
-  (defun hudson-mode-version ()
-    "Return `hudson-mode' version."
-    (interactive)
-    (if (interactive-p)
-        (message hudson-version)
-      hudson-version))
-
-  (defun hudson-hs-hide-level-1 ()
-    (hs-hide-level 1)
-    (hudson-next-statement)))
+(defun hudson-hs-hide-level-1 ()
+  (hs-hide-level 1)
+  (hudson-next-statement))
 
 (defun hudson-shift-left (start end &optional count)
   "Shift lines in region COUNT (the prefix arg) columns to the left.
