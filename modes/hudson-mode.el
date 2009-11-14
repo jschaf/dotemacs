@@ -87,6 +87,9 @@
     ;; Type checking using the ? operator
     (,(rx "?" (0+ space) (group upper (0+ (or alnum "_"))))
      (1 font-lock-type-face))
+    ;; Unnamed numerical constants
+    (,(rx not-wordchar (group (? "-") (1+ num)) word-end)
+     (1 font-lock-constant-face))
     ;; include directives
     (,(rx line-start (group "#include" (1+ space) (1+ (or alnum "-" "_" "."))))
      (1 font-lock-preprocessor-face))))
