@@ -60,9 +60,9 @@
   ;; Keywords
   `(,(rx symbol-start
          (or
-          "and" "assert" "class" "constant" "do" "else" "false"
-          "fun" "function" "if" "inherit" "is" "not" "null" "or"
-          "procedure" "return" "then" "true" "variable" "while")
+          "and" "assert" "class" "constant" "do" "else" "false" "fun"
+          "function" "if" "inherit" "is" "not" "null" "or" "procedure"
+          "ref" "return" "then" "true" "variable" "while")
          symbol-end)
     ;; Function and procedure names must begin with a lowercase letter
     (,(rx symbol-start (or "function" "procedure") (1+ space)
@@ -70,8 +70,10 @@
      (1 font-lock-function-name-face))
     ;; Classes
     (,(rx line-start (0+ blank) "class" (1+ space)
-          (group (regexp "[A-Z][[:alnum:]_]*")))
+          (group upper (0+ (or ?_ alnum))))
      (1 font-lock-type-face))
+    ;; Subtypes (e.g "< Foldable")
+    (,(rx "<" (1+ (0+ space) (? ",") (0+ space) (group upper (0+ (or ?_ alnum))))))
     ;; Top-level variable assignments
     (,(rx line-start (or "variable" "constant") (1+ space)
           (group lower (0+ (or alnum "_"))))
@@ -85,7 +87,9 @@
     ;; Type checking using the ? operator
     (,(rx "?" (0+ space) (group upper (0+ (or alnum "_"))))
      (1 font-lock-type-face))
-    ))
+    ;; include directives
+    (,(rx line-start (group "#include" (1+ space) (1+ (or alnum "-" "_" "."))))
+     (1 font-lock-preprocessor-face))))
 
 (defvar hudson-mode-map
   (let ((map (make-sparse-keymap)))
@@ -1013,8 +1017,8 @@ Use `hudson-version' to find out what version this is.
     (save-excursion
       (goto-char (point-min))
       (while (re-search-forward
-              (rx line-start (0+ space) "#-" (0+ space) "include" (1+ space)
-                  (group (1+ (or alnum "-" "_"))))
+              (rx line-start  "#include" (1+ space)
+                  (group (1+ (or alnum "-" "_" "."))))
               nil t)
         (push (buffer-substring-no-properties (match-beginning 1)
                                               (match-end 1))
@@ -1042,8 +1046,6 @@ If ARG is non-nil, ask for user confirmation"
 
 
 ;;;; Miscellany.
-
-
   (defun hudson-fill-paragraph (&optional justify)
     "`fill-paragraph-function' handling multi-line strings and possibly comments.
 If any of the current line is in or at the end of a multi-line string,
