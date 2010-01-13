@@ -5,7 +5,8 @@ CVS/
 .hg/
 
 # Personal files
-private/
+private/*
+!private/filler
 
 # Large files
 emacs-w3m/
