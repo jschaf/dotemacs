@@ -189,7 +189,7 @@ the second for a 'normal' command, and the third for a multiline command.")
       ;;XXX this is really just a cheap hack, it only completes symbols in the
       ;;interactive session -- useful nonetheless.
       (define-key py-mode-map [(meta tab)] 'ipython-complete)
-
+      (define-key py-shell-map (kbd "RET") 'ipython-send-and-indent)
       )
     (add-hook 'py-shell-hook 'ipython-shell-hook)
     ;; Regular expression that describes tracebacks for IPython in context and
@@ -485,7 +485,7 @@ matches last process output."
            (add-hook 'comint-output-filter-functions
                      'ipython-indentation-hook)))
 
-(define-key py-shell-map (kbd "RET") 'ipython-send-and-indent)
+
 ;;; / end autoindent support
 
 (provide 'ipython)
