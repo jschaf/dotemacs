@@ -1,8 +1,11 @@
 DOD
+HW
+*INode
 *ID
 *IO
 *IP
 *OS
 *TTY
 *UB
-HW*
+*FS
+*FD

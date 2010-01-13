@@ -3,6 +3,7 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(Info-additional-directory-list (quote ("~/.emacs.d/info")))
  '(LaTeX-command "latex")
  '(LaTeX-math-abbrev-prefix ";")
  '(LaTeX-version "2e")
@@ -33,6 +34,7 @@
  '(color-theme-libraries (quote ("~/.emacs.d/packages/colortheme/themes/color-theme-wombat.el" "~/.emacs.d/packages/colortheme/themes/color-theme-library.el")))
  '(color-theme-load-all-themes nil)
  '(column-number-mode t)
+ '(completion-ignored-extensions (quote (".o" "~" ".bin" ".bak" ".obj" ".map" ".ico" ".pif" ".lnk" ".a" ".ln" ".blg" ".aux" ".dvi" ".toc" ".out" ".snm" ".pyc")))
  '(completion-pcm-word-delimiters "-_. ")
  '(delete-old-versions t)
  '(dired-listing-switches "-alh")
@@ -63,6 +65,8 @@
  '(icicle-apropos-cycle-next-keys (quote ([next] [(control n)])))
  '(icicle-apropos-cycle-previous-keys (quote ([prior] [(control p)])))
  '(icicle-reminder-prompt-flag nil)
+ '(ido-ignore-files (quote ("\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./" "\\`b~")))
+ '(ido-use-filename-at-point nil)
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(initial-scratch-message "")
@@ -109,7 +113,7 @@
  '(org-reverse-note-order t)
  '(preview-icon-specs nil)
  '(ps-font-family (quote Courier))
- '(python-python-command "python2.6")
+ '(python-python-command "ipython -cl")
  '(quack-fontify-style nil)
  '(quack-global-menu-p nil)
  '(quack-pretty-lambda-p t)

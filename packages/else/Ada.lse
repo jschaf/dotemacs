@@ -26,7 +26,7 @@ DELETE LANGUAGE "Ada" -
 DEFINE LANGUAGE "Ada" -
     /INITIAL_STRING="{compilation_unit}" -
     /PUNCTUATION_CHARACTERS=",|;"
-    /SELF_INSERT_CHARACTERS=" `~!@#$%^&*(),.<>/?;:'[]{}=\-+|""
+    /SELF_INSERT_CHARACTERS=" `~!@#$%^&*(),.<>/?;:'[]{}=\-+|\""
     /VALID_IDENTIFIER_CHARACTERS="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789"
     /INDENT_SIZE=3
     /VERSION=1.5

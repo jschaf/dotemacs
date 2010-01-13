@@ -62,34 +62,28 @@
          (or
           "and" "assert" "class" "constant" "do" "else" "false" "fun"
           "function" "if" "inherit" "is" "not" "null" "or" "procedure"
-          "ref" "return" "then" "true" "variable" "while")
+          "ref" "return" "then" "this" "true" "variable" "while")
          symbol-end)
     ;; Function and procedure names must begin with a lowercase letter
     (,(rx symbol-start (or "function" "procedure") (1+ space)
           (group (? ".") lower (0+ (or alnum "_"))))
      (1 font-lock-function-name-face))
-    ;; Classes
-    (,(rx line-start (0+ blank) "class" (1+ space)
-          (group upper (0+ (or ?_ alnum))))
+    ;; Uppercase symbols (which are all classes)
+    (,(rx not-wordchar (group upper (0+ (or ?_ alnum))) word-end)
      (1 font-lock-type-face))
-    ;; Subtypes (e.g "< Foldable")
-    (,(rx "<" (1+ (0+ space) (? ",") (0+ space) (group upper (0+ (or ?_ alnum))))))
     ;; Top-level variable assignments
     (,(rx line-start (or "variable" "constant") (1+ space)
           (group lower (0+ (or alnum "_"))))
      (1 font-lock-variable-name-face))
-    ;; Optional type annotations for variables and constants
-    (,(rx symbol-start (or "variable" "constant")
-          (1+ space) lower (0+ (or alnum "_"))
-          (0+ space) ":" (0+ space)
-          (group upper (0+ (or alnum "_"))))
-     (1 font-lock-type-face))
-    ;; Type checking using the ? operator
-    (,(rx "?" (0+ space) (group upper (0+ (or alnum "_"))))
-     (1 font-lock-type-face))
     ;; Unnamed numerical constants
     (,(rx not-wordchar (group (? "-") (1+ num)) word-end)
      (1 font-lock-constant-face))
+    ;; Else-mode constructs
+    (,(rx (group (or "{" "[") (1+ (or alnum ?_)) (or "}" "]") (? "...")))
+     (1 font-lock-comment-face))
+    ;; Errors
+    (,(rx not-wordchar (group "error") word-end)
+     (1 font-lock-warning-face))
     ;; include directives
     (,(rx line-start (group "#include" (1+ space) (1+ (or alnum "-" "_" "."))))
      (1 font-lock-preprocessor-face))))
@@ -1063,7 +1057,8 @@ If ARG is non-nil, ask for user confirmation"
                                   ant-directive "awplay.hux")
                             " ")
                (mapconcat 'identity (list includes-str filename) " ")
-               )))))
+               ))
+     t)))
 
 
 ;;;; Miscellany.

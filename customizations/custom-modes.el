@@ -1,7 +1,9 @@
 ;; hudson mode
 (add-hook 'hudson-mode-hook
           (lambda ()
-            (local-set-key "\C-m" 'hudson-newline-and-indent)))
+            (local-set-key "\C-m" 'hudson-newline-and-indent)
+            (else-mode 1)
+            (c-subword-mode 1)))
 ;; (setq hudson-jar-file "E:\\Users\\joe\\prog\\hudson\\hudson.jar")
 (setq hudson-jar-file (expand-file-name "~/prog/hudson/hudson.jar"))
 
@@ -10,11 +12,30 @@
   (let ((hook (intern (concat mode "-mode-hook"))))
     (add-hook hook 'hs-minor-mode)))
 
+(add-hook 'eshell-mode-hook
+          (lambda ()
+            (let ((path (getenv "PATH")))
+              (setq path (concat path ";.;e:/Program Files (x86)/darcs-2.3.1-win1/")))))
+
 (add-hook 'hs-minor-mode-hook
           (lambda ()
             (local-set-key "\M-=" 'hs-toggle-hiding)
             (local-set-key "\M-_" 'hs-hide-all)
             (local-set-key "\M-+" 'hs-show-all)))
+
+(add-hook 'compilation-mode-hook
+          (lambda ()
+            (local-set-key "\M-n" 'cycle-buffer)
+            (local-set-key "\M-p" 'cycle-buffer-backward)
+            ))
+
+;; Template (ELSE) mode
+(add-hook 'else-mode-hook
+          (lambda ()
+            (add-to-list 'hs-special-modes-alist
+                         '(else-mode "DELETE PLACEHOLDER" "END DEFINE"
+                                         "###" nil nil))
+            (hs-minor-mode 1)))
 
 ;; Term-mode
 (add-hook 'term-mode-hook
@@ -32,10 +53,13 @@
      (load "custom-java")))
 
 ;; Python
-(eval-after-load 'python-mode
+(setq ipython-command "c:/python26/scripts/ipython.exe")
+(require 'ipython)
+
+(eval-after-load "python-mode"
   '(progn
-     (require 'ipython)
-     (load "custom-python")))
+     ;;(load "custom-python")
+     ))
 
 ;; Misc
 (global-set-key "\C-ha" 'apropos)
@@ -74,7 +98,8 @@
             (load "dired-x")
             ;; Don't show dot files in dired
             (setq dired-omit-files
-                  (concat dired-omit-files "\\|^\\..+$"))))
+                  ;;(concat dired-omit-files "\\|^\\..+$")
+                  )))
 (add-hook 'dired-mode-hook
           (lambda ()
             ;; Set dired-x buffer-local variables here.  For example:
@@ -93,6 +118,10 @@
              (c-subword-mode 1)
              (turn-on-eldoc-mode)
              (paredit-mode 1)))
+(eval-after-load 'paredit
+  '(progn
+     (define-key paredit-mode-map (kbd "C-<home>") 'paredit-forward-slurp-sexp)))
+
 (add-hook 'lisp-interaction-mode-hook
           (lambda ()
             (local-set-key "\C-J" 'eval-print-last-sexp)))
@@ -101,6 +130,33 @@
   '(progn
      (load "ada-mode-keys")
      ))
+
+;; (defconst ada-hs-start-regexp
+;;   (rx-to-string '(line-start (0+ space) (or "function" "procedure") ))
+;;   "Regexp to match start of the expression to hide.")
+;; (global-unset-key (kbd "C-9"))
+(global-set-key (kbd "C-*") 'paredit-forward-slurp-sexp)
+
+;; Stolen from VHDL mode
+(defun ada-hs-minor-mode (&optional arg)
+  "Toggle hideshow minor."
+  (interactive "P")
+  (require 'hideshow)
+  ;; check for hideshow version 5.x
+  (if (not (boundp 'hs-block-start-mdata-select))
+      (vhdl-warning-when-idle "Install included `hideshow.el' patch first (see INSTALL file)")
+    ;; initialize hideshow
+    (unless (assoc 'ada-mode hs-special-modes-alist)
+      (setq hs-special-modes-alist
+	    (cons (list 'ada-mode ada-hs-start-regexp nil "--\\( \\|$\\)"
+			'vhdl-hs-forward-sexp-func nil)
+		  hs-special-modes-alist)))
+    (make-local-variable 'hs-minor-mode-hook)
+    (if vhdl-hide-all-init
+	(add-hook 'hs-minor-mode-hook 'hs-hide-all)
+      (remove-hook 'hs-minor-mode-hook 'hs-hide-all))
+    (hs-minor-mode arg))
+  )
 
 (add-hook 'ada-mode-hook
           (lambda ()
@@ -297,7 +353,6 @@ highlighting is done"
 (eval-after-load "w3m"
   '(progn
      (joe/w3m-setup-keymap)))
-
 
 
 ;; ERC
