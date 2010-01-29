@@ -20,3 +20,6 @@
 [submodule "./packages/mozrepl"]
 	path = packages/mozrepl
 	url = git://github.com/bard/mozrepl.git
+[submodule "packages/egg"]
+	path = packages/egg
+	url = git://github.com/bogolisk/egg.git
