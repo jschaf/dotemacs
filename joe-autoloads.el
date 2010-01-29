@@ -48,9 +48,7 @@
 (color-theme-wombat)
 
 ;; Another git interface
-(require 'magit)
-(global-set-key [(control c) (g)] 'magit-status)
-(setq magit)
+(require 'egg)
 
 ;; w3m is an emacs interface to the w3 backend
 ;; (require 'w3m-load)
