@@ -53,8 +53,8 @@
      (load "custom-java")))
 
 ;; Python
-(setq ipython-command "c:/python26/scripts/ipython.exe")
-(require 'ipython)
+;; (setq ipython-command "c:/python26/scripts/ipython.exe")
+;; (require 'ipython)
 
 (eval-after-load "python-mode"
   '(progn
