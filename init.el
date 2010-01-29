@@ -15,7 +15,7 @@
 (setq default-directory "~/")
 
 ;;; Initial Code Load
-(setq custom-file "~/.emacs.d/.emacs-custom.el")
+(setq custom-file ".emacs-custom.el")
 (load custom-file)
 (load "joe-autoloads.el")
 (load "joe-functions.el")
