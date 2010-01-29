@@ -1,10 +1,4 @@
 # don't use ./ prefixes
-[submodule "./packages/campfire-mode"]
-	path = packages/campfire-mode
-	url = git://github.com/rubyist/campfire-mode.git
-[submodule "./packages/el4r"]
-	path = packages/el4r
-	url = git://github.com/michaelklishin/el4r.git
 [submodule "./packages/org-mode"]
 	path = packages/org-mode
 	url = git://repo.or.cz/org-mode.git
@@ -14,9 +8,6 @@
 [submodule "./packages/pymacs"]
 	path = packages/pymacs
 	url = git://pymacs.progiciels-bpi.ca/pymacs
-[submodule "./packages/magit"]
-	path = packages/magit
-	url = git://github.com/technomancy/magit.git
 [submodule "./packages/mozrepl"]
 	path = packages/mozrepl
 	url = git://github.com/bard/mozrepl.git
