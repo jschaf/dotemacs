@@ -98,7 +98,7 @@
             (load "dired-x")
             ;; Don't show dot files in dired
             (setq dired-omit-files
-                  ;;(concat dired-omit-files "\\|^\\..+$")
+                  (concat dired-omit-files "\\|^\\..+$")
                   )))
 (add-hook 'dired-mode-hook
           (lambda ()
