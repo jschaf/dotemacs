@@ -1,4 +1,4 @@
-;; Ada mode keys, extensions to gnu ada-mode
+;;; Ada mode keys, extensions to gnu ada-mode
 
 ;; loaded after ada-mode; load rest of ada-mode utils, then fix
 ;; various things
@@ -9,20 +9,18 @@
 (require 'gnat-fix-error)
 (load "ada-mode-patches")
 
-;; ;;; auto-loads and associated fixes
-;; (autoload 'ada-customize "ada-prj" "customize ada project files" t)
-;; (eval-after-load 'ada-prj
-;;   (remove-hook 'ada-mode-hook 'ada-prj-add-ada-menu))
+;;; auto-loads and associated fixes
+(autoload 'ada-customize "ada-prj" "customize ada project files" t)
+(eval-after-load 'ada-prj
+  (remove-hook 'ada-mode-hook 'ada-prj-add-ada-menu))
 
 ;;;; supplemental packages
 
 ;;; Align
 (require 'align) ; so ada-mode will set the appropriate stuff
 
-
-; ignore gnat library files
+                                        ; ignore gnat library files
 (add-to-list 'completion-ignored-extensions ".ali")
-(add-to-list 'completion-ignored-extensions ".o")
 
 (setq ada-other-file-alist
       ;; First element is regexp, matches are not.
@@ -39,20 +37,23 @@
 ;;; hooks
 
 ;; ada-xref adds this, but we don't want all of it
-;;(remove-hook 'ada-mode-hook 'ada-xref-initialize)
+(remove-hook 'ada-mode-hook 'ada-xref-initialize)
 
+;; change `_` to a word constituent. This must be in the hook, because
+;; ada-mode re-creates the syntax table for each buffer.
+(add-hook 'ada-mode-hook (lambda () (modify-syntax-entry ?_ "w" ada-mode-syntax-table)))
 
-;;(add-hook 'ada-mode-hook 'ada-find-file-setup)
+(add-hook 'ada-mode-hook 'ada-find-file-setup)
 
-; menu stuff added to ada-mode-hook below
+;; menu stuff added to ada-mode-hook below
 
 ;; ada-mode variables
 
-; prompt for project file when first required
+;; prompt for project file when first required
 (setq ada-always-ask-project t)
 
 ;; remove trailing spaces, untabify
-;;(setq ada-clean-buffer-before-saving t)
+(setq ada-clean-buffer-before-saving t)
 
 ;; overwrite tree file if it exists, no file header
 (setq ada-gnatstub-opts "-q -hs -t -I${src_dir}")
@@ -90,7 +91,7 @@
 
   )
 
-;(add-hook 'ada-mode-hook 'sal-ada-mode-setup)
+(add-hook 'ada-mode-hook 'sal-ada-mode-setup)
 ;;; custom functions
 
 (defun ada-adjust-case-current-identifier ()
@@ -266,45 +267,34 @@ placed at beginning of first match."
 (define-key ada-mode-map "\C-c;"    'ada-comment-box-header)
 (define-key ada-mode-map "\M-["     'ada-align)
 (define-key ada-mode-map "\C-\M-\\" 'ada-indent-region); indent-region
-(define-key ada-mode-map [(control c) (b)] 'ada-make-subprogram-body)
-;; (define-key ada-mode-map "\M-c"     'ada-calc-record-rep)
-;; (define-key ada-mode-map "\C-c\C-d" 'ada-goto-declaration-at-point)
-;; (define-key ada-mode-map "\C-c\M-d" 'ada-xref-goto-previous-reference)
-;; (define-key ada-mode-map "\C-c\C-s" 'ada-make-package-spec)
-;; (define-key ada-mode-map "\M-\C-w"  'ada-capitalize-word)
+(define-key ada-mode-map "\C-c\C-b" 'ada-make-subprogram-body)
+(define-key ada-mode-map "\M-c"     'ada-calc-record-rep)
+(define-key ada-mode-map "\C-c\C-d" 'ada-goto-declaration-at-point)
+(define-key ada-mode-map "\C-c\M-d" 'ada-xref-goto-previous-reference)
+(define-key ada-mode-map "\C-c\C-s" 'ada-make-package-spec)
+(define-key ada-mode-map "\C-c\C-w" 'ada-create-case-exception)
+(define-key ada-mode-map "\C-e"     'else-expand-placeholder)
+
+
 
 ;; movement (M-S-* same as M-* for these keys on Windows keyboard)
-(define-key ada-mode-map [prior]
-  '(lambda () (interactive) (sal-prev-meta-thing 0 ada-thing-regexp)))
-(define-key ada-mode-map [M-prior]
-  '(lambda () (interactive) (sal-prev-meta-thing 1 ada-thing-regexp)))
-(define-key ada-mode-map [C-prior]
-  '(lambda () (interactive) (sal-prev-meta-thing 2 ada-thing-regexp)))
-(define-key ada-mode-map [M-C-prior]
-  '(lambda () (interactive) (sal-prev-meta-thing 3 ada-thing-regexp)))
-(define-key ada-mode-map [next]
-  '(lambda () (interactive) (sal-next-meta-thing 0 ada-thing-regexp)))
-(define-key ada-mode-map [M-next]
-  '(lambda () (interactive) (sal-next-meta-thing 1 ada-thing-regexp)))
-(define-key ada-mode-map [C-next]
-  '(lambda () (interactive) (sal-next-meta-thing 2 ada-thing-regexp)))
-(define-key ada-mode-map [M-C-next]
-  '(lambda () (interactive) (sal-next-meta-thing 3 ada-thing-regexp)))
+(define-key ada-mode-map [prior] '(lambda () (interactive) (sal-prev-meta-thing 0 ada-thing-regexp)))
+(define-key ada-mode-map [M-prior] '(lambda () (interactive) (sal-prev-meta-thing 1 ada-thing-regexp)))
+(define-key ada-mode-map [C-prior] '(lambda () (interactive) (sal-prev-meta-thing 2 ada-thing-regexp)))
+(define-key ada-mode-map [M-C-prior] '(lambda () (interactive) (sal-prev-meta-thing 3 ada-thing-regexp)))
+(define-key ada-mode-map [next] '(lambda () (interactive) (sal-next-meta-thing 0 ada-thing-regexp)))
+(define-key ada-mode-map [M-next] '(lambda () (interactive) (sal-next-meta-thing 1 ada-thing-regexp)))
+(define-key ada-mode-map [C-next] '(lambda () (interactive) (sal-next-meta-thing 2 ada-thing-regexp)))
+(define-key ada-mode-map [M-C-next] '(lambda () (interactive) (sal-next-meta-thing 3 ada-thing-regexp)))
 
 (define-key ada-mode-map [f5] 'misc-compile)
 (define-key ada-mode-map [M-f5] 'ada-compile-current)
 (define-key ada-mode-map [C-f5] 'ada-compile-application)
-(define-key ada-mode-map [(meta g) (meta s)] 'gnat-fix-compiler-error)
+(define-key ada-mode-map [C-f6] 'gnat-fix-compiler-error)
 (define-key ada-mode-map [f7] 'ada-find-references)
 ;; f8 free
 (define-key ada-mode-map [f9] nil); ada-mode: 'ada-compile-application
-(define-key ada-mode-map [f10] nil)     ; ada-mode: 'next-error)
-
-(setq ada-mode-extra-prefix "\C-c")
-
-;;; something in here is killing this
-(setq yas/trigger-key [(j)])
-
+(define-key ada-mode-map [f10] nil) ; ada-mode: 'next-error)
 
 ;; Add to default ada-mode menu. This must be done in ada-mode-hook,
 ;; since ada-mode recreates the menu for each buffer.
@@ -313,14 +303,14 @@ placed at beginning of first match."
   (interactive)
   (ada-reread-prj-file ada-prj-default-project-file) )
 
-;; (defun ada-menu-setup ()
-;;   "customize ada-menu"
-;;   (define-key-after (lookup-key ada-mode-map [menu-bar Ada Project]) [reload]
-;;     '("Reload" . ada-prj-reload-project-file) 'Load)
+(defun ada-menu-setup ()
+  "customize ada-menu"
+  (define-key-after (lookup-key ada-mode-map [menu-bar Ada Project]) [reload]
+    '("Reload" . ada-prj-reload-project-file) 'Load)
 
-;;   (define-key-after (lookup-key ada-mode-map [menu-bar Ada]) [print]
-;;     '("Print" . ada-print-buffer) 'Print))
+  (define-key-after (lookup-key ada-mode-map [menu-bar Ada]) [print]
+    '("Print" . ada-print-buffer) 'Print))
 
-;; (add-hook 'ada-mode-hook 'ada-menu-setup)
+(add-hook 'ada-mode-hook 'ada-menu-setup)
 
-; end of file
+                                        ; end of file

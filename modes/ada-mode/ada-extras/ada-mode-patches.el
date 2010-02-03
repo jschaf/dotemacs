@@ -58,8 +58,8 @@ bit ranges. Move to next line."
                      " * Words")
                  " range "
                  (number-to-string (+ 1 range-last))
-               " .. "
-               (number-to-string (+ range-last size))) )
+                 " .. "
+                 (number-to-string (+ range-last size))) )
               ))))))
   (next-line 1))
 
@@ -79,7 +79,6 @@ bit ranges. Move to next line."
       (newline-and-indent)
       )))
 
-      
 (defun ada-invert-line-order ()
   "Invert line order in region. Useful for editing record representation clauses."
   (interactive)
@@ -123,8 +122,8 @@ current construct."
                           (backward-word 2)
                           (looking-at "type"))))
         (if in-discrim
-          (align-current)
-        (ada-format-paramlist))))
+            (align-current)
+          (ada-format-paramlist))))
 
      (t
       (align-current))
@@ -139,7 +138,7 @@ show in other window"
   (ada-xref-push-pos (buffer-file-name) (point))
   (let ((ada-xref-other-buffer other-window) ; tell ada-find-in-ali to use other window
         (identlist (ada-read-identifier (point))))
-        (ada-find-in-ali identlist nil)))
+    (ada-find-in-ali identlist nil)))
 
 ;;; Additional find-file support
 
@@ -216,7 +215,174 @@ ff-pre-find-hooks."
 
 ;;; now ada-xref patches
 
+;; from ada-xref.el
+;; handle pragma Source_Reference
+(defun ada-find-file-number-in-ali (file)
+  "Returns the file number for FILE in the associated ali file."
+  (set-buffer (ada-get-ali-buffer file))
+  (goto-char (point-min))
 
+  (let ((begin (re-search-forward "^D"))
+        (filename (file-name-nondirectory file)))
+    (beginning-of-line)
+    (re-search-forward (concat "^D " filename "\\|1:" filename))
+    (count-lines begin (point))))
+
+
+;; from ada-xref.el
+;; Allow env vars, relative paths in src_dir, obj_dir, casing in project file.
+;; Expand file names while in the project file, so paths are relative to the project file.
+;; Allow comments.
+(defun ada-parse-prj-file (prj-file)
+  "Reads and parses the PRJ-FILE file if it was found.
+The current buffer should be the ada-file buffer."
+  (if prj-file
+      (let (project src_dir obj_dir make_cmd comp_cmd check_cmd casing
+                    run_cmd debug_pre_cmd debug_post_cmd
+                    (ada-buffer (current-buffer)))
+        (setq prj-file (expand-file-name prj-file))
+
+        ;;  Set the project file as the active one, so
+        ;;  ada-xref-get-project-field works (called by ada-xref-get-src-dir-field)
+        (setq ada-prj-default-project-file prj-file)
+
+        ;;  Initialize the project with the default values
+        (ada-xref-set-default-prj-values 'project (current-buffer))
+
+        ;;  Do not use find-file below, since we don't want to show this
+        ;;  buffer. If the file is open through speedbar, we can't use
+        ;;  find-file anyway, since the speedbar frame is special and does not
+        ;;  allow the selection of a file in it.
+
+        (if (file-exists-p prj-file)
+            (progn
+              (let* ((buffer (run-hook-with-args-until-success
+                              'ada-load-project-hook prj-file)))
+                (unless buffer
+                  (setq buffer (find-file-noselect prj-file nil)))
+                (set-buffer buffer))
+
+              (widen)
+              (goto-char (point-min))
+
+              ;;  Now overrides these values with the project file
+              ;;  Don't cross line endings; this allows comments.
+              (while (not (eobp))
+                (if (looking-at "^\\([^=\n]+\\)=\\(.*\\)")
+                    (cond
+                     ((string= (match-string 1) "src_dir")
+                      (add-to-list 'src_dir
+                                   (file-name-as-directory
+                                    (expand-file-name (substitute-in-file-name (match-string 2))))))
+                     ((string= (match-string 1) "obj_dir")
+                      (add-to-list 'obj_dir
+                                   (file-name-as-directory
+                                    (expand-file-name (substitute-in-file-name (match-string 2))))))
+                     ((string= (match-string 1) "casing")
+                      (set 'casing (cons (expand-file-name (substitute-in-file-name (match-string 2))) casing)))
+                     ((string= (match-string 1) "build_dir")
+                      (set 'project
+                           (plist-put project 'build_dir
+                                      (file-name-as-directory (match-string 2)))))
+                     ((string= (match-string 1) "make_cmd")
+                      (add-to-list 'make_cmd (match-string 2)))
+                     ((string= (match-string 1) "comp_cmd")
+                      (add-to-list 'comp_cmd (match-string 2)))
+                     ((string= (match-string 1) "check_cmd")
+                      (add-to-list 'check_cmd (match-string 2)))
+                     ((string= (match-string 1) "run_cmd")
+                      (add-to-list 'run_cmd (match-string 2)))
+                     ((string= (match-string 1) "debug_pre_cmd")
+                      (add-to-list 'debug_pre_cmd (match-string 2)))
+                     ((string= (match-string 1) "debug_post_cmd")
+                      (add-to-list 'debug_post_cmd (match-string 2)))
+                     (t
+                      (set 'project (plist-put project (intern (match-string 1))
+                                               (match-string 2))))))
+                (forward-line 1))
+
+              (if src_dir (set 'project (plist-put project 'src_dir
+                                                   (reverse src_dir))))
+              (if obj_dir (set 'project (plist-put project 'obj_dir
+                                                   (reverse obj_dir))))
+              (if casing  (set 'project (plist-put project 'casing
+                                                   (reverse casing))))
+              (if make_cmd (set 'project (plist-put project 'make_cmd
+                                                    (reverse make_cmd))))
+              (if comp_cmd (set 'project (plist-put project 'comp_cmd
+                                                    (reverse comp_cmd))))
+              (if check_cmd (set 'project (plist-put project 'check_cmd
+                                                     (reverse check_cmd))))
+              (if run_cmd (set 'project (plist-put project 'run_cmd
+                                                   (reverse run_cmd))))
+              (if debug_post_cmd (set 'project (plist-put project 'debug_post_cmd
+                                                          (reverse debug_post_cmd))))
+              (if debug_pre_cmd (set 'project (plist-put project 'debug_pre_cmd
+                                                         (reverse debug_pre_cmd))))
+
+              ;; Kill the project buffer
+              (kill-buffer nil)
+              (set-buffer ada-buffer)
+              )
+
+          ;;  Else the file wasn't readable (probably the default project).
+          ;;  We initialize it with the current environment variables.
+          ;;  We need to add the startup directory in front so that
+          ;;  files locally redefined are properly found. We cannot
+          ;;  add ".", which varies too much depending on what the
+          ;;  current buffer is.
+          (set 'project
+               (plist-put project 'src_dir
+                          (append
+                           (list command-line-default-directory)
+                           (split-string (or (getenv "ADA_INCLUDE_PATH") "") ":")
+                           (list "." default-directory))))
+          (set 'project
+               (plist-put project 'obj_dir
+                          (append
+                           (list command-line-default-directory)
+                           (split-string (or (getenv "ADA_OBJECTS_PATH") "") ":")
+                           (list "." default-directory))))
+          )
+
+
+        ;;  Delete the default project file from the list, if it is there.
+        ;;  Note that in that case, this default project is the only one in
+        ;;  the list
+        (if (assoc nil ada-xref-project-files)
+            (setq ada-xref-project-files nil))
+
+        ;;  Memorize the newly read project file
+        (if (assoc prj-file ada-xref-project-files)
+            (setcdr (assoc prj-file ada-xref-project-files) project)
+          (add-to-list 'ada-xref-project-files (cons prj-file project)))
+
+        ;; Sets up the compilation-search-path so that Emacs is able to
+        ;; go to the source of the errors in a compilation buffer
+        (setq compilation-search-path (ada-xref-get-src-dir-field))
+
+        ;; Set the casing exceptions file list
+        (if casing
+            (progn
+              (setq ada-case-exception-file (reverse casing))
+              (ada-case-read-exceptions)))
+
+        ;; Add the directories to the search path for ff-find-other-file, in the ada buffer.
+        ;; Do not add the '/' or '\' at the end
+        (setq ada-search-directories-internal
+              (append (mapcar 'directory-file-name compilation-search-path)
+                      ada-search-directories))
+
+        (ada-xref-update-project-menu)
+        )
+
+    ;;  No prj file ? => Setup default values
+    ;;  Note that nil means that all compilation modes will first look in the
+    ;;  current directory, and only then in the current file's directory. This
+    ;;  current file is assumed at this point to be in the common source
+    ;;  directory.
+    (setq compilation-search-path (list nil default-directory))
+    ))
 
 ;; Renamed from ada-xref.el ada-make-filename-from-adaname, which
 ;; redefines ada-mode.el ada-make-filename-from-adaname. But there are
@@ -324,6 +490,5 @@ function."
 
 (defun ada-make-filename-from-adaname (adaname)
   (funcall ada-make-filename-from-adaname adaname))
-
 
 ;;; end of file

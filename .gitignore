@@ -18,3 +18,7 @@ packages/rope/
 *.elc
 tramp
 session*
+info/
+*.html
+*.tar.gz
+

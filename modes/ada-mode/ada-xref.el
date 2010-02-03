@@ -1,7 +1,7 @@
 ;; ada-xref.el --- for lookup and completion in Ada mode
 
 ;; Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003,
-;;               2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
+;;   2004, 2005, 2006, 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
 
 ;; Author: Markus Heritsch <Markus.Heritsch@studbox.uni-stuttgart.de>
 ;;      Rolf Ebert <ebert@inf.enst.fr>
@@ -356,8 +356,7 @@ Return new value of PLIST.
 GPR_FILE must be full path to file, normalized.
 src_dir, obj_dir will include compiler runtime.
 Assumes environment variable ADA_PROJECT_PATH is set properly."
-  (save-excursion
-    (set-buffer (get-buffer-create "*gnatls*"))
+  (with-current-buffer (get-buffer-create "*gnatls*")
     (erase-buffer)
 
     ;; this can take a long time; let the user know what's up
@@ -760,7 +759,7 @@ is non-nil, prompt the user to select one.  If none are found, return
   (let ((file (buffer-file-name nil)))
     (list
      ;; variable name alphabetical order
-     'ada_project_path  ""
+     'ada_project_path (let ((path (getenv "ADA_PROJECT_PATH"))) (if path path ""))
      'ada_project_path_sep  ada-prj-ada-project-path-sep
      'bind_opt        ada-prj-default-bind-opt
      'build_dir       default-directory
@@ -1046,8 +1045,7 @@ existing buffer `*gnatfind*', if there is one."
 	  (setq command (concat command " -p\"" ada-prj-default-project-file "\""))))
 
     (if (and append (get-buffer ada-gnatfind-buffer-name))
-	(save-excursion
-	  (set-buffer "*gnatfind*")
+	(with-current-buffer "*gnatfind*"
 	  (setq old-contents (buffer-string))))
 
     (if (ada-check-emacs-version 22 0)
@@ -1059,8 +1057,7 @@ existing buffer `*gnatfind*', if there is one."
 			(lambda (mode) ada-gnatfind-buffer-name)))
 
     ;;  Hide the "Compilation" menu
-    (save-excursion
-      (set-buffer ada-gnatfind-buffer-name)
+    (with-current-buffer ada-gnatfind-buffer-name
       (local-unset-key [menu-bar compilation-menu])
 
       (if old-contents
@@ -1305,7 +1302,7 @@ If ARG is non-nil, ask for user confirmation of the command."
 (defun ada-run-application (&optional arg)
   "Run the application.
 If ARG is non-nil, ask for user confirmation."
-  (interactive "P")
+  (interactive)
   (ada-require-project-file)
 
   (let ((machine (ada-xref-get-project-field 'cross_prefix)))
@@ -1321,33 +1318,31 @@ If ARG is non-nil, ask for user confirmation."
     ;; Modify the command to run remotely
     (setq command (ada-remote (mapconcat 'identity command
 					 ada-command-separator)))
+
     ;; Ask for the arguments to the command if required
     (if (or ada-xref-confirm-compile arg)
-        (setq command (read-from-minibuffer "Enter command to execute: "
-                                            command)))
+	(setq command (read-from-minibuffer "Enter command to execute: "
+					    command)))
 
     ;; Run the command
-    (save-excursion
-      (set-buffer (get-buffer-create "*run*"))
+    (with-current-buffer (get-buffer-create "*run*")
       (set 'buffer-read-only nil)
 
       (erase-buffer)
       (start-process "run" (current-buffer) shell-file-name
-                     "-c" command)
+		     "-c" command)
       (comint-mode)
       ;;  Set these two variables to their default values, since otherwise
       ;;  the output buffer is scrolled so that only the last output line
       ;;  is visible at the top of the buffer.
-      ;(set (make-local-variable 'comint-scroll-to-bottom-on-input) nil)
-      (set (make-local-variable 'scroll-step) 10)
-      (set (make-local-variable 'scroll-conservatively) 10)
+      (set (make-local-variable 'scroll-step) 0)
+      (set (make-local-variable 'scroll-conservatively) 0)
       )
     (display-buffer "*run*")
-    
+
     ;;  change to buffer *run* for interactive programs
     (other-window 1)
     (switch-to-buffer "*run*")
-    ;(goto-char (point-min))
     ))
 
 (defun ada-gdb-application (&optional arg executable-name)
@@ -1558,8 +1553,7 @@ the project file."
   ;;      the 'D' lines.  This is done repeatedly, in case the direct parent is
   ;;      also a separate.
 
-  (save-excursion
-    (set-buffer (get-file-buffer file))
+  (with-current-buffer (get-file-buffer file)
     (let ((short-ali-file-name
 	   (concat (file-name-sans-extension (file-name-nondirectory file))
 		   ".ali"))
@@ -1912,7 +1906,8 @@ This function is disabled for operators, and only works for identifiers."
 		   (ada-name-of identlist)))
 	   ;; one => should be the right one
 	   ((= len 1)
-	    (goto-line (caar declist)))
+	    (goto-char (point-min))
+	    (forward-line (1- (caar declist))))
 
 	   ;; more than one => display choice list
 	   (t
@@ -1948,7 +1943,8 @@ This function is disabled for operators, and only works for identifiers."
 		       (read-from-minibuffer "Enter No. of your choice: "))))
 	      )
 	    (set-buffer ali-buffer)
-	    (goto-line (car (nth (1- choice) declist)))
+	    (goto-char (point-min))
+	    (forward-line (1- (car (nth (1- choice) declist))))
 	    ))))))
 
 
@@ -2053,13 +2049,11 @@ the declaration and documentation of the subprograms one is using."
 	choice
 	file)
 
-    (save-excursion
+    ;;  Do the grep in all the directories.  We do multiple shell
+    ;;  commands instead of one in case there is no .ali file in one
+    ;;  of the directory and the shell stops because of that.
 
-      ;;  Do the grep in all the directories.  We do multiple shell
-      ;;  commands instead of one in case there is no .ali file in one
-      ;;  of the directory and the shell stops because of that.
-
-      (set-buffer (get-buffer-create "*grep*"))
+    (with-current-buffer (get-buffer-create "*grep*")
       (while dirs
 	(insert (shell-command-to-string
 		 (concat
@@ -2177,7 +2171,8 @@ If OTHER-FRAME is non-nil, creates a new frame to show the file."
 
     ;; move the cursor to the correct position
     (push-mark)
-    (goto-line line)
+    (goto-char (point-min))
+    (forward-line (1- line))
     (move-to-column column)
 
     ;; If we are not on the identifier, the ali file was not up-to-date.
@@ -2242,8 +2237,7 @@ Return the position of the declaration in the buffer, or nil if not found."
 	(unit-name nil)
 	(body-name nil)
 	(ali-name nil))
-    (save-excursion
-      (set-buffer buffer)
+    (with-current-buffer buffer
       (goto-char (point-min))
       (re-search-forward "^U \\([^ \t%]+\\)%[bs][ \t]+\\([^ \t]+\\)")
       (setq unit-name (match-string 1))
@@ -2287,9 +2281,8 @@ Return the position of the declaration in the buffer, or nil if not found."
   "Determine the filename in which ADANAME is found.
 This is a GNAT specific function that uses gnatkrunch."
   (let ((krunch-buf (generate-new-buffer "*gkrunch*"))
-	(cross-prefix (plist-get (cdr (ada-xref-current-project)) 'cross_prefix)))
-    (save-excursion
-      (set-buffer krunch-buf)
+        (cross-prefix (plist-get (cdr (ada-xref-current-project)) 'cross_prefix)))
+    (with-current-buffer krunch-buf
       ;; send adaname to external process `gnatkr'.
       ;; Add a dummy extension, since gnatkr versions have two different
       ;; behaviors depending on the version:
@@ -2348,8 +2341,7 @@ If INTERACTIVE is nil, assume this is called from `ff-file-created-hook'."
 				" " gnatstub-opts " " filename))
 	 (buffer        (get-buffer-create "*gnat stub*")))
 
-    (save-excursion
-      (set-buffer buffer)
+    (with-current-buffer buffer
       (compilation-minor-mode 1)
       (erase-buffer)
       (insert gnatstub-cmd)
@@ -2368,7 +2360,7 @@ If INTERACTIVE is nil, assume this is called from `ff-file-created-hook'."
       ;; file not created; display the error message
       (display-buffer buffer))))
 
-(defun ada-xref-initialize ()
+(defun ada-xref-initialize (&optional ignored)
   "Function called by `ada-mode-hook' to initialize the ada-xref.el package.
 For instance, it creates the gnat-specific menus, sets some hooks for
 `find-file'."

@@ -1,19 +1,18 @@
 ;; @(#) gnat-fix-error.el --- utilities for automatically fixing
 ;; errors reported by the GNAT Ada compiler.
 
-;; Copyright (C) 1999-2007 Stephen Leake.
+;; Copyright (C) 1999-2009 Stephen Leake.
 
 ;; Author     : Stephen Leake      <Stephen_Leake@stephe-leake.org>
 ;; Maintainer : Stephen Leake      <Stephen_Leake@stephe-leake.org>
 ;; Web site   : http://www.stephe-leake.org/
-;; CVS version:   $Revision: 1.69 $
 ;; Keywords   : languages ada error
 
 ;; This file is not part of GNU Emacs
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation; either version 2, or (at your option)
+;; the Free Software Foundation; either version 3, or (at your option)
 ;; any later version.
 
 ;; This program is distributed in the hope that it will be useful,
@@ -126,7 +125,7 @@ file-name, and thus all lower-case."
 
 (defun gnat-fix-subprogram-decl-end ()
   "If at or in a subprogram declaration, move to the end of the declaration."
-  ; ada-procedure-start-regexp is anchored at a line beginning
+                                        ; ada-procedure-start-regexp is anchored at a line beginning
   (beginning-of-line)
   (if (not (looking-at ada-procedure-start-regexp))
       (search-backward-regexp ada-procedure-start-regexp))
@@ -222,6 +221,7 @@ fix."
 
   (let ((source-buffer (current-buffer))
         (source-window (selected-window))
+        (line-move-visual nil); screws up next-line otherwise
         compilation-buffer-start)
 
     ;; Goto the error message. Sometimes (the very first time the
@@ -259,9 +259,11 @@ fix."
             (let ((unit-file
                    (cond
                     ((looking-at (concat ".*at " gnat-file-line-regexp ".*at " gnat-file-line-regexp))
-                      (match-string 3))
+                     (match-string 3))
                     ((looking-at (concat "non-visible \\((private) \\)?declaration at " gnat-file-line-regexp))
-                      (match-string 2)))))
+                     (match-string 2))
+                    (t
+                     (error "unrecognized error message")))))
               (pop-to-buffer source-buffer)
               ;; We either need to add a with_clause for a package, or
               ;; prepend the package name here (or add a use clause, but I
@@ -314,7 +316,7 @@ fix."
 
                 ;; else can't deal with it
                 (error "error not recognized"))
-                )))
+              )))
 
          ((looking-at (concat gnat-quoted-name-regexp " not declared in " gnat-quoted-name-regexp))
           (let ((child-name (match-string 1))
@@ -367,12 +369,20 @@ fix."
             (insert expected-name)))
 
          ((looking-at "extra \".\" ignored")
-            (set-buffer source-buffer)
-            (delete-char 1))
+          (set-buffer source-buffer)
+          (delete-char 1))
 
          ((looking-at "extra right paren")
           (pop-to-buffer source-buffer)
           (delete-char 1))
+
+         ((looking-at "expected an access type")
+          (progn
+            (pop-to-buffer source-buffer)
+            (backward-char 1)
+            (if (looking-at "\\.all")
+                (delete-char 4)
+              (ding))))
 
          ((looking-at (concat "expected \\(private \\)?type " gnat-quoted-name-regexp))
           (let ((type (match-string 2)))
@@ -396,19 +406,19 @@ fix."
                   (ding))))))
 
          ((looking-at "if qualified expression was meant, use apostrophe")
-            (progn
-              (set-buffer source-buffer)
-              (delete-backward-char 1)
-              (insert "'")))
+          (progn
+            (set-buffer source-buffer)
+            (delete-backward-char 1)
+            (insert "'")))
 
          ((looking-at (concat "missing " gnat-quoted-punctuation-regexp))
           (let ((stuff (match-string-no-properties 1)))
-              (set-buffer source-buffer)
-              (insert stuff)))
+            (set-buffer source-buffer)
+            (insert stuff)))
 
          ((looking-at (concat "missing #"))
-            (set-buffer source-buffer)
-            (insert "#"))
+          (set-buffer source-buffer)
+          (insert "#"))
 
          ((looking-at (concat "missing body for " gnat-quoted-name-regexp " declared at " gnat-file-line-regexp))
           (let ((file (match-string 2))
@@ -437,7 +447,7 @@ fix."
             (pop-to-buffer source-buffer)
             (gnat-fix-add-with-clause package-name)))
 
-         ((looking-at (concat "misspelling of " gnat-quoted-name-regexp))
+         ((looking-at (concat "possible misspelling of " gnat-quoted-name-regexp))
           ;; correctable misspelling
           (progn
             (setq correct-spelling (match-string 1))
@@ -463,7 +473,7 @@ fix."
 
                 ;; else can't deal with it
                 (error "error not recognized"))
-                )))
+              )))
 
          ((looking-at "no space allowed here")
           (progn
@@ -533,12 +543,12 @@ fix."
             (gnat-fix-prj-show-source file line)))
 
          ((looking-at "unexpected right parenthesis")
-            (set-buffer source-buffer)
-            (delete-char 1))
+          (set-buffer source-buffer)
+          (delete-char 1))
 
          ((looking-at "unexpected semicolon ignored")
-            (set-buffer source-buffer)
-            (delete-char 1))
+          (set-buffer source-buffer)
+          (delete-char 1))
 
          ((looking-at (concat "warning: " gnat-quoted-name-regexp " is not modified, could be declared constant"))
           (pop-to-buffer source-buffer)
@@ -679,6 +689,17 @@ fix."
                   (delete-region (point) then-pos)
                   (insert " "))
               (error "can't fix \"then\""))))
+
+         ((looking-at "(style) missing \"overriding\" indicator")
+          (set-buffer source-buffer)
+          (cond
+           ((looking-at "\\(procedure\\)\\|\\(function\\)")
+            (insert "overriding "))
+           ((looking-at "abstract")
+            (ada-search-ignore-string-comment ada-subprog-start-re t)
+            (insert "overriding "))
+           (t
+            (error "can't fix"))))
 
          ((looking-at "(style) reserved words must be all lower case")
           (progn

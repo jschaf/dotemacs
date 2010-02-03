@@ -1,4 +1,4 @@
-This is the README for Emacs ada-mode 4.00w.
+This is the README for Emacs ada-mode 4.01.
 
 ada-mode is part of the standard Emacs distribution; see
 ftp://ftp.gnu.org/pub/gnu/emacs/ .
@@ -12,7 +12,7 @@ Installation:
 Unzip ada-mode-i.jj.tar.gz to a directory; we'll assume
 "~/ada-mode" for example.
 
-Add the directory to your Emacs load-path. In your .emacs, add:
+Add the directory to your Emacs load-path. In your ~/.emacs, add:
 
 (add-to-list 'load-path (expand-file-name "~/ada-mode"))
 
