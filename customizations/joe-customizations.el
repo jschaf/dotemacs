@@ -12,7 +12,14 @@
 ;; Mouse
 (global-set-key [down-mouse-3] 'imenu)
 
-(setq echo-keystrokes 0.5)
+(set-register ?E '(file . "~/.emacs.d/init.el")) ;; C-x r j E
+(set-register ?D '(file . "~/docs"))
+(set-register ?P '(file . "~/prog"))
+(set-register ?A '(file . "~/.emacs.d/joe-autoloads.el"))
+(set-register ?C '(file . "~/.emacs.d/customizations/custom-modes.el"))
+
+(setq echo-keystrokes 0)
+
 
 (global-set-key [?\M-\C-z] #'move-to-char)
 
