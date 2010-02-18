@@ -267,15 +267,12 @@ placed at beginning of first match."
 (define-key ada-mode-map "\C-c;"    'ada-comment-box-header)
 (define-key ada-mode-map "\M-["     'ada-align)
 (define-key ada-mode-map "\C-\M-\\" 'ada-indent-region); indent-region
-(define-key ada-mode-map "\C-c\C-b" 'ada-make-subprogram-body)
-(define-key ada-mode-map "\M-c"     'ada-calc-record-rep)
+;; (define-key ada-mode-map "\C-c\C-b" 'ada-make-subprogram-body)
+(define-key ada-mode-map "\C-c\M-c" 'ada-calc-record-rep)
 (define-key ada-mode-map "\C-c\C-d" 'ada-goto-declaration-at-point)
 (define-key ada-mode-map "\C-c\M-d" 'ada-xref-goto-previous-reference)
 (define-key ada-mode-map "\C-c\C-s" 'ada-make-package-spec)
 (define-key ada-mode-map "\C-c\C-w" 'ada-create-case-exception)
-(define-key ada-mode-map "\C-e"     'else-expand-placeholder)
-
-
 
 ;; movement (M-S-* same as M-* for these keys on Windows keyboard)
 (define-key ada-mode-map [prior] '(lambda () (interactive) (sal-prev-meta-thing 0 ada-thing-regexp)))
