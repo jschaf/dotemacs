@@ -50,6 +50,9 @@
 ;; Another git interface
 (require 'egg)
 
+;; Easily browse the kill ring
+(require 'browse-kill-ring+)
+
 ;; w3m is an emacs interface to the w3 backend
 ;; (require 'w3m-load)
 ;; (setq browse-url-browser-function 'w3m-browse-url)
