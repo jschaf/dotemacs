@@ -24,6 +24,10 @@
             (local-set-key "\M-p" 'cycle-buffer-backward)
             ))
 
+(defun rope-before-save-actions ()
+  nil)
+(defun rope-after-save-actions ()
+  nil)
 ;; Redefine the 8 primary terminal colors to look good against black
 (setq ansi-term-color-vector
       [unspecified "#000000" "#963F3C" "#5FFB65" "#FFFD65" 
@@ -37,10 +41,11 @@
 ;; Python
 ;; (setq ipython-command "c:/python26/scripts/ipython.exe")
 ;; (require 'ipython)
+;; (load "custom-python")
 
-(eval-after-load "python-mode"
+(eval-after-load "python"
   '(progn
-     ;;(load "custom-python")
+     (load "custom-python")
      ))
 
 ;; Misc
@@ -119,7 +124,7 @@
             (local-set-key "\M-=" 'show-entry)
             (local-set-key "\C-cm" 'ada-method-header)
             (local-set-key "\C-xnd" 'ada-narrow-to-defun)
-            (local-set-key "\C-ci" 'joe/ada-incr-variable)
+            ;; (local-set-key "\C-ci" 'joe/ada-incr-variable)
             (setq ada-fill-comment-postfix "-- ")
             (else-mode 1)
             (key-chord-define ada-mode-map "ja"
