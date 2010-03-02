@@ -208,7 +208,7 @@ Keys are sorted by their complexity; `key-complexity' determines
 (global-set-key (kbd "M-n") 'cycle-buffer)
 (global-set-key (kbd "M-p") 'cycle-buffer-backward)
 
-(global-set-key "\C-xp" 'find-file-at-point)
+;; (global-set-key "\C-xp" 'find-file-at-point)
 (global-set-key "\C-x\C-b" 'ido-switch-buffer)
 (global-set-key "\C-cj" 'delete-indentation)
 (global-set-key "\M-g\M-f" 'next-error)
