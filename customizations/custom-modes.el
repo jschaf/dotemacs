@@ -24,6 +24,10 @@
             (local-set-key "\M-p" 'cycle-buffer-backward)
             ))
 
+(defun rope-before-save-actions ()
+  nil)
+(defun rope-after-save-actions ()
+  nil)
 ;; Redefine the 8 primary terminal colors to look good against black
 (setq ansi-term-color-vector
       [unspecified "#000000" "#963F3C" "#5FFB65" "#FFFD65" 
@@ -37,10 +41,11 @@
 ;; Python
 ;; (setq ipython-command "c:/python26/scripts/ipython.exe")
 ;; (require 'ipython)
+;; (load "custom-python")
 
-(eval-after-load "python-mode"
+(eval-after-load "python"
   '(progn
-     ;;(load "custom-python")
+     (load "custom-python")
      ))
 
 ;; Misc
@@ -107,10 +112,10 @@
 ;; Ada
 (autoload 'ada-mode "ada-mode" "Ada mode for emacs." t)
 
-(eval-after-load 'ada-mode
-  '(progn
-     (load "ada-mode-keys")
-     ))
+;; (eval-after-load 'ada-mode
+;;   '(progn
+;;      (load "ada-mode-keys")
+;;      ))
 
 (add-hook 'ada-mode-hook
           (lambda ()
@@ -119,11 +124,9 @@
             (local-set-key "\M-=" 'show-entry)
             (local-set-key "\C-cm" 'ada-method-header)
             (local-set-key "\C-xnd" 'ada-narrow-to-defun)
-            (local-set-key "\C-ci" 'joe/ada-incr-variable)
+            ;; (local-set-key "\C-ci" 'joe/ada-incr-variable)
+            (setq ada-fill-comment-postfix "-- ")
             (else-mode 1)
-            (local-set-key "\C-ct" 'ada-atest-compile-and-run)
-            (local-set-key "\C-c\M-t"
-                           'ada-atest-write-test-results)
             (key-chord-define ada-mode-map "ja"
                               (lambda () (interactive) (insert ":= ")))
             (key-chord-define ada-mode-map "jd"
@@ -187,6 +190,54 @@
 (eval-after-load "w3m"
   '(progn
      (joe/w3m-setup-keymap)))
+
+(defun ido-goto-symbol (&optional symbol-list)
+  "Refresh imenu and jump to a place in the buffer using Ido."
+  (interactive)
+  (unless (featurep 'imenu)
+    (require 'imenu nil t))
+  (cond
+   ((not symbol-list)
+    (let ((ido-mode ido-mode)
+          (ido-enable-flex-matching
+           (if (boundp 'ido-enable-flex-matching)
+               ido-enable-flex-matching t))
+          name-and-pos symbol-names position)
+      (unless ido-mode
+        (ido-mode 1)
+        (setq ido-enable-flex-matching t))
+      (while (progn
+               (imenu--cleanup)
+               (setq imenu--index-alist nil)
+               (ido-goto-symbol (imenu--make-index-alist))
+               (setq selected-symbol
+                     (ido-completing-read "Symbol? " symbol-names))
+               (string= (car imenu--rescan-item) selected-symbol)))
+      (setq position (cdr (assoc selected-symbol name-and-pos)))
+      (cond
+       ((overlayp position)
+        (goto-char (overlay-start position)))
+       (t
+        (goto-char position)))))
+   ((listp symbol-list)
+    (dolist (symbol symbol-list)
+      (let (name position)
+        (cond
+         ((and (listp symbol) (imenu--subalist-p symbol))
+          (ido-goto-symbol symbol))
+         ((listp symbol)
+          (setq name (car symbol))
+          (setq position (cdr symbol)))
+         ((stringp symbol)
+          (setq name symbol)
+          (setq position
+                (get-text-property 1 'org-imenu-marker symbol))))
+        (unless (or (null position) (null name)
+                    (string= (car imenu--rescan-item) name))
+          (add-to-list 'symbol-names name)
+          (add-to-list 'name-and-pos (cons name position))))))))
+
+(global-set-key "\C-ci" 'ido-goto-symbol) ; or any key you see fit
 
 ;; ERC
 (remove-hook 'erc-echo-notice-always-hook 'erc-echo-notice-in-default-buffer)

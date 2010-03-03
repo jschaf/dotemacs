@@ -50,6 +50,9 @@
 ;; Another git interface
 (require 'egg)
 
+;; Easily browse the kill ring
+(require 'browse-kill-ring+)
+
 ;; w3m is an emacs interface to the w3 backend
 ;; (require 'w3m-load)
 ;; (setq browse-url-browser-function 'w3m-browse-url)
@@ -205,7 +208,7 @@ Keys are sorted by their complexity; `key-complexity' determines
 (global-set-key (kbd "M-n") 'cycle-buffer)
 (global-set-key (kbd "M-p") 'cycle-buffer-backward)
 
-(global-set-key "\C-xp" 'find-file-at-point)
+;; (global-set-key "\C-xp" 'find-file-at-point)
 (global-set-key "\C-x\C-b" 'ido-switch-buffer)
 (global-set-key "\C-cj" 'delete-indentation)
 (global-set-key "\M-g\M-f" 'next-error)

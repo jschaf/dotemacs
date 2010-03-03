@@ -4,7 +4,6 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)           ;replace y-e-s with y
 (setq bookmark-default-file "~/.emacs.d/.emacs.bmk")
-(menu-bar-mode -1)
 
 (put 'narrow-to-region 'disabled nil)   ;useful for regexps
 (put 'scroll-left 'disabled nil)        ;need this mainly for csv files
@@ -12,14 +11,13 @@
 ;; Mouse
 (global-set-key [down-mouse-3] 'imenu)
 
-(setq echo-keystrokes 0.5)
+(set-register ?E '(file . "~/.emacs.d/init.el")) ;; C-x r j E
+(set-register ?D '(file . "~/docs"))
+(set-register ?P '(file . "~/prog"))
+(set-register ?A '(file . "~/.emacs.d/joe-autoloads.el"))
+(set-register ?C '(file . "~/.emacs.d/customizations/custom-modes.el"))
 
-(global-set-key [?\M-\C-z] #'move-to-char)
-
-(defface line-over-72
-  '((t :underline "red"))
-  "Used to highlight lines with text past 72 columns."
-  :group 'basic-faces)
+;; (setq echo-keystrokes 0)
 
 ;; Aliases
 (defalias 'dtw 'delete-trailing-whitespace)
