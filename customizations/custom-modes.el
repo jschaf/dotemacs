@@ -25,9 +25,15 @@
             ))
 
 (defun rope-before-save-actions ()
+  "The lack of this function prevents emacs from exiting when we
+  try to use ropemacs."
   nil)
+
 (defun rope-after-save-actions ()
+  "The lack of this function prevents emacs from exiting when we
+  try to use ropemacs."
   nil)
+
 ;; Redefine the 8 primary terminal colors to look good against black
 (setq ansi-term-color-vector
       [unspecified "#000000" "#963F3C" "#5FFB65" "#FFFD65" 
@@ -237,7 +243,26 @@
           (add-to-list 'symbol-names name)
           (add-to-list 'name-and-pos (cons name position))))))))
 
-(global-set-key "\C-ci" 'ido-goto-symbol) ; or any key you see fit
+(defun recentf-ido-find-file ()
+  "Find a recent file using Ido."
+  (interactive)
+  (let* ((file-assoc-list
+	  (mapcar (lambda (x)
+		    (cons (file-name-nondirectory x)
+			  x))
+		  recentf-list))
+	 (filename-list
+	  (remove-duplicates (mapcar #'car file-assoc-list)
+			     :test #'string=))
+	 (filename (ido-completing-read "Choose recent file: "
+					filename-list
+					nil
+					t)))
+    (when filename
+      (find-file (cdr (assoc filename
+			     file-assoc-list))))))
+(global-set-key "\C-cr" 'recentf-ido-find-file)
+(global-set-key "\C-ci" 'ido-goto-symbol)
 
 ;; ERC
 (remove-hook 'erc-echo-notice-always-hook 'erc-echo-notice-in-default-buffer)
