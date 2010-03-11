@@ -159,10 +159,13 @@
 
 ;; LaTeX stuff
 (add-hook 'latex-mode-hook
-          '('turn-on-reftex)
-          '(face-spec-set (default ((t ( :foreground "white")))))
-          '(set-face-attribute 'font-latex-sedate-face nil
-                               :foreground "red"))
+          (lambda ()
+            (turn-on-reftex)
+            (face-spec-set (default ((t ( :foreground "white")))))
+            (set (make-local-variable sentence-end) "[.?!][]\"')}]*\\($\\|     \\|  \\)[
+]*")
+            (set-face-attribute 'font-latex-sedate-face nil
+                                :foreground "red")))
 
 ;; when viewing pdf/dvi automatically reload them if they change
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
