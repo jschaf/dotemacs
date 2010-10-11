@@ -17,3 +17,6 @@
 [submodule "packages/html5-el"]
 	path = packages/html5-el
 	url = git://github.com/hober/html5-el.git
+[submodule "packages/zencoding"]
+	path = packages/zencoding
+	url = git://github.com/chrisdone/zencoding.git
