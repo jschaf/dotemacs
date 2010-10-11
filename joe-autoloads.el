@@ -100,6 +100,9 @@
   "Minor mode for pseudo-structurally editing Lisp code."
   t)
 
+(autoload 'clevercss-mode "clevercss-mode" "Major Mode for CleverCSS files" t)
+(add-to-list 'auto-mode-alist '("\\.pcss$" . clevercss-mode))
+
 ;; Hudson mode for cs478
 (autoload 'hudson-mode "hudson-mode" "Major Mode for the Hudson Programming language" t)
 (add-to-list 'auto-mode-alist '("\\.hud$" . hudson-mode))
