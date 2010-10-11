@@ -39,6 +39,8 @@
 (key-chord-define-global "z," 'beginning-of-buffer)
 (key-chord-define-global "z." 'end-of-buffer)
 (key-chord-define-global "/z" 'move-to-char)
+(key-chord-define-global "xv" 'show-entry)
+(key-chord-define-global "xc" 'hide-entry)
 
 ;; I <3 pretty colors
 (require 'color-theme)
