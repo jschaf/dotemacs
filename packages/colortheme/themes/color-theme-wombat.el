@@ -24,7 +24,7 @@
        (underline ((t ( :underline t ))))
        (modeline ((t ( :foreground "white" :background "gray26" :box (:style released-button)))))
        (modeline-buffer-id ((t ( :foreground nil :background nil ))))
-       (modeline-mousable ((t ( :foreground "white" :background "4d4d4d" ))))
+       (modeline-mousable ((t ( :foreground "white" :background "#4d4d4d" ))))
        (modeline-inactive ((t ( :foreground "gray54" :background "gray17" :box (:style released-button)))))
        (modeline-highlight ((t (:background "#386466"))))
        (minibuffer-prompt ((t (:foreground "skyblue3"))))
