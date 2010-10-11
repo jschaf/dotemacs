@@ -236,7 +236,19 @@ Keys are sorted by their complexity; `key-complexity' determines
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 (global-set-key "\C-h\M-c" 'describe-char)
 
-;; (setq ropemacs-global-prefix "\C-cr")
-;; (require 'pymacs)
-;; (pymacs-load  "ropemacs" "rope-")
+(autoload 'apache-mode "apache-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.htaccess\\'"   . apache-mode))
+(add-to-list 'auto-mode-alist '("httpd\\.conf\\'"  . apache-mode))
+(add-to-list 'auto-mode-alist '("srm\\.conf\\'"    . apache-mode))
+(add-to-list 'auto-mode-alist '("access\\.conf\\'" . apache-mode))
+(add-to-list 'auto-mode-alist '("sites-\\(available\\|enabled\\)/" . apache-mode))
 
+;;; zencoding-mode.el --- Unfold CSS-selector-like expressions to markup
+(require 'zencoding-mode)
+(add-hook 'sgml-mode-hook 'zencoding-mode) ;; Auto-start on any markup modes
+
+;; htmlize.el --- Convert buffer text and decorations to HTML.
+(require 'htmlize)
+
+;;; hexrgb.el --- Functions to manipulate colors, including RGB hex strings.
+(require 'hexrgb)
