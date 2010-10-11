@@ -151,8 +151,7 @@
   "Either comments the current line or uncomments it."
   (interactive)
   (comment-or-uncomment-region (line-beginning-position)
-                               (line-end-position))
-  (indent-according-to-mode))
+                               (line-end-position)))
 
 (defun hardWrap-to-softWrap (beg end)
   "Covert hard wrapped lines into soft wrapped."
