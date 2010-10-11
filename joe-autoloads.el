@@ -134,48 +134,13 @@
           (lambda ()
             (local-set-key [(control c)(control c)] 'compile)))
 
+(eval-after-load "rng-loc"
+  '(add-to-list 'rng-schema-locating-files
+                "~/.emacs.d/packages/html5-el/schemas.xml"))
+(require 'whattf-dt)
 
 (autoload 'ebib "ebib" "Ebib, a BibTeX databse manager." t)
-(autoload 'inferior-moz-mode "moz" "Major mode for interacting with Mozilla" t)
-(autoload 'inferior-moz-process "moz" "Process to interact with Mozilla" t)
-(autoload 'moz-minor-mode "moz" "Mozilla Minor and Inferior Mozilla Modes" t)
-(add-hook 'javascript-mode-hook 'javascript-custom-setup)
-(defun javascript-custom-setup ()
-  (moz-minor-mode 1))
 
-(defun send-to-moz-repl ()
-  (interactive)
-  (comint-send-string (inferior-moz-process)
-                      "setTimeout(BrowserReload(), \"1000\");"))
-
-(defun auto-reload-firefox-on-after-save-hook ()
-  (add-hook 'after-save-hook
-            'send-to-moz-repl
-            'append 'local)) ; buffer-local
-
-;; Example - you may want to add hooks for your own modes.
-;; I also add this to python-mode when doing django development.
-(setq reload-firefox-on-css-html-save nil)
-(defun toggle-firefox-reload ()
-  "Toggle the auto-reload via moz-repl on html/css save."
-  (interactive)
-  (if reload-firefox-on-css-html-save
-      (progn
-        (remove-hook 'after-save-hook 'send-to-moz-repl)
-        (remove-hook 'html-mode-hook 'auto-reload-firefox-on-after-save-hook)
-        (remove-hook 'css-mode-hook 'auto-reload-firefox-on-after-save-hook)
-        (setq reload-firefox-on-css-html-save nil)
-        (message "Firefox reload disabled."))
-    (progn
-      (add-hook 'after-save-hook 'send-to-moz-repl)
-      (add-hook 'html-mode-hook 'auto-reload-firefox-on-after-save-hook)
-      (add-hook 'css-mode-hook 'auto-reload-firefox-on-after-save-hook)
-      (setq reload-firefox-on-css-html-save t)
-      (message "Firefox reload enabled."))))
-
-;; (add-hook 'espresso-mode-hook 'espresso-custom-setup)
-;; (defun espresso-custom-setup ()
-;;   (moz-minor-mode 1))
 
 ;; ido
 (require 'ido)
