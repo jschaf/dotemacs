@@ -59,7 +59,7 @@
 ;; (global-set-key [(control c)(control u)] 'browse-url-at-point)
 
 ;; js2 mode by Steve Yegge
-(autoload 'js2-mode "js2-mode" nil t)
+(autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 ;; Binary movement with chop
