@@ -185,6 +185,8 @@ Keys are sorted by their complexity; `key-complexity' determines
 (global-set-key "\M-g\M-d" 'previous-error)
 (global-set-key "\C-h\M-f" 'describe-face)
 
+(autoload 'ada-mode "ada-mode" "Ada mode for emacs." t)
+
 ;; Recognize gnat project files using the gpr-mode.el from ada-mode
 (autoload 'gpr-mode "gpr-mode" "Major mode for GNAT Project files" t)
 (add-to-list 'auto-mode-alist '("\\.gpr$" . gpr-mode))
