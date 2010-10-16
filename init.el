@@ -17,9 +17,9 @@
 ;;; Initial Code Load
 (setq custom-file ".emacs-custom.el")
 (load custom-file)
-(load "joe-autoloads.el")
-(load "joe-functions.el")
-(load "joe-customizations.el")
+(load "autoloads.el")
+(load "functions.el")
+(load "customizations.el")
 
 ;; update M-x command cache
 (smex-update)
