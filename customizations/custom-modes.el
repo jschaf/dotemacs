@@ -3,14 +3,10 @@
           (lambda ()
             (local-set-key "\C-m" 'hudson-newline-and-indent)
             (else-mode 1)
+            (hs-minor-mode)
             (subword-mode 1)))
 
 (setq hudson-jar-file (expand-file-name "~/prog/hudson/hudson.jar"))
-
-;; Hideshow support
-(dolist (mode '("emacs-lisp" "hudson" "jde"))
-  (let ((hook (intern (concat mode "-mode-hook"))))
-    (add-hook hook 'hs-minor-mode)))
 
 (add-hook 'hs-minor-mode-hook
           (lambda ()
@@ -77,6 +73,7 @@
 (add-hook 'emacs-lisp-mode-hook
 	  '(lambda ()
              (subword-mode 1)
+             (hs-minor-mode 1)
              (turn-on-eldoc-mode)
              (paredit-mode 1)))
 
@@ -131,73 +128,6 @@
 
 ;; when viewing pdf/dvi automatically reload them if they change
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
-
-(defun ido-goto-symbol (&optional symbol-list)
-  "Refresh imenu and jump to a place in the buffer using Ido."
-  (interactive)
-  (unless (featurep 'imenu)
-    (require 'imenu nil t))
-  (cond
-   ((not symbol-list)
-    (let ((ido-mode ido-mode)
-          (ido-enable-flex-matching
-           (if (boundp 'ido-enable-flex-matching)
-               ido-enable-flex-matching t))
-          name-and-pos symbol-names position)
-      (unless ido-mode
-        (ido-mode 1)
-        (setq ido-enable-flex-matching t))
-      (while (progn
-               (imenu--cleanup)
-               (setq imenu--index-alist nil)
-               (ido-goto-symbol (imenu--make-index-alist))
-               (setq selected-symbol
-                     (ido-completing-read "Symbol? " symbol-names))
-               (string= (car imenu--rescan-item) selected-symbol)))
-      (setq position (cdr (assoc selected-symbol name-and-pos)))
-      (cond
-       ((overlayp position)
-        (goto-char (overlay-start position)))
-       (t
-        (goto-char position)))))
-   ((listp symbol-list)
-    (dolist (symbol symbol-list)
-      (let (name position)
-        (cond
-         ((and (listp symbol) (imenu--subalist-p symbol))
-          (ido-goto-symbol symbol))
-         ((listp symbol)
-          (setq name (car symbol))
-          (setq position (cdr symbol)))
-         ((stringp symbol)
-          (setq name symbol)
-          (setq position
-                (get-text-property 1 'org-imenu-marker symbol))))
-        (unless (or (null position) (null name)
-                    (string= (car imenu--rescan-item) name))
-          (add-to-list 'symbol-names name)
-          (add-to-list 'name-and-pos (cons name position))))))))
-
-(defun recentf-ido-find-file ()
-  "Find a recent file using Ido."
-  (interactive)
-  (let* ((file-assoc-list
-	  (mapcar (lambda (x)
-		    (cons (file-name-nondirectory x)
-			  x))
-		  recentf-list))
-	 (filename-list
-	  (remove-duplicates (mapcar #'car file-assoc-list)
-			     :test #'string=))
-	 (filename (ido-completing-read "Choose recent file: "
-					filename-list
-					nil
-					t)))
-    (when filename
-      (find-file (cdr (assoc filename
-			     file-assoc-list))))))
-(global-set-key "\C-cr" 'recentf-ido-find-file)
-(global-set-key "\C-ci" 'ido-goto-symbol)
 
 ;; ERC
 (remove-hook 'erc-echo-notice-always-hook 'erc-echo-notice-in-default-buffer)
