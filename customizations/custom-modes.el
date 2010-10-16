@@ -132,36 +132,6 @@
 ;; when viewing pdf/dvi automatically reload them if they change
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 
-;; W3M keymap
-(defun joe/w3m-setup-keymap ()
-  "Use my heavily customized map."
-  (interactive)
-                                        ;(define-key w3m-mode-map "a" 'sacha/delicious-url)
-  (define-key w3m-mode-map "A" 'w3m-bookmark-add-current-url)
-  (define-key w3m-mode-map "w" 'w3m-download-with-wget)
-  (define-key w3m-mode-map "g" 'w3m-search)
-
-  ;; i is a more useful mnemonic for toggling images
-  (define-key w3m-mode-map "i" 'w3m-toggle-inline-image)
-  ;; Vimperator controls since they're stuck in my fingers
-  (define-key w3m-mode-map "d" 'w3m-delete-buffer)
-  (define-key w3m-mode-map "H" 'w3m-view-previous-page)
-  (define-key w3m-mode-map "L" 'w3m-view-next-page)
-  (define-key w3m-mode-map "y" 'w3m-print-this-url)
-  (define-key w3m-mode-map "o" 'w3m-goto-url)
-  (define-key w3m-mode-map "t" 'w3m-goto-url-new-session)
-  ;; (define-key w3m-mode-map "\M-n" 'w3m-next-anchor)
-  ;; (define-key w3m-mode-map "\M-p" 'w3m-previous-anchor)
-  (define-key w3m-mode-map "t" 'w3m-goto-url-new-session)
-  (define-key w3m-mode-map "f" 'w3m-view-this-url-new-session)
-  (define-key w3m-mode-map "F" 'w3m-view-this-url)
-  (define-key w3m-mode-map "." 'w3m-next-buffer)
-  (define-key w3m-mode-map "," 'w3m-previous-buffer))
-
-(eval-after-load "w3m"
-  '(progn
-     (joe/w3m-setup-keymap)))
-
 (defun ido-goto-symbol (&optional symbol-list)
   "Refresh imenu and jump to a place in the buffer using Ido."
   (interactive)
