@@ -3,7 +3,7 @@
           (lambda ()
             (local-set-key "\C-m" 'hudson-newline-and-indent)
             (else-mode 1)
-            (c-subword-mode 1)))
+            (subword-mode 1)))
 
 (setq hudson-jar-file (expand-file-name "~/prog/hudson/hudson.jar"))
 
@@ -23,16 +23,6 @@
             (local-set-key "\M-n" 'cycle-buffer)
             (local-set-key "\M-p" 'cycle-buffer-backward)
             ))
-
-(defun rope-before-save-actions ()
-  "The lack of this function prevents emacs from exiting when we
-  try to use ropemacs."
-  nil)
-
-(defun rope-after-save-actions ()
-  "The lack of this function prevents emacs from exiting when we
-  try to use ropemacs."
-  nil)
 
 ;; Redefine the 8 primary terminal colors to look good against black
 (setq ansi-term-color-vector
@@ -61,10 +51,10 @@
 (global-set-key (kbd "C-M-/") (lambda () (interactive) (kill-buffer nil)))
 
 ;; Help-mode
-(define-key help-mode-map "j" (lambda () (interactive) (scroll-up 1)))
-(define-key help-mode-map "k" (lambda () (interactive) (scroll-down 1)))
-(define-key help-mode-map "l" 'help-go-back)
-(define-key help-mode-map "h" 'help-go-forward)
+;; (define-key help-mode-map "j" (lambda () (interactive) (scroll-up 1)))
+;; (define-key help-mode-map "k" (lambda () (interactive) (scroll-down 1)))
+;; (define-key help-mode-map "l" 'help-go-back)
+;; (define-key help-mode-map "h" 'help-go-forward)
 
 ;; VHDL
 (defun vhdl-ghdl-check-syntax (&optional arg)
@@ -101,14 +91,14 @@
 ;; C type languages
 (add-hook 'c-mode-common-hook
 	  (lambda ()
-            (c-subword-mode 1)))
+            (subword-mode 1)))
 (setq c-default-style '((java-mode . "k&r")
 			(awk-mode . "awk")
 			(other . "linux")))
 ;; Emacs lisp
 (add-hook 'emacs-lisp-mode-hook
 	  '(lambda ()
-             (c-subword-mode 1)
+             (subword-mode 1)
              (turn-on-eldoc-mode)
              (paredit-mode 1)))
 
