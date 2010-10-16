@@ -37,22 +37,6 @@
 ;; (define-key help-mode-map "l" 'help-go-back)
 ;; (define-key help-mode-map "h" 'help-go-forward)
 
-;; VHDL
-(defun vhdl-ghdl-check-syntax (&optional arg)
-  "Runs the ghdl check syntax command on the current buffer.  If
-  arg is non-nil then prompts for the comand."
-  (interactive "P")
-  (let ((command (concat "ghdl -s "
-                         (buffer-name))))
-    (compile command)
-    ))
-
-(add-hook 'vhdl-mode-hook
-          (lambda ()
-            (local-set-key "\C-c\C-v" 'vhdl-ghdl-check-syntax)
-            (set (make-local-variable 'paragraph-start) "\f\\|[ 	]*$")
-            (set (make-local-variable 'paragraph-separate) "[ 	\f]*$")))
-
 ;; dired-x
 ;; Set dired-x global variables here.  For example:
 ;; (setq dired-guess-shell-gnutar "gtar")
