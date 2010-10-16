@@ -28,21 +28,6 @@
 (setq ansi-term-color-vector
       [unspecified "#000000" "#963F3C" "#5FFB65" "#FFFD65" 
                    "#0082FF" "#FF2180" "#57DCDB" "#FFFFFF"])
-;; Java
-(add-to-list 'auto-mode-alist '("\\.java\\'" . jde-mode))
-(eval-after-load 'jde
-  '(progn
-     (load "custom-java")))
-
-;; Python
-;; (setq ipython-command "c:/python26/scripts/ipython.exe")
-;; (require 'ipython)
-;; (load "custom-python")
-
-(eval-after-load "python"
-  '(progn
-     (load "custom-python")
-     ))
 
 ;; Misc
 (global-set-key "\C-ha" 'apropos)
@@ -88,13 +73,6 @@
             ;; Set dired-x buffer-local variables here.  For example:
             (dired-omit-mode 1)))
 
-;; C type languages
-(add-hook 'c-mode-common-hook
-	  (lambda ()
-            (subword-mode 1)))
-(setq c-default-style '((java-mode . "k&r")
-			(awk-mode . "awk")
-			(other . "linux")))
 ;; Emacs lisp
 (add-hook 'emacs-lisp-mode-hook
 	  '(lambda ()
@@ -105,13 +83,7 @@
 (add-hook 'lisp-interaction-mode-hook
           (lambda ()
             (local-set-key "\C-\M-j" 'eval-print-last-sexp)))
-;; Ada
-(autoload 'ada-mode "ada-mode" "Ada mode for emacs." t)
 
-;; (eval-after-load 'ada-mode
-;;   '(progn
-;;      (load "ada-mode-keys")
-;;      ))
 
 (add-hook 'ada-mode-hook
           (lambda ()
