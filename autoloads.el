@@ -4,15 +4,6 @@
 (require 'uniquify)
 (toggle-uniquify-buffer-names)
 
-;; Fancy symbol completion with a dropdown list
-(require 'auto-complete)
-(require 'auto-complete-config)
-(global-auto-complete-mode t)
-(setq ac-auto-start nil)
-(global-set-key "\M-i" 'ac-start)
-(define-key ac-complete-mode-map "\M-n" 'ac-next)
-(define-key ac-complete-mode-map "\M-p" 'ac-previous)
-
 ;; Key-chord (pressing "jf" and executing a command)
 (require 'key-chord)
 (key-chord-mode 1)
@@ -42,29 +33,19 @@
 (key-chord-define-global "xv" 'show-entry)
 (key-chord-define-global "xc" 'hide-entry)
 
-;; I <3 pretty colors
+;;; Color themes for Emacs
 (require 'color-theme)
 (color-theme-initialize)
-;; in .bashrc "export TERM=xterm-256color" from package ncurses-term,
-;; so I don't have to worry about not enough colors.
 (color-theme-wombat)
 
-;; Another git interface
+;;; egg -- Emacs Got Git
 (require 'egg)
 
-;; Easily browse the kill ring
-(require 'browse-kill-ring+)
-
-;; w3m is an emacs interface to the w3 backend
-;; (require 'w3m-load)
-;; (setq browse-url-browser-function 'w3m-browse-url)
-;; (global-set-key [(control c)(control u)] 'browse-url-at-point)
-
-;; js2 mode by Steve Yegge
+;;; js2 -- an improved JavaScript editing mode
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
-;; Binary movement with chop
+;;; chop.el -- Interactive binary search for a line within a window.
 (autoload 'chop-move-up "chop.el"
   "Use binary movement up (successively move the point half the
   remaining buffer up)" t)
@@ -77,7 +58,6 @@
 ;; Haskell mode
 (load "haskell-site-file")
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 
 ;; Wikipedia Mode
@@ -104,14 +84,6 @@
 
 (autoload 'clevercss-mode "clevercss-mode" "Major Mode for CleverCSS files" t)
 (add-to-list 'auto-mode-alist '("\\.pcss$" . clevercss-mode))
-
-;; Hudson mode for cs478
-(autoload 'hudson-mode "hudson-mode" "Major Mode for the Hudson Programming language" t)
-(add-to-list 'auto-mode-alist '("\\.hud$" . hudson-mode))
-
-;; YAML
-(autoload 'yaml-mode "yaml-mode" "Major Mode for 'Yet Another Markup Language'" t)
-(add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
 
 ;; CSV
 (add-to-list 'auto-mode-alist '("\\.csv\\'" . csv-mode))
@@ -142,7 +114,7 @@
 (autoload 'ebib "ebib" "Ebib, a BibTeX databse manager." t)
 
 
-;; ido
+;;; ido
 (require 'ido)
 (ido-mode t)
 (ido-everywhere t)
