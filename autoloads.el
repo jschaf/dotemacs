@@ -38,8 +38,10 @@
 (color-theme-initialize)
 (color-theme-wombat)
 
-;;; egg -- Emacs Got Git
-(require 'egg)
+;;; magit.el -- control Git from Emacs.
+(require 'magit)
+(global-set-key (kbd "\C-xg") 'magit-status)
+
 
 ;;; js2 -- an improved JavaScript editing mode
 (autoload 'js2-mode "js2" nil t)
@@ -119,7 +121,7 @@
 (ido-mode t)
 (ido-everywhere t)
 (setq ido-enable-flex-matching t)
-(setq ido-use-filename-at-point t)
+(setq ido-use-filename-at-point nil)
 (setq ido-auto-merge-work-directories-length -1)
 (add-hook 'ido-setup-hook
 	  (lambda ()
@@ -193,3 +195,8 @@ Keys are sorted by their complexity; `key-complexity' determines
 
 ;;; hexrgb.el --- Functions to manipulate colors, including RGB hex strings.
 (require 'hexrgb)
+
+;; scion.el --- Haskell Minor Mode for Interacting with the Scion Library
+(require 'scion)
+(setq scion-program "~/.cabal/bin/scion-server")
+(setq scion-completing-read-function 'ido-completing-read)

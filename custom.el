@@ -1,4 +1,36 @@
-;; Hudson mode
+;;; Personal customizations for emacs separate from customize.
+
+;; Disable tooltip help.  The mouse help is annoying and blocks the
+;; minibuffer.
+(setq show-help-function nil)
+
+;; Follow symlinks to source controlled files without prompting.
+(setq vc-follow-symlinks t)
+
+;; Replace yes with y.
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(setq bookmark-default-file "~/.emacs.d/.emacs.bmk")
+
+;; Useful for regexps.
+(put 'narrow-to-region 'disabled nil)
+
+;; Helpful for csv files.
+(put 'scroll-left 'disabled nil)
+
+(setq tramp-default-method "ssh")
+
+;; Aliases
+(defalias 'dtw 'delete-trailing-whitespace)
+(defalias 'ar  'align-regexp)
+(defalias 'rr  'replace-regexp)
+(defalias 'qrr 'query-replace-regexp)
+(defalias 'ap 'apropos)
+(defalias 'cv 'customize-variable)
+(defalias 'cg 'customize-group)
+(defalias 'ttl 'toggle-truncate-lines)
+
+;; Hudson
 (add-hook 'hudson-mode-hook
           (lambda ()
             (local-set-key "\C-m" 'hudson-newline-and-indent)
@@ -8,6 +40,7 @@
 
 (setq hudson-jar-file (expand-file-name "~/prog/hudson/hudson.jar"))
 
+;; Hide-show
 (add-hook 'hs-minor-mode-hook
           (lambda ()
             (local-set-key "\M-=" 'hs-toggle-hiding)
@@ -22,24 +55,18 @@
 
 ;; Redefine the 8 primary terminal colors to look good against black
 (setq ansi-term-color-vector
-      [unspecified "#000000" "#963F3C" "#5FFB65" "#FFFD65" 
+      [unspecified "#000000" "#963F3C" "#5FFB65" "#FFFD65"
                    "#0082FF" "#FF2180" "#57DCDB" "#FFFFFF"])
 
-;; Misc
-(global-set-key "\C-ha" 'apropos)
-(global-set-key (kbd "<f1>") 'menu-bar-mode)
-(global-set-key (kbd "C-M-/") (lambda () (interactive) (kill-buffer nil)))
+;; Help
+(add-hook 'help-mode-hook
+          (lambda ()
+            (local-set-key "j" (lambda () (interactive) (scroll-up 1)))
+            (local-set-key "k" (lambda () (interactive) (scroll-down 1)))
+            (local-set-key "l" 'help-go-back)
+            (local-set-key "h" 'help-go-forward)))
 
-;; Help-mode
-;; (define-key help-mode-map "j" (lambda () (interactive) (scroll-up 1)))
-;; (define-key help-mode-map "k" (lambda () (interactive) (scroll-down 1)))
-;; (define-key help-mode-map "l" 'help-go-back)
-;; (define-key help-mode-map "h" 'help-go-forward)
-
-;; dired-x
-;; Set dired-x global variables here.  For example:
-;; (setq dired-guess-shell-gnutar "gtar")
-;; (setq dired-x-hands-off-my-keys nil)
+;; Dired
 (add-hook 'dired-load-hook
           (lambda ()
             (load "dired-x")
@@ -47,9 +74,9 @@
             (setq dired-omit-files
                   (concat dired-omit-files "\\|^\\..+$")
                   )))
+
 (add-hook 'dired-mode-hook
           (lambda ()
-            ;; Set dired-x buffer-local variables here.  For example:
             (dired-omit-mode 1)))
 
 ;; Emacs lisp
@@ -64,7 +91,7 @@
           (lambda ()
             (local-set-key "\C-\M-j" 'eval-print-last-sexp)))
 
-
+;; Ada mode
 (add-hook 'ada-mode-hook
           (lambda ()
             (outline-minor-mode 1)
@@ -81,19 +108,21 @@
                               (lambda () (interactive) (insert "_")))
             (local-set-key [(meta \')] 'else-kill-placeholder)))
 
-(defun joe/ada-incr-variable (&optional arg)
+(defun ada-incr-variable (&optional arg)
   "Increment or decrement the variable before the point by ARG.
   If ARG is positive then increment the variable, else decrement
   the variable."
   (interactive "p")
   (save-excursion (re-search-backward "[ \t]+\\([a-z_0-9]+\\)"
-                                      (line-beginning-position) 'noerror))
+                                      (line-beginning-position)
+                                      'noerror))
   (just-one-space)
   (insert (format ":= %s %s %d;"
                   (match-string 1)
                   (if (<= 0 arg) "+" "-")
                   (abs arg))))
 
+;; ELSE
 (add-hook 'else-mode-hook
           (lambda ()
             (local-set-key "\M-n" 'else-next-placeholder)
@@ -110,9 +139,11 @@
                               (lambda () (interactive) (insert "-> ")))
             (require 'inf-haskell)
             (require 'hs-lint)
+            (scion-flycheck-on-save 1)
+            (scion-mode 1)
             (local-set-key "\C-cl" 'hs-lint)))
 
-;; LaTeX stuff
+;; LaTeX
 (add-hook 'latex-mode-hook
           (lambda ()
             (turn-on-reftex)
@@ -122,8 +153,10 @@
             (set-face-attribute 'font-latex-sedate-face nil
                                 :foreground "red")))
 
-;; when viewing pdf/dvi automatically reload them if they change
+;; Automatically reload pdf/dvi files when changed.
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 
-;; ERC
-(remove-hook 'erc-echo-notice-always-hook 'erc-echo-notice-in-default-buffer)
+;; Misc
+(global-set-key "\C-ha" 'apropos)
+(global-set-key (kbd "<f1>") 'menu-bar-mode)
+(global-set-key (kbd "C-M-/") (lambda () (interactive) (kill-buffer nil)))

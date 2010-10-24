@@ -15,11 +15,11 @@
 (setq default-directory "~/")
 
 ;;; Initial Code Load
-(setq custom-file ".emacs-custom.el")
+(setq custom-file "~/.emacs.d/.emacs-custom.el")
 (load custom-file)
 (load "autoloads.el")
-(load "functions.el")
-(load "customizations.el")
+(load "funcs.el")
+(load "custom.el")
 
 ;; update M-x command cache
 (smex-update)
@@ -29,4 +29,5 @@
 (when (and (= emacs-major-version 23) (equal window-system 'w32))
   (defun server-ensure-safe-dir (dir) "Noop" t))
 
-(server-start)
+(unless (server-running-p)
+  (server-start))

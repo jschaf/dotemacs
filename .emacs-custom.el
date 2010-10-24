@@ -1,14 +1,5 @@
+
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(Info-additional-directory-list (quote ("~/.emacs.d/info")))
- '(LaTeX-command "latex")
- '(LaTeX-math-abbrev-prefix ";")
- '(LaTeX-version "2e")
- '(TeX-newline-function (quote newline-and-indent))
- '(TeX-region "._region_")
  '(ada-case-attribute (quote ada-loose-case-word))
  '(ada-case-exception-file (quote ("~/.emacs.d/.ada_case_exceptions")))
  '(ada-case-identifier (quote ada-loose-case-word))
@@ -48,6 +39,7 @@
  '(ecb-source-face (quote speedbar-highlight-face))
  '(ecb-tip-of-the-day nil)
  '(ecb-windows-width 0.13)
+ '(egg-mode-key-prefix "C-c x")
  '(else-kill-proceed-to-next-placeholder t)
  '(erc-fill-column 72)
  '(erc-nick "joesmoe")
@@ -114,10 +106,6 @@
  '(preview-icon-specs nil)
  '(ps-font-family (quote Courier))
  '(python-python-command "ipython -cl")
- '(quack-fontify-style nil)
- '(quack-global-menu-p nil)
- '(quack-pretty-lambda-p t)
- '(quack-smart-open-paren-p t)
  '(recentf-mode t)
  '(recentf-save-file "~/.emacs.d/private/.recentf")
  '(remember-annotation-functions (quote (org-remember-annotation)))
@@ -131,26 +119,17 @@
  '(split-width-threshold 100)
  '(split-window-preferred-function nil)
  '(tags-table-list (quote ("TAGS")))
- '(tool-bar-mode nil)
- '(tooltip-mode nil)
  '(tramp-temp-name-prefix "~/.emacs.d/private/tramp.")
  '(transient-mark-mode t)
  '(version-control t)
- '(w3m-default-save-directory "~/.emacs.d/private/.w3m")
- '(w3m-favicon-size (quote (16 . 16)))
- '(w3m-init-file "~/.emacs.d/private/.emacs-w3m")
- '(w3m-profile-directory "~/.w3m")
- '(w3m-use-cookies t)
- '(w3m-use-tab-menubar nil)
- '(w3m-use-toolbar nil)
  '(winner-mode t nil (winner))
  '(woman-use-own-frame nil)
  '(x-select-enable-clipboard t))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(emms-browser-artist-face ((t (:foreground "skyblue3"))))
  '(highlight ((((class color) (min-colors 88) (background dark)) (:background "darkolivegreen"))))
  '(hl-line ((t (:background "#212121"))))
