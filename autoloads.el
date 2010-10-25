@@ -1,16 +1,15 @@
 ;; ELSE mode
 (autoload 'else-mode "else-mode" "Emacs Language Sensitive Editor" t)
 
-(require 'uniquify)
+(autoload 'toggle-uniquify-buffer-names "uniquify" nil t)
 (toggle-uniquify-buffer-names)
 
 ;; Key-chord (pressing "jf" and executing a command)
-(require 'key-chord)
+(autoload 'key-chord-mode "key-chord" nil t)
+(autoload 'key-chord-define-global "key-chord" nil t)
+
 (key-chord-mode 1)
 
-(key-chord-define-global "5j" 'other-frame)
-(key-chord-define-global "js" 'isearch-forward)
-(key-chord-define-global "jr" 'isearch-backward)
 (key-chord-define-global "fh" 'windmove-left)
 (key-chord-define-global "fj" 'windmove-down)
 (key-chord-define-global "fk" 'windmove-up)
@@ -18,30 +17,19 @@
 (key-chord-define-global "j1" 'delete-other-windows)
 (key-chord-define-global "j2" 'split-window-vertically)
 (key-chord-define-global "j3" 'split-window-horizontally)
-(key-chord-define-global "j0" 'delete-window)
 (key-chord-define-global "jx" 'smex)
 (key-chord-define-global "kx" 'smex-major-mode-commands)
 (key-chord-define-global "xb" 'ido-switch-buffer)
 (key-chord-define-global "/s" 'save-buffer)
-(key-chord-define-global "/f" 'ido-find-file)
 (key-chord-define-global "nb" 'bookmark-jump)
 (key-chord-define-global "nm" 'bookmark-set)
 (key-chord-define-global "nl" 'bookmark-bmenu-list)
-(key-chord-define-global "z," 'beginning-of-buffer)
-(key-chord-define-global "z." 'end-of-buffer)
-(key-chord-define-global "/z" 'move-to-char)
-(key-chord-define-global "xv" 'show-entry)
-(key-chord-define-global "xc" 'hide-entry)
-
-;;; Color themes for Emacs
-(require 'color-theme)
-(color-theme-initialize)
-(color-theme-wombat)
+(key-chord-define-global ".z" 'end-of-buffer)
+(key-chord-define-global ",z" 'beginning-of-buffer)
 
 ;;; magit.el -- control Git from Emacs.
-(require 'magit)
+(autoload 'magit-status "magit" nil t)
 (global-set-key (kbd "\C-xg") 'magit-status)
-
 
 ;;; js2 -- an improved JavaScript editing mode
 (autoload 'js2-mode "js2" nil t)
@@ -84,40 +72,13 @@
   "Minor mode for pseudo-structurally editing Lisp code."
   t)
 
-(autoload 'clevercss-mode "clevercss-mode" "Major Mode for CleverCSS files" t)
-(add-to-list 'auto-mode-alist '("\\.pcss$" . clevercss-mode))
-
 ;; CSV
 (add-to-list 'auto-mode-alist '("\\.csv\\'" . csv-mode))
 (autoload 'csv-mode "csv-mode"
   "Major mode for editing comma-separated value files." t)
 (add-hook 'csv-mode-hook 'toggle-truncate-lines)
 
-;; GNUPlot
-(autoload 'gnuplot-mode "gnuplot" "gnuplot major mode" t)
-(autoload 'gnuplot-make-buffer "gnuplot" "open a buffer in gnuplot mode" t)
-(add-to-list 'auto-mode-alist '("\\.gp$" . gnuplot-mode))
-
-;; Graphviz
-(autoload 'graphviz-dot-mode "graphviz-dot-mode"
-  "Major Mode for working with the dot language file used by
-  graphviz"
-  t)
-(add-to-list 'auto-mode-alist '("\\.dot$" . graphviz-dot-mode))
-(add-hook 'graphviz-dot-mode
-          (lambda ()
-            (local-set-key [(control c)(control c)] 'compile)))
-
-(eval-after-load "rng-loc"
-  '(add-to-list 'rng-schema-locating-files
-                "~/.emacs.d/packages/html5-el/schemas.xml"))
-(require 'whattf-dt)
-
-(autoload 'ebib "ebib" "Ebib, a BibTeX databse manager." t)
-
-
 ;;; ido
-(require 'ido)
 (ido-mode t)
 (ido-everywhere t)
 (setq ido-enable-flex-matching t)
@@ -170,7 +131,11 @@ Keys are sorted by their complexity; `key-complexity' determines
 (key-chord-define-global "/c" 'goto-last-change)
 
 ;; M-x enhancement for emacs
-(require 'smex)
+(autoload 'smex-initialize "smex" nil t)
+(autoload 'smex "smex" nil t)
+(autoload 'smex-major-mode-commands "smex" nil t)
+(autoload 'smex-update-and-run "smex" nil t)
+
 (smex-initialize)
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
@@ -187,16 +152,12 @@ Keys are sorted by their complexity; `key-complexity' determines
 (add-to-list 'auto-mode-alist '("sites-\\(available\\|enabled\\)/" . apache-mode))
 
 ;;; zencoding-mode.el --- Unfold CSS-selector-like expressions to markup
-(require 'zencoding-mode)
-(add-hook 'sgml-mode-hook 'zencoding-mode) ;; Auto-start on any markup modes
-
-;; htmlize.el --- Convert buffer text and decorations to HTML.
-(require 'htmlize)
-
-;;; hexrgb.el --- Functions to manipulate colors, including RGB hex strings.
-(require 'hexrgb)
+(autoload 'zencoding-mode "zencoding-mode" nil t)
+;; Auto-start on any markup modes
+(add-hook 'sgml-mode-hook 'zencoding-mode)
 
 ;; scion.el --- Haskell Minor Mode for Interacting with the Scion Library
-(require 'scion)
+(autoload 'scion-mode "scion" nil t)
+(autoload 'scion "scion" nil t)
 (setq scion-program "~/.cabal/bin/scion-server")
 (setq scion-completing-read-function 'ido-completing-read)

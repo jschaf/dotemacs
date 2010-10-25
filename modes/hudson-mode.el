@@ -950,9 +950,9 @@ Use `hudson-version' to find out what version this is.
 
 \\{hudson-mode-map} "
   :group 'hudson
+  (interactive)
   (set (make-local-variable 'font-lock-defaults)
        '(hudson-font-lock-keywords))
-  (interactive)
   (set (make-local-variable 'parse-sexp-lookup-properties) t)
   (set (make-local-variable 'parse-sexp-ignore-comments) t)
   (set (make-local-variable 'comment-start) "# ")

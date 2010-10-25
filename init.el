@@ -14,20 +14,17 @@
 ;; Start in a reasonable directory
 (setq default-directory "~/")
 
-;;; Initial Code Load
+;;; Code Load
+(require 'cl)
+
 (setq custom-file "~/.emacs.d/.emacs-custom.el")
 (load custom-file)
 (load "autoloads.el")
 (load "funcs.el")
 (load "custom.el")
+(load "colors.el")
 
-;; update M-x command cache
+;; Update smex command cache after all the loads.
 (smex-update)
 
-; Suppress error "directory ~/.emacs.d/server is unsafe" on windows.
-(require 'server)
-(when (and (= emacs-major-version 23) (equal window-system 'w32))
-  (defun server-ensure-safe-dir (dir) "Noop" t))
-
-(unless (server-running-p)
-  (server-start))
+(server-start)

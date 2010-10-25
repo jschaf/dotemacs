@@ -9,10 +9,7 @@ private/*
 !private/filler
 
 # Large files
-emacs-w3m/
-packages/ropemacs/
-packages/ropemode/
-packages/rope/
+packages/
 
 # Unnecessary files
 *.elc
