@@ -1,5 +1,19 @@
 ;;; Personal customizations for emacs separate from customize.
 
+;; Unnecessary.
+(setq inhibit-startup-screen t
+      initial-scratch-message "")
+
+;; Recent file mode.
+(setq recentf-mode t)
+(setq recentf-save-file "~/.emacs.d/private/.recentf")
+
+;; Highlight when mark is active
+(setq transient-mark-mode t)
+
+;; Kill and yank use the clipboard.
+(setq x-select-enable-clipboard t)
+
 ;; Disable tooltip help.  The mouse help is annoying and blocks the
 ;; minibuffer.
 (setq show-help-function nil)
@@ -18,7 +32,47 @@
 ;; Helpful for csv files.
 (put 'scroll-left 'disabled nil)
 
-(setq tramp-default-method "ssh")
+;; Ido options
+(setq ido-ignore-files '("\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./" "\\`b~")
+      ido-use-filename-at-point nil)
+
+;; Tramp
+(setq tramp-default-method "ssh"
+      tramp-temp-name-prefix "~/.emacs.d/private/tramp.")
+
+;; Emacs backups
+(setq auto-save-list-file-prefix "~/.emacs.d/private/auto-save-list/.saves-"
+      backup-by-copying t
+      backup-directory-alist  '(("." . "~/.emacs.d/private/.emacs-backups"))
+      kept-new-versions 3
+      delete-old-versions t
+      version-control t)
+
+;; Completion options
+(setq completion-ignored-extensions
+      '(".o" "~" ".bin" ".bak" ".obj" ".map" ".ico" ".pif" ".lnk" ".a" ".ln"
+        ".blg" ".aux" ".dvi" ".toc" ".out" ".snm" ".pyc"))
+
+(setq completion-pcm-word-delimiters "-_. ")
+
+;; Never allow tabs
+(setq indent-tabs-mode nil)
+
+;;; Usability tweaks
+(show-paren-mode 1)
+;; (setq split-width-threshold 100)
+;; (setq show-trailing-whitespace nil)
+;; (setq split-window-preferred-function nil)
+
+;; Ansi term
+(setq ansi-color-for-comint-mode t
+      ansi-color-names-vector ["black" "indian red" "palegreen3" "goldenrod"
+                               "skyblue3" "medium orchid" "darkSlateGray3"
+                               "honeydew2"])
+
+;; Misc.
+(setq smex-save-file "~/.emacs.d/private/smex.save")
+(setq auto-revert-interval 2)
 
 ;; Aliases
 (defalias 'dtw 'delete-trailing-whitespace)
@@ -67,6 +121,8 @@
             (local-set-key "h" 'help-go-forward)))
 
 ;; Dired
+(setq dired-listing-switches "-alh")
+
 (add-hook 'dired-load-hook
           (lambda ()
             (load "dired-x")
@@ -92,6 +148,17 @@
             (local-set-key "\C-\M-j" 'eval-print-last-sexp)))
 
 ;; Ada mode
+(setq ada-case-attribute 'ada-loose-case-word
+      ada-case-exception-file '("~/.emacs.d/.ada_case_exceptions")
+      ada-case-identifier 'ada-loose-case-word
+      ada-clean-buffer-before-saving nil
+      ada-label-indent 0
+      ada-language-version 'ada2005
+      ada-move-to-declaration t
+      ada-search-directories  '("." "$ADA_INCLUDE_PATH")
+      ada-xref-create-ali nil
+      ada-xref-other-buffer t)
+
 (add-hook 'ada-mode-hook
           (lambda ()
             (outline-minor-mode 1)
@@ -139,15 +206,14 @@
                               (lambda () (interactive) (insert "-> ")))
             (require 'inf-haskell)
             (require 'hs-lint)
-            (scion-flycheck-on-save 1)
-            (scion-mode 1)
+            ;; (scion-flycheck-on-save 1)
+            ;; (scion-mode 1)
             (local-set-key "\C-cl" 'hs-lint)))
 
 ;; LaTeX
 (add-hook 'latex-mode-hook
           (lambda ()
             (turn-on-reftex)
-            (face-spec-set (default ((t ( :foreground "white")))))
             (set (make-local-variable sentence-end) "[.?!][]\"')}]*\\($\\|     \\|  \\)[
 ]*")
             (set-face-attribute 'font-latex-sedate-face nil
