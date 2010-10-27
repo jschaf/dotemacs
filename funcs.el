@@ -1,3 +1,5 @@
+(eval-when-compile (require 'cl))
+
 (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
   "Prevent annoying 'Active processes exist' query when you quit Emacs."
   (flet ((process-list ())) ad-do-it))
@@ -131,26 +133,12 @@
         (fill-region (region-beginning) (region-end))
       (fill-paragraph))))
 
-(defun move-to-char (arg char)
-  "Move to ARG'th occurrence of CHAR.
-Case is ignored if `case-fold-search' is non-nil in the current
-buffer. Goes backward if ARG is negative; error if CHAR not
-found. Trivial modification of zap-to-char from GNU Emacs
-22.2.1."
-  (interactive "p\ncMove to char: ")
-  (when (char-table-p translation-table-for-input)
-    (setq char (or (aref translation-table-for-input char) char)))
-  (search-forward (char-to-string char) nil nil arg)
-  (goto-char (1+ (match-beginning 0))))
-
 (defun toggle-line-spacing ()
   "Toggle line spacing between 1 and 5 pixels."
   (interactive)
   (if (not (eq line-spacing nil))
       (setq-default line-spacing nil)
-    (setq-default line-spacing 7))
-  )
-
+    (setq-default line-spacing 7)))
 
 (defun ido-goto-symbol (&optional symbol-list)
   "Refresh imenu and jump to a place in the buffer using Ido."
