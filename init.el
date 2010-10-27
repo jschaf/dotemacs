@@ -1,28 +1,29 @@
 ;; Joe Schafer's .emacs
 
-;; use a decent font and remove distractions
+;; Use a decent font. 
 (modify-all-frames-parameters
- '((font . "Consolas 11")
-   (menu-bar-lines . 0)
-   (tool-bar-lines . 0)))
+ '((font . "Consolas 11")))
 
-;; Add the default-directory and all subdirectories to the load path
+;; Remove distractions.
+(menu-bar-mode nil)
+(tool-bar-mode nil)
+(scroll-bar-mode nil)
+
+;; Add the default-directory and all subdirectories to the load path.
 (let ((default-directory "~/.emacs.d/"))
   (setq load-path (cons default-directory load-path))
   (normal-top-level-add-subdirs-to-load-path))
 
-;; Start in a reasonable directory
+;; Start in a reasonable directory.
 (setq default-directory "~/")
 
 ;;; Code Load
-(require 'cl)
-
-(setq custom-file "~/.emacs.d/.emacs-custom.el")
+(setq custom-file "~/.emacs.d/.emacs-custom")
 (load custom-file)
-(load "autoloads.el")
-(load "funcs.el")
-(load "custom.el")
-(load "colors.el")
+(load "autoloads")
+(load "funcs")
+(load "custom")
+(load "colors")
 
 ;; Update smex command cache after all the loads.
 (smex-update)
