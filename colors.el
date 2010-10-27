@@ -23,8 +23,9 @@
         (italic nil :foreground "paleGreen3" :italic t )
         (bold-italic nil  :foreground "dark red" :bold t :italic t )
         (bold nil  :bold t)
-        (isearch nil :background "#3d5450")
+        (isearch nil :foreground nil :background "#3d5450")
         (lazy-highlight nil :background "gray27")
+        (variable-pitch nil :family "Calibri")
 
         ;; Font Lock
 
