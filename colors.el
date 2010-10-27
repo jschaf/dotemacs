@@ -92,9 +92,9 @@
 
 (defun go-ranger-ranger ()
   (modify-all-frames-parameters ranger-ranger-frame-colors)
-  (loop for face-args in ranger-ranger-theme do
-        (let ((face (make-empty-face (car face-args)))
-              (attrs (cdr face-args)))
-          (apply 'set-face-attribute face attrs))))
+  (dolist (face-args ranger-ranger-theme)
+    (let ((face (make-empty-face (car face-args)))
+          (attrs (cdr face-args)))
+      (apply 'set-face-attribute face attrs))))
 
 (go-ranger-ranger)
