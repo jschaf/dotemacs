@@ -201,6 +201,7 @@
             (require 'hs-lint)
             ;; (scion-flycheck-on-save 1)
             ;; (scion-mode 1)
+	    (local-set-key [f5] 'shime-load-file)
             (local-set-key "\C-cl" 'hs-lint)))
 
 ;; LaTeX
