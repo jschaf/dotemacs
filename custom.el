@@ -5,8 +5,8 @@
       initial-scratch-message "")
 
 ;; Recent file mode.
-(setq recentf-mode t)
-(setq recentf-save-file "~/.emacs.d/private/.recentf")
+(setq recentf-mode t
+      recentf-save-file "~/.emacs.d/private/.recentf")
 
 ;; Highlight when mark is active
 (setq transient-mark-mode t)
