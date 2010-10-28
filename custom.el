@@ -58,21 +58,14 @@
 ;; Never allow tabs
 (setq indent-tabs-mode nil)
 
+;; Save window configs
+(desktop-save-mode 1)
+(setq desktop-path '("~/.emacs.d/private" "." "~"))
+
 ;;; Usability tweaks
 (show-paren-mode 1)
-;; (setq split-width-threshold 100)
-;; (setq show-trailing-whitespace nil)
-;; (setq split-window-preferred-function nil)
-
-;; Ansi term
-(setq ansi-color-for-comint-mode t
-      ansi-color-names-vector ["black" "indian red" "palegreen3" "goldenrod"
-                               "skyblue3" "medium orchid" "darkSlateGray3"
-                               "honeydew2"])
-
-;; Misc.
-(setq smex-save-file "~/.emacs.d/private/smex.save")
-(setq auto-revert-interval 2)
+(column-number-mode 1)
+(winner-mode 1)
 
 ;; Aliases
 (defalias 'dtw 'delete-trailing-whitespace)
