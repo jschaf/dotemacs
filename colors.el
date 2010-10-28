@@ -23,8 +23,8 @@
         (italic nil :foreground "paleGreen3" :italic t )
         (bold-italic nil  :foreground "dark red" :bold t :italic t )
         (bold nil  :bold t)
-        (isearch nil :foreground nil :background "#3d5450")
-        (lazy-highlight nil :background "gray27")
+        (isearch nil :foreground "green" :background "#3d5450")
+        (lazy-highlight nil :background "gray19")
         (variable-pitch nil :family "Calibri")
 
         ;; Font Lock
@@ -91,6 +91,7 @@
         (rst-level-6-face nil :foreground "azure3" :background nil )))
 
 (defun go-ranger-ranger ()
+  (interactive)
   (modify-all-frames-parameters ranger-ranger-frame-colors)
   (dolist (face-args ranger-ranger-theme)
     (let ((face (make-empty-face (car face-args)))
