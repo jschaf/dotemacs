@@ -161,3 +161,7 @@ Keys are sorted by their complexity; `key-complexity' determines
 (autoload 'scion "scion" nil t)
 (setq scion-program "~/.cabal/bin/scion-server")
 (setq scion-completing-read-function 'ido-completing-read)
+
+;;; shime.el --- Superior Haskell Integration Mode for Emacs
+(autoload 'shime "shime" nil t)
+(autoload 'shime-load-file "shime" nil t)
