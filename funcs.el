@@ -148,9 +148,6 @@
   (cond
    ((not symbol-list)
     (let ((ido-mode ido-mode)
-          (ido-enable-flex-matching
-           (if (boundp 'ido-enable-flex-matching)
-               ido-enable-flex-matching t))
           name-and-pos symbol-names position)
       (unless ido-mode
         (ido-mode 1)
@@ -159,8 +156,12 @@
                (imenu--cleanup)
                (setq imenu--index-alist nil)
                (ido-goto-symbol (imenu--make-index-alist))
+	       (message (format "%s" symbol-names))
+	       (princ symbol-names)
+	       (setq initial-entry (car (member (thing-at-point 'symbol) symbol-names)))
+	       (message (format "initial %s" initial-entry))
                (setq selected-symbol
-                     (ido-completing-read "Symbol? " symbol-names))
+                     (ido-completing-read "Symbol? " symbol-names nil nil initial-entry))
                (string= (car imenu--rescan-item) selected-symbol)))
       (setq position (cdr (assoc selected-symbol name-and-pos)))
       (cond
