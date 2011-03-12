@@ -131,6 +131,17 @@
           (lambda ()
             (dired-omit-mode 1)))
 
+;; Shime
+
+(add-hook 'shime-mode-hook
+          '(lambda ()
+             (global-set-key [f6] '(lambda ()
+                                     (interactive)
+                                     (switch-to-buffer "*shime*")))
+             (global-set-key [f7] '(lambda ()
+                                     (interactive)
+                                     (shime-kill-session-by-name "shime")))))
+
 ;; Emacs lisp
 (add-hook 'emacs-lisp-mode-hook
 	  '(lambda ()
