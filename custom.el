@@ -139,6 +139,13 @@
              (turn-on-eldoc-mode)
              (paredit-mode 1)))
 
+(defun shime-elisp-hooks ()
+ (font-lock-add-keywords nil '(("(\\(if-let\\|when-let\\|shime-with-[^ ]+\\)\\>"
+                                1 font-lock-keyword-face))))
+
+(add-hook 'emacs-lisp-mode-hook 'shime-elisp-hooks)
+
+
 (add-hook 'lisp-interaction-mode-hook
           (lambda ()
             (local-set-key "\C-\M-j" 'eval-print-last-sexp)))
