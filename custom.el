@@ -200,8 +200,9 @@
           (lambda ()
             (key-chord-define haskell-mode-map "ja"
                               (lambda () (interactive) (insert "-> ")))
-            (require 'inf-haskell)
             (require 'hs-lint)
+	    (local-set-key "\C-c\C-c" 'shime-cabal-build)
+	    (local-set-key "\C-cc" 'shime-cabal-ido)
             ;; (scion-flycheck-on-save 1)
             ;; (scion-mode 1)
 	    (local-set-key [f5] 'shime-load-file)
