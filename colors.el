@@ -83,14 +83,14 @@
         (ido-only-match nil :foreground "ForestGreen")
 
         ;; RST Mode
-        (rst-level-1-face nil :foreground "seagreen3" :background "yellow" )
+        (rst-level-1-face nil :foreground "seagreen3" :background nil )
         (rst-level-2-face nil :foreground "aquamarine3" :background nil )
         (rst-level-3-face nil :foreground "darkSlateGray3" :background nil )
         (rst-level-4-face nil :foreground "PaleTurquoise3" :background nil )
         (rst-level-5-face nil :foreground "LightCyan3" :background nil )
         (rst-level-6-face nil :foreground "azure3" :background nil )))
 
-(defun go-ranger-ranger ()
+(defun load-ranger-ranger-theme ()
   (interactive)
   (modify-all-frames-parameters ranger-ranger-frame-colors)
   (dolist (face-args ranger-ranger-theme)
@@ -98,4 +98,3 @@
           (attrs (cdr face-args)))
       (apply 'set-face-attribute face attrs))))
 
-(go-ranger-ranger)

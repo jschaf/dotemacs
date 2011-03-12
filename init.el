@@ -25,6 +25,7 @@
 (load "custom")
 (load "colors")
 
+(load-ranger-ranger-theme)
 ;; Update smex command cache after all the loads.
 (smex-update)
 
