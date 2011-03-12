@@ -223,3 +223,4 @@
 (global-set-key "\C-ha" 'apropos)
 (global-set-key (kbd "<f1>") 'menu-bar-mode)
 (global-set-key (kbd "C-M-/") (lambda () (interactive) (kill-buffer nil)))
+(global-set-key "\C-cs" (lambda () (interactive) (switch-to-buffer "*scratch*")))
