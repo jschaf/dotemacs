@@ -14,6 +14,7 @@
 (key-chord-define-global "fj" 'windmove-down)
 (key-chord-define-global "fk" 'windmove-up)
 (key-chord-define-global "fl" 'windmove-right)
+(key-chord-define-global "j0" 'delete-window)
 (key-chord-define-global "j1" 'delete-other-windows)
 (key-chord-define-global "j2" 'split-window-vertically)
 (key-chord-define-global "j3" 'split-window-horizontally)
@@ -165,3 +166,5 @@ Keys are sorted by their complexity; `key-complexity' determines
 ;;; shime.el --- Superior Haskell Integration Mode for Emacs
 (autoload 'shime "shime" nil t)
 (autoload 'shime-load-file "shime" nil t)
+(autoload 'shime-kill-session "shime" nil t)
+(autoload 'shime-cabal-build "shime" nil t)
