@@ -156,10 +156,7 @@
                (imenu--cleanup)
                (setq imenu--index-alist nil)
                (ido-goto-symbol (imenu--make-index-alist))
-	       (message (format "%s" symbol-names))
-	       (princ symbol-names)
 	       (setq initial-entry (car (member (thing-at-point 'symbol) symbol-names)))
-	       (message (format "initial %s" initial-entry))
                (setq selected-symbol
                      (ido-completing-read "Symbol? " symbol-names nil nil initial-entry))
                (string= (car imenu--rescan-item) selected-symbol)))
