@@ -148,7 +148,7 @@
              (subword-mode 1)
              (hs-minor-mode 1)
              (turn-on-eldoc-mode)
-             (paredit-mode 1)))
+             (enable-paredit-mode)))
 
 (defun shime-elisp-hooks ()
  (font-lock-add-keywords nil '(("(\\(if-let\\|when-let\\|shime-with-[^ ]+\\)\\>"
