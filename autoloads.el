@@ -69,7 +69,7 @@
 (add-to-list 'auto-mode-alist '("\\.reddit\\.com.*\\.txt\\'" . markdown-mode))
 
 ;; Paredit
-(autoload 'paredit-mode "paredit-beta"
+(autoload 'enable-paredit-mode "paredit"
   "Minor mode for pseudo-structurally editing Lisp code."
   t)
 
