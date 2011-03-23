@@ -8,9 +8,6 @@ CVS/
 private/*
 !private/filler
 
-# Large files
-packages/
-
 # Unnecessary files
 *.elc
 tramp
