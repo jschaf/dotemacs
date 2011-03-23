@@ -1,25 +1,16 @@
 # don't use ./ prefixes
-[submodule "./packages/org-mode"]
-	path = packages/org-mode
-	url = git://repo.or.cz/org-mode.git
-[submodule "./packages/smex"]
+[submodule "smex"]
 	path = packages/smex
 	url = git://github.com/nonsequitur/smex.git
-[submodule "./packages/pymacs"]
-	path = packages/pymacs
-	url = git://pymacs.progiciels-bpi.ca/pymacs
-[submodule "./packages/mozrepl"]
-	path = packages/mozrepl
-	url = git://github.com/bard/mozrepl.git
-[submodule "packages/egg"]
-	path = packages/egg
-	url = git://github.com/bogolisk/egg.git
-[submodule "packages/html5-el"]
-	path = packages/html5-el
-	url = git://github.com/hober/html5-el.git
-[submodule "packages/zencoding"]
+[submodule "zencoding"]
 	path = packages/zencoding
 	url = git://github.com/chrisdone/zencoding.git
-[submodule "packages/magit"]
+[submodule "magit"]
 	path = packages/magit
 	url = git://github.com/philjackson/magit.git
+# [submodule "paredit"]
+# 	path = packages/paredit
+# 	url = git://github.com/emacsmirror/paredit.git
+[submodule "packages/paredit"]
+	path = packages/paredit
+	url = git://github.com/emacsmirror/paredit.git
