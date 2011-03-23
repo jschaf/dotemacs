@@ -8,8 +8,6 @@ Setup
 A few commands to initialize, populate and correctly place the
 repository.
 
-.. sourcecode:: bash
-
     git clone git@github.com:jschaf/dotemacs.git
     mv dotemacs .emacs.d
     cd .emacs.d
