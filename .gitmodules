@@ -8,9 +8,6 @@
 [submodule "magit"]
 	path = packages/magit
 	url = git://github.com/philjackson/magit.git
-# [submodule "paredit"]
-# 	path = packages/paredit
-# 	url = git://github.com/emacsmirror/paredit.git
-[submodule "packages/paredit"]
+[submodule "paredit"]
 	path = packages/paredit
 	url = git://github.com/emacsmirror/paredit.git
