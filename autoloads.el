@@ -79,16 +79,6 @@
   "Major mode for editing comma-separated value files." t)
 (add-hook 'csv-mode-hook 'toggle-truncate-lines)
 
-;;; ido
-(ido-mode t)
-(ido-everywhere t)
-(setq ido-enable-flex-matching t)
-(setq ido-use-filename-at-point nil)
-(setq ido-auto-merge-work-directories-length -1)
-(add-hook 'ido-setup-hook
-	  (lambda ()
-	    (setq ido-enable-flex-matching t)))
-
 (autoload 'describe-unbound-keys "unbound"
   "Display a list of unbound keystrokes of complexity no greater than MAX.
 Keys are sorted by their complexity; `key-complexity' determines
