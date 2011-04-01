@@ -5,9 +5,9 @@
  '((font . "Consolas 11")))
 
 ;; Remove distractions.
-(menu-bar-mode nil)
-(tool-bar-mode nil)
-(scroll-bar-mode nil)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
 
 ;; Add the default-directory and all subdirectories to the load path.
 (let ((default-directory "~/.emacs.d/"))
