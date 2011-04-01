@@ -12,6 +12,7 @@
         (fringe nil  :foreground "gray20" :background "gray5")
         (default nil  :foreground "#cecece")
         (region nil  :foreground nil :background "#2e3436" )
+        (menu nil :font "Consolas")
         (underline nil  :underline t )
         (modeline nil  :foreground "white" :background "gray26" :box (:style released-button))
         (modeline-buffer-id nil  :foreground nil :background nil )
