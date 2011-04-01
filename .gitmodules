@@ -17,6 +17,3 @@
 [submodule "packages/haskell-mode"]
 	path = packages/haskell-mode
 	url = git://github.com/emacsmirror/haskell-mode.git
-[submodule "packages/scss-mode"]
-	path = packages/scss-mode
-	url = https://github.com/antonj/scss-mode.git
