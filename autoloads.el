@@ -158,3 +158,13 @@ Keys are sorted by their complexity; `key-complexity' determines
 (autoload 'shime-load-file "shime" nil t)
 (autoload 'shime-kill-session "shime" nil t)
 (autoload 'shime-cabal-build "shime" nil t)
+
+
+;;; scss-mode.el --- Major mode for editing SCSS files
+(autoload 'scss-mode "scss-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
+
+(require 'edit-server)
+(edit-server-start)
+
+(add-to-list 'auto-mode-alist '("\\.gitmodules\\'" . conf-mode))
