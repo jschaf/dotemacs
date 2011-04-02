@@ -17,3 +17,15 @@
 [submodule "packages/haskell-mode"]
 	path = packages/haskell-mode
 	url = git://github.com/emacsmirror/haskell-mode.git
+[submodule "packages/scss-mode"]
+	path = packages/scss-mode
+	url = git@github.com:jschaf/scss-mode.git
+[submodule "packages/virtualenv"]
+	path = packages/virtualenv
+	url = https://github.com/aculich/virtualenv.el.git
+[submodule "packages/webdev_server_chrome"]
+	path = packages/webdev_server_chrome
+	url = git@github.com:jschaf/webdev_server_chrome.git
+[submodule "packages/js2"]
+	path = packages/js2
+	url = https://github.com/mooz/js2-mode.git
