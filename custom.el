@@ -78,6 +78,13 @@
 (column-number-mode 1)
 (winner-mode 1)
 
+;;; js2
+(setq js2-mirror-mode t)
+
+
+;;; scss
+(setq scss-compile-at-save nil)
+
 ;; Aliases
 (defalias 'dtw 'delete-trailing-whitespace)
 (defalias 'ar  'align-regexp)
