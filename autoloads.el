@@ -169,3 +169,6 @@ Keys are sorted by their complexity; `key-complexity' determines
 (edit-server-start)
 
 (add-to-list 'auto-mode-alist '("\\.gitmodules\\'" . conf-mode))
+
+(autoload 'virtualenv-workon "virtualenv" nil t)
+(autoload 'virtualenv-default-directory "virtualenv" nil t)
