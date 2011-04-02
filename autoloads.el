@@ -33,8 +33,9 @@
 (global-set-key (kbd "\C-xg") 'magit-status)
 
 ;;; js2 -- an improved JavaScript editing mode
-(autoload 'js2-mode "js2" nil t)
+(autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
 
 ;;; chop.el -- Interactive binary search for a line within a window.
 (autoload 'chop-move-up "chop.el"
