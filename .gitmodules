@@ -32,3 +32,12 @@
 [submodule "packages/emacs-http-server"]
 	path = packages/emacs-http-server
 	url = git@github.com:jschaf/emacs-http-server.git
+[submodule "packages/shime"]
+	path = packages/shime
+	url = git@github.com:jschaf/shime.git
+[submodule "packages/django-mode"]
+	path = packages/django-mode
+	url = https://github.com/myfreeweb/django-mode.git
+[submodule "packages/yasnippet"]
+	path = packages/yasnippet
+	url = https://github.com/emacsmirror/yasnippet.git
