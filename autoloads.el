@@ -160,7 +160,6 @@ Keys are sorted by their complexity; `key-complexity' determines
 (autoload 'shime-kill-session "shime" nil t)
 (autoload 'shime-cabal-build "shime" nil t)
 
-
 ;;; scss-mode.el --- Major mode for editing SCSS files
 (autoload 'scss-mode "scss-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
@@ -172,3 +171,21 @@ Keys are sorted by their complexity; `key-complexity' determines
 
 (autoload 'virtualenv-workon "virtualenv" nil t)
 (autoload 'virtualenv-default-directory "virtualenv" nil t)
+
+(autoload 'httpd-start "httpd" nil t)
+
+;; django-html-mode.el --- Major mode for editing Django HTML
+;; templates
+(autoload 'django-html-mode "django-html-mode" nil t)
+(autoload 'django-mode "django-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.djhtml$" . django-html-mode))
+
+;;; Yasnippet.el --- Yet another snippet extension for Emacs.
+(require 'yasnippet)
+(yas/initialize)
+(setq yas/root-directory '("~/.emacs.d/extras/snippets"
+                           "~/.emacs.d/packages/django-mode/snippets/text-mode"
+                           "~/.emacs.d/packages/yasnippet/snippets"))
+(yas/reload-all)
+;; (mapc 'yas/load-directory yas/root-directory)
+

@@ -35,9 +35,9 @@
 [submodule "packages/shime"]
 	path = packages/shime
 	url = git@github.com:jschaf/shime.git
-[submodule "packages/django-mode"]
-	path = packages/django-mode
-	url = https://github.com/myfreeweb/django-mode.git
 [submodule "packages/yasnippet"]
 	path = packages/yasnippet
 	url = https://github.com/emacsmirror/yasnippet.git
+[submodule "packages/django-mode"]
+	path = packages/django-mode
+	url = git@github.com:jschaf/django-mode.git
