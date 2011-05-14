@@ -81,9 +81,11 @@
 ;;; js2
 (setq js2-mirror-mode t)
 
-
 ;;; scss
 (setq scss-compile-at-save nil)
+
+;;; smex
+(setq smex-save-file "~/.emacs.d/private/smex-save")
 
 ;; Aliases
 (defalias 'dtw 'delete-trailing-whitespace)
