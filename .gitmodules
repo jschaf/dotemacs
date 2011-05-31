@@ -14,9 +14,6 @@
 [submodule "packages/js2-mode"]
 	path = packages/js2-mode
 	url = https://github.com/mooz/js2-mode.git
-[submodule "packages/haskell-mode"]
-	path = packages/haskell-mode
-	url = git://github.com/emacsmirror/haskell-mode.git
 [submodule "packages/scss-mode"]
 	path = packages/scss-mode
 	url = git@github.com:jschaf/scss-mode.git
