@@ -48,7 +48,7 @@
 (global-set-key [(super meta i)] 'chop-move-down)
 
 ;; Haskell mode
-(load "haskell-site-file")
+;; (load "haskell-site-file")
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 
@@ -123,18 +123,18 @@ Keys are sorted by their complexity; `key-complexity' determines
 (key-chord-define-global "/c" 'goto-last-change)
 
 ;; M-x enhancement for emacs
-(autoload 'smex-initialize "smex" nil t)
-(autoload 'smex "smex" nil t)
-(autoload 'smex-major-mode-commands "smex" nil t)
-(autoload 'smex-update-and-run "smex" nil t)
+;; (autoload 'smex-initialize "smex" nil t)
+;; (autoload 'smex "smex" nil t)
+;; (autoload 'smex-major-mode-commands "smex" nil t)
+;; (autoload 'smex-update-and-run "smex" nil t)
 
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-(global-set-key (kbd "C-c M-x") 'smex-update-and-run)
-;; This is the old M-x.
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-(global-set-key "\C-h\M-c" 'describe-char)
+;; (smex-initialize)
+;; (global-set-key (kbd "M-x") 'smex)
+;; (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;; (global-set-key (kbd "C-c M-x") 'smex-update-and-run)
+;; ;; This is the old M-x.
+;; (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+;; (global-set-key "\C-h\M-c" 'describe-char)
 
 (autoload 'apache-mode "apache-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.htaccess\\'"   . apache-mode))
@@ -181,11 +181,11 @@ Keys are sorted by their complexity; `key-complexity' determines
 (add-to-list 'auto-mode-alist '("\\.djhtml$" . django-html-mode))
 
 ;;; Yasnippet.el --- Yet another snippet extension for Emacs.
-(require 'yasnippet)
-(yas/initialize)
-(setq yas/root-directory '("~/.emacs.d/extras/snippets"
-                           "~/.emacs.d/packages/django-mode/snippets/text-mode"
-                           "~/.emacs.d/packages/yasnippet/snippets"))
-(yas/reload-all)
+;; (require 'yasnippet)
+;; (yas/initialize)
+;; (setq yas/root-directory '("~/.emacs.d/extras/snippets"
+;;                            "~/.emacs.d/packages/django-mode/snippets/text-mode"
+;;                            "~/.emacs.d/packages/yasnippet/snippets"))
+;; (yas/reload-all)
 ;; (mapc 'yas/load-directory yas/root-directory)
 
