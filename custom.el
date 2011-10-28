@@ -14,6 +14,9 @@
 ;; Kill and yank use the clipboard.
 (setq x-select-enable-clipboard t)
 
+(add-to-list 'exec-path
+             "C:\\Program Files\\Git\\bin")
+
 ;; Disable tooltip help.  The mouse help is annoying and blocks the
 ;; minibuffer.
 (setq show-help-function nil)
@@ -146,6 +149,7 @@
 
 (add-hook 'dired-mode-hook
           (lambda ()
+            (local-set-key "\C-\M-k" 'dired-kill-subdir)
             (dired-omit-mode 1)))
 
 ;; Shime
@@ -260,3 +264,5 @@
 (global-set-key (kbd "<f1>") 'menu-bar-mode)
 (global-set-key (kbd "C-M-/") (lambda () (interactive) (kill-buffer nil)))
 (global-set-key "\C-cs" (lambda () (interactive) (switch-to-buffer "*scratch*")))
+;; Disable mouse clicks that move the mouse when I'm typing.
+(global-set-key [mouse-1] (lambda () (interactive)))

@@ -28,6 +28,8 @@
 (key-chord-define-global ".z" 'end-of-buffer)
 (key-chord-define-global ",z" 'beginning-of-buffer)
 
+(setq key-chord-two-keys-delay 0.08)
+
 ;;; magit.el -- control Git from Emacs.
 (autoload 'magit-status "magit" nil t)
 (global-set-key (kbd "\C-xg") 'magit-status)
@@ -123,18 +125,18 @@ Keys are sorted by their complexity; `key-complexity' determines
 (key-chord-define-global "/c" 'goto-last-change)
 
 ;; M-x enhancement for emacs
-;; (autoload 'smex-initialize "smex" nil t)
-;; (autoload 'smex "smex" nil t)
-;; (autoload 'smex-major-mode-commands "smex" nil t)
-;; (autoload 'smex-update-and-run "smex" nil t)
+(autoload 'smex-initialize "smex" nil t)
+(autoload 'smex "smex" nil t)
+(autoload 'smex-major-mode-commands "smex" nil t)
+(autoload 'smex-update-and-run "smex" nil t)
 
-;; (smex-initialize)
-;; (global-set-key (kbd "M-x") 'smex)
-;; (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-;; (global-set-key (kbd "C-c M-x") 'smex-update-and-run)
-;; ;; This is the old M-x.
-;; (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-;; (global-set-key "\C-h\M-c" 'describe-char)
+(smex-initialize)
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+(global-set-key (kbd "C-c M-x") 'smex-update-and-run)
+;; This is the old M-x.
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+(global-set-key "\C-h\M-c" 'describe-char)
 
 (autoload 'apache-mode "apache-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.htaccess\\'"   . apache-mode))
