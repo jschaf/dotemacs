@@ -16,3 +16,4 @@ info/
 *.html
 *.tar.gz
 eshell/
+server/
