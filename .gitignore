@@ -15,4 +15,4 @@ session*
 info/
 *.html
 *.tar.gz
-
+eshell/
