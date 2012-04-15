@@ -79,6 +79,13 @@
         (ecb-analyse-face nil :foreground "gray22")
         (speedbar-highlight-face nil :foreground "skyblue3" :weight normal :underline "skyblue3")
 
+        ;; Diff
+        (diff-added nil :foreground "paleGreen3")
+        (diff-removed nil :foreground "IndianRed")
+
+        ;; Magit
+        (magit-item-highlight nil :foreground nil :background "#2e3436")
+        
         ;; Ido
         (ido-first-match nil :foreground "deep sky blue" :weight normal)
         (ido-subdir nil :foreground "paleGreen3")
