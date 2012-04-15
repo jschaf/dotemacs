@@ -191,3 +191,6 @@ Keys are sorted by their complexity; `key-complexity' determines
 ;; (yas/reload-all)
 ;; (mapc 'yas/load-directory yas/root-directory)
 
+(require 'package)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
