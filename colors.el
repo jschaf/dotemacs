@@ -38,7 +38,7 @@
         (font-lock-function-name-face nil  :foreground "#6ccc6c" :weight normal )
         (font-lock-keyword-face nil  :foreground "skyblue3" :weight normal )
         (font-lock-preprocessor-face nil  :foreground "salmon3" :weight normal )
-        (font-lock-string-face nil  :foreground "#eb8ab7" :weight normal)
+        (font-lock-string-face nil  :foreground "DarkSalmon" :weight normal)
         (font-lock-type-face nil  :foreground "#9773d9" :weight normal )
         (font-lock-variable-name-face nil  :foreground "darkSlateGray3" :weight normal )
         (font-lock-warning-face nil  :foreground "orange red" :underline "orange red" :weight normal )
