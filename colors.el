@@ -52,7 +52,7 @@
         (info-menu-header :bold t :foreground "lightGoldenRod3" :background nil)
         (info-node :bold t :foreground "lightGoldenRod3")
         (info-xref :foreground "skyblue3" :weight normal)
-        (info-xref-visited :foreground "mediumPurple3" :underline nil)
+        (info-xref-visited :foreground "mediumPurple3" :underline t)
 
         ;; Woman
         (woman-bold :foreground "skyBlue3" :bold t)
