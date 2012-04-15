@@ -14,9 +14,6 @@
 ;; Kill and yank use the clipboard.
 (setq x-select-enable-clipboard t)
 
-(add-to-list 'exec-path
-             "C:\\Program Files\\Git\\bin")
-
 ;; Disable tooltip help.  The mouse help is annoying and blocks the
 ;; minibuffer.
 (setq show-help-function nil)
