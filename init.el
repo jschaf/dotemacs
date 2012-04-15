@@ -21,7 +21,7 @@
 (setq custom-file "~/.emacs.d/.emacs-custom")
 (load custom-file)
 (load "autoloads")
-(load "funcs")
+(load "functions")
 (load "custom")
 (load "colors")
 
