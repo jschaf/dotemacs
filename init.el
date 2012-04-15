@@ -2,7 +2,7 @@
 
 ;; Use a decent font. 
 (modify-all-frames-parameters
- '((font . "Consolas 11")))
+ '((font . "Consolas 12")))
 
 ;; Remove distractions.
 (menu-bar-mode -1)
