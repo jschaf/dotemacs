@@ -27,6 +27,7 @@
         (isearch nil :foreground "green" :background "#3d5450")
         (lazy-highlight nil :background "gray19")
         (variable-pitch nil :family "Calibri")
+        (link nil :foreground "skyblue3" :underline "skyblue3")
 
         ;; Font Lock
 
