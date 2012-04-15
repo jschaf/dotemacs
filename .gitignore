@@ -6,14 +6,10 @@ CVS/
 
 # Personal files
 private/*
-!private/filler
+# need at least one file for git to keep it
+!private/filler 
 
 # Unnecessary files
-*.elc
 tramp
-session*
-info/
-*.html
-*.tar.gz
-eshell/
-server/
+*.elc
+elpa/
