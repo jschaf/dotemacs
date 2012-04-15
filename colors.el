@@ -82,10 +82,12 @@
         ;; Diff
         (diff-added :foreground "paleGreen3")
         (diff-removed :foreground "IndianRed")
+        (diff-header :background nil)
 
         ;; Magit
         (magit-item-highlight :foreground nil :background "#2e3436")
-        
+        (magit-diff-file-header :foreground "skyblue3" :background nil :inherit nil)
+        (magit-header :foreground "skyblue3" :background nil :weight bold :inherit nil)
         ;; Ido
         (ido-first-match :foreground "deep sky blue" :weight normal)
         (ido-subdir :foreground "paleGreen3")
