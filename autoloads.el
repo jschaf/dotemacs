@@ -145,29 +145,9 @@ Keys are sorted by their complexity; `key-complexity' determines
 (add-to-list 'auto-mode-alist '("access\\.conf\\'" . apache-mode))
 (add-to-list 'auto-mode-alist '("sites-\\(available\\|enabled\\)/" . apache-mode))
 
-;;; zencoding-mode.el --- Unfold CSS-selector-like expressions to markup
-(autoload 'zencoding-mode "zencoding-mode" nil t)
-;; Auto-start on any markup modes
-(add-hook 'sgml-mode-hook 'zencoding-mode)
-
-;; scion.el --- Haskell Minor Mode for Interacting with the Scion Library
-(autoload 'scion-mode "scion" nil t)
-(autoload 'scion "scion" nil t)
-(setq scion-program "~/.cabal/bin/scion-server")
-(setq scion-completing-read-function 'ido-completing-read)
-
-;;; shime.el --- Superior Haskell Integration Mode for Emacs
-(autoload 'shime "shime" nil t)
-(autoload 'shime-load-file "shime" nil t)
-(autoload 'shime-kill-session "shime" nil t)
-(autoload 'shime-cabal-build "shime" nil t)
-
 ;;; scss-mode.el --- Major mode for editing SCSS files
 (autoload 'scss-mode "scss-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
-
-(require 'edit-server)
-(edit-server-start)
 
 (add-to-list 'auto-mode-alist '("\\.gitmodules\\'" . conf-mode))
 
@@ -182,14 +162,8 @@ Keys are sorted by their complexity; `key-complexity' determines
 (autoload 'django-mode "django-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.djhtml$" . django-html-mode))
 
-;;; Yasnippet.el --- Yet another snippet extension for Emacs.
-;; (require 'yasnippet)
-;; (yas/initialize)
-;; (setq yas/root-directory '("~/.emacs.d/extras/snippets"
-;;                            "~/.emacs.d/packages/django-mode/snippets/text-mode"
-;;                            "~/.emacs.d/packages/yasnippet/snippets"))
-;; (yas/reload-all)
-;; (mapc 'yas/load-directory yas/root-directory)
+(autoload 'rust-mode "rust-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
 
 (require 'package)
 (add-to-list 'package-archives
