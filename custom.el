@@ -70,7 +70,8 @@
 (desktop-save-mode 1)
 (setq desktop-path '("~/.emacs.d/private" "." "~"))
 
-;; Restructured Text
+;; Change default highlight level for headers so it's easier to see
+;; against a dark background.
 (setq rst-level-face-base-light 60)
 
 ;;; Usability tweaks
