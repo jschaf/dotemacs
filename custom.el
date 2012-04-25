@@ -74,17 +74,25 @@
 (setq rst-level-face-base-light 60)
 
 ;;; Usability tweaks
+
+;; Toggle visualization of matching parens.
 (show-paren-mode 1)
+
+;; Toggle column number display in the mode line.
 (column-number-mode 1)
+
+;; Restore old window configurations.  By default bound to C-c
+;; <left-arrow> and C-c <right-arrow>
 (winner-mode 1)
 
-;;; js2
+;; Auto insert closing brackets and parens automatically in js2-mode.
 (setq js2-mirror-mode t)
 
-;;; scss
+;; Don't compile scss files on save.  I usually don't setup the
+;; compiler.
 (setq scss-compile-at-save nil)
 
-;;; smex
+;; Put smex history file in the private folder so git will ignore it.
 (setq smex-save-file "~/.emacs.d/private/smex-save")
 
 ;; Aliases
@@ -149,30 +157,14 @@
             (local-set-key "\C-\M-k" 'dired-kill-subdir)
             (dired-omit-mode 1)))
 
-;; Shime
-
-(add-hook 'shime-mode-hook
-          '(lambda ()
-             (global-set-key [f6] '(lambda ()
-                                     (interactive)
-                                     (switch-to-buffer "*shime*")))
-             (global-set-key [f7] '(lambda ()
-                                     (interactive)
-                                     (shime-kill-session-by-name "shime")))))
-
 ;; Emacs lisp
 (add-hook 'emacs-lisp-mode-hook
 	  '(lambda ()
+             (local-set-key "\C-ce" 'eval-buffer)
              (subword-mode 1)
              (hs-minor-mode 1)
              (turn-on-eldoc-mode)
              (enable-paredit-mode)))
-
-(defun shime-elisp-hooks ()
- (font-lock-add-keywords nil '(("(\\(if-let\\|when-let\\|shime-with-[^ ]+\\)\\>"
-                                1 font-lock-keyword-face))))
-
-(add-hook 'emacs-lisp-mode-hook 'shime-elisp-hooks)
 
 
 (add-hook 'lisp-interaction-mode-hook
@@ -209,8 +201,9 @@
 
 (defun ada-incr-variable (&optional arg)
   "Increment or decrement the variable before the point by ARG.
-  If ARG is positive then increment the variable, else decrement
-  the variable."
+
+If ARG is positive then increment the variable, else decrement
+the variable."
   (interactive "p")
   (save-excursion (re-search-backward "[ \t]+\\([a-z_0-9]+\\)"
                                       (line-beginning-position)
@@ -261,5 +254,3 @@
 (global-set-key (kbd "<f1>") 'menu-bar-mode)
 (global-set-key (kbd "C-M-/") (lambda () (interactive) (kill-buffer nil)))
 (global-set-key "\C-cs" (lambda () (interactive) (switch-to-buffer "*scratch*")))
-;; Disable mouse clicks that move the mouse when I'm typing.
-(global-set-key [mouse-1] (lambda () (interactive)))
