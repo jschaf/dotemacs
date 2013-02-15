@@ -31,7 +31,7 @@
 
 ;; Helpful for csv files.
 (put 'scroll-left 'disabled nil)
-
+        
 ;; Ido
 (ido-mode t)
 (ido-everywhere t)
@@ -43,6 +43,9 @@
 	    (setq ido-enable-flex-matching t)))
 (setq ido-ignore-files '("\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./" "\\`b~")
       ido-use-filename-at-point nil)
+
+;; Turn off the bell
+(setq ring-bell-function 'ignore)
 
 ;; Tramp
 (setq tramp-default-method "ssh"
@@ -67,8 +70,8 @@
 (setq-default indent-tabs-mode nil)
 
 ;; Save window configs
-(desktop-save-mode 1)
-(setq desktop-path '("~/.emacs.d/private" "." "~"))
+;; (desktop-save-mode 1)
+;; (setq desktop-path '("~/.emacs.d/private" "." "~"))
 
 ;; Change default highlight level for headers so it's easier to see
 ;; against a dark background.
