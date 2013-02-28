@@ -9,6 +9,12 @@ private/*
 # need at least one file for git to keep it
 !private/filler 
 
+# Info
+# ignore huge info files
+info/*
+# but have a way to get them
+!info/info-get.el
+
 # Unnecessary files
 tramp
 *.elc
