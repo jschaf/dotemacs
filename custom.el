@@ -241,6 +241,21 @@ the variable."
 	    (local-set-key [f5] 'shime-load-file)
             (local-set-key "\C-cl" 'hs-lint)))
 
+;; Python
+(add-hook 'python-mode-hook
+          (lambda ()
+            (enable-paredit-mode)
+            (hs-minor-mode)
+            ;; Set Paredit to not insert a space when inserting
+            ;; parens, but only in python-mode
+            (set (make-local-variable 'paredit-space-for-delimiter-predicates)
+                 (list (function (lambda (endp delimiter) nil))))
+            ))
+
+;; Add Info for Python 2.7
+(add-to-list 'Info-default-directory-list "~/.emacs.d/info")
+(require 'pydoc-info)
+
 ;; LaTeX
 (add-hook 'latex-mode-hook
           (lambda ()
@@ -252,6 +267,12 @@ the variable."
 
 ;; Automatically reload pdf/dvi files when changed.
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+
+;; Eshell
+(setq-default eshell-directory-name "~/.emacs.d/private/eshell")
+
+;; Emacs server
+(setq-default server-auth-dir "~/.emacs.d/private/server")
 
 ;; Misc
 (global-set-key "\C-ha" 'apropos)
