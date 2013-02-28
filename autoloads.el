@@ -168,3 +168,8 @@ Keys are sorted by their complexity; `key-complexity' determines
 (require 'package)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
+
+;; Keep track of recent files
+(require 'recentf)
+(recentf-mode 1)
+(setq recentf-max-menu-items 25)
