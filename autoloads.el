@@ -46,8 +46,8 @@
 (autoload 'chop-move-down "chop.el"
   "Use binary movement down (successively move the point half the
   remaining buffer down)" t)
-(global-set-key [(super meta u)] 'chop-move-up)
-(global-set-key [(super meta i)] 'chop-move-down)
+(global-set-key [(meta i)] 'chop-move-up)
+(global-set-key [(meta o)] 'chop-move-down)
 
 ;; Haskell mode
 ;; (load "haskell-site-file")
