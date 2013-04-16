@@ -43,6 +43,7 @@
 	    (setq ido-enable-flex-matching t)))
 (setq ido-ignore-files '("\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./" "\\`b~")
       ido-use-filename-at-point nil)
+(setq ido-save-directory-list-file "~/.emacs.d/private/.ido.last")
 
 ;; Turn off the bell
 (setq ring-bell-function 'ignore)
