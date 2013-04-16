@@ -245,7 +245,6 @@ the variable."
 ;; Python
 (add-hook 'python-mode-hook
           (lambda ()
-            (enable-paredit-mode)
             (hs-minor-mode)
             ;; Set Paredit to not insert a space when inserting
             ;; parens, but only in python-mode
