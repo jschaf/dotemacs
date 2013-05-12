@@ -164,7 +164,9 @@
 (add-hook 'dired-mode-hook
           (lambda ()
             (local-set-key "\C-\M-k" 'dired-kill-subdir)
-            (dired-omit-mode 1)))
+            ;;(dired-omit-mode 1)
+            ))
+
 
 ;; Emacs lisp
 (add-hook 'emacs-lisp-mode-hook
