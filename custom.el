@@ -283,3 +283,29 @@ the variable."
 (global-set-key (kbd "<f1>") 'menu-bar-mode)
 (global-set-key (kbd "C-M-/") (lambda () (interactive) (kill-buffer nil)))
 (global-set-key "\C-cs" (lambda () (interactive) (switch-to-buffer "*scratch*")))
+
+;; Evil
+(setq evil-default-cursor "#5EA0AD")
+(setq evil-motion-state-cursor evil-default-cursor)
+(setq evil-normal-state-cursor evil-default-cursor)
+(setq evil-insert-state-cursor "#AD5E5E")
+(setq evil-operator-state-cursor nil)
+(setq evil-want-visual-char-semi-exclusive t)
+(setq evil-move-cursor-back nil)
+(define-key evil-normal-state-map "\C-i" 'evil-indent-line)
+
+
+(define-key evil-normal-state-map "\C-j" 'scroll-up-command)
+(define-key evil-motion-state-map "\C-j" 'scroll-up-command)
+(define-key evil-normal-state-map "\C-k" 'scroll-down-command)
+(define-key evil-motion-state-map "\C-k" 'scroll-down-command)
+(define-key evil-normal-state-map "," nil)
+(let ((leader-map (make-sparse-keymap)))
+  (define-key evil-normal-state-map "," leader-map)
+  (define-key leader-map "xg" 'magit-status)
+  (define-key leader-map "df" 'describe-text-properties)
+  (define-key leader-map "k" '(lambda () (interactive) (kill-buffer nil)))
+  (define-key leader-map "cs" '(lambda () (interactive) (switch-to-buffer "*scratch*")))
+  (define-key leader-map "o" 'delete-blank-lines)
+  (define-key leader-map "r" 'jump-to-register))
+
