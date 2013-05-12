@@ -23,9 +23,8 @@
 (load "autoloads")
 (load "functions")
 (load "custom")
-(load "colors")
+(load-theme 'solarized-light t)
 
-(load-ranger-ranger-theme)
 ;; Update smex command cache after all the loads.
 (smex-update)
 
