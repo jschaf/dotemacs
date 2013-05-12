@@ -31,7 +31,7 @@
 
 ;; Helpful for csv files.
 (put 'scroll-left 'disabled nil)
-        
+
 ;; Ido
 (ido-mode t)
 (ido-everywhere t)
@@ -113,16 +113,6 @@
 (defalias 'cv 'customize-variable)
 (defalias 'cg 'customize-group)
 (defalias 'ttl 'toggle-truncate-lines)
-
-;; Hudson
-(add-hook 'hudson-mode-hook
-          (lambda ()
-            (local-set-key "\C-m" 'hudson-newline-and-indent)
-            (else-mode 1)
-            (hs-minor-mode)
-            (subword-mode 1)))
-
-(setq hudson-jar-file (expand-file-name "~/prog/hudson/hudson.jar"))
 
 ;; Hide-show
 (add-hook 'hs-minor-mode-hook
