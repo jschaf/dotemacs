@@ -3,16 +3,9 @@
 	path = packages/magit
 	url = https://github.com/magit/magit.git
 	branch = master
-[submodule "packages/smex"]
-	path = packages/smex
-	url = https://github.com/nonsequitur/smex.git
-	branch = master
 [submodule "packages/evil"]
 	path = packages/evil
 	url = git://gitorious.org/evil/evil.git
 [submodule "packages/ace-jump"]
 	path = packages/ace-jump
 	url = https://github.com/winterTTr/ace-jump-mode.git
-[submodule "packages/el-get"]
-	path = packages/el-get
-	url = https://github.com/dimitri/el-get.git
