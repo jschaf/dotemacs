@@ -97,8 +97,12 @@
 ;; compiler.
 (setq scss-compile-at-save nil)
 
-;; Put smex history file in the private folder so git will ignore it.
-(setq smex-save-file "~/.emacs.d/private/smex-save")
+;; Registers
+(set-register ?i '(file . "~/.emacs.d/init.el"))
+(set-register ?a '(file . "~/.emacs.d/autoloads.el"))
+(set-register ?l '(file . "~/.emacs.d/colors.el"))
+(set-register ?f '(file . "~/.emacs.d/functions.el"))
+(set-register ?c '(file . "~/.emacs.d/custom.el"))
 
 ;; Aliases
 (defalias 'dtw 'delete-trailing-whitespace)
