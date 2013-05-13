@@ -1,43 +1,64 @@
-(unless (require 'el-get nil 'noerror)
-  (with-current-buffer
-      (url-retrieve-synchronously
-       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-    (goto-char (point-max))
-    (eval-print-last-sexp)))
+;; Require el-get
+(unless (require 'el-get nil t)
+  (url-retrieve
+   "https://raw.github.com/dimitri/el-get/master/el-get-install.el"
+   (lambda (s)
+     (let (el-get-master-branch)
+       (goto-char (point-max))
+       (eval-print-last-sexp)))))
 
-(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
-(el-get 'sync)
-
-;; now either el-get is `require'd already, or have been `load'ed by
-;; the el-get installer.
 (setq el-get-sources
-      '(;;el-get
-        ;; Auto complete framework
-        auto-complete
-        ;; Evil - vim emulation in emacs
-        evil
-        ;; Magit - git mode to interact with emacs
-        magit
-        ;; Ace-jump
-        ace-jump-mode
-        ;; Easy way to write empty HTML
-        zencoding-mode
-        ;; Solarized color theme
-        color-theme-solarized
-        ;; A smart M-x
-        smex
-        ;; Key chords, pressing two keys rapidly to execute a command
-        key-chord))
+      '((:name el-get
+               :website "https://github.com/dimitri/el-get#readme"
+               :description "Manage the external elisp bits and pieces you depend upon."
+               :type github
+               :branch "master"
+               :pkgname "dimitri/el-get"
+               ;:info    "."
+               :load    "el-get.el")
+        (:name magit
+               :website "https://github.com/magit/magit#readme"
+               :description "It's Magit! An Emacs mode for Git."
+               :type github
+               :pkgname "magit/magit"
+               :depends (cl-lib)
+               :info "."
+               ;; let el-get care about autoloads so that it works with all OSes
+               :build `(("make" ,(format "EMACS=%s" el-get-emacs) "docs")))
+
+
+        (:name evil
+               :website "http://gitorious.org/evil/pages/Home"
+               :description "Evil is an extensible vi layer for Emacs."
+               :features evil
+               :depends undo-tree
+               :build (("make" "all")))
+     ))
+
+(setq el-get-packages
+      (append
+       '(;; Auto complete framework
+         auto-complete
+         ;; Magit - git mode to interact with emacs
+         magit
+         ;; Ace-jump
+         ace-jump-mode
+         ;; Easy way to write empty HTML
+         zencoding-mode
+         ;; Solarized color theme
+         color-theme-solarized
+         ;; A smart M-x
+         smex
+         ;; Key chords, pressing two keys rapidly to execute a command
+         key-chord)
+       (mapcar 'el-get-as-symbol
+               (mapcar 'el-get-source-name el-get-sources))))
 
 ;; install new packages and init already installed packages
-(el-get 'sync)
+(el-get 'sync el-get-packages)
 
 (autoload 'toggle-uniquify-buffer-names "uniquify" nil t)
 (toggle-uniquify-buffer-names)
-
-;; Key-chord (pressing "jf" and executing a command)
-(autoload 'key-chord-mode "key-chord" nil t)
-(autoload 'key-chord-define-global "key-chord" nil t)
 
 (key-chord-mode 1)
 
