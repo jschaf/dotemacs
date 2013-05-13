@@ -1,5 +1,36 @@
-;; ELSE mode
-(autoload 'else-mode "else-mode" "Emacs Language Sensitive Editor" t)
+(unless (require 'el-get nil 'noerror)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
+
+(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
+(el-get 'sync)
+
+;; now either el-get is `require'd already, or have been `load'ed by
+;; the el-get installer.
+(setq el-get-sources
+      '(;;el-get
+        ;; Auto complete framework
+        auto-complete
+        ;; Evil - vim emulation in emacs
+        evil
+        ;; Magit - git mode to interact with emacs
+        magit
+        ;; Ace-jump
+        ace-jump-mode
+        ;; Easy way to write empty HTML
+        zencoding-mode
+        ;; Solarized color theme
+        color-theme-solarized
+        ;; A smart M-x
+        smex
+        ;; Key chords, pressing two keys rapidly to execute a command
+        key-chord))
+
+;; install new packages and init already installed packages
+(el-get 'sync)
 
 (autoload 'toggle-uniquify-buffer-names "uniquify" nil t)
 (toggle-uniquify-buffer-names)
@@ -19,157 +50,80 @@
 (key-chord-define-global "j2" 'split-window-vertically)
 (key-chord-define-global "j3" 'split-window-horizontally)
 (key-chord-define-global "jx" 'smex)
-(key-chord-define-global "kx" 'smex-major-mode-commands)
+(key-chord-define-global "jg" 'keyboard-quit)
 (key-chord-define-global "xb" 'ido-switch-buffer)
+(key-chord-define-global "/f" 'ido-find-file)
 (key-chord-define-global "/s" 'save-buffer)
 (key-chord-define-global "nb" 'bookmark-jump)
 (key-chord-define-global "nm" 'bookmark-set)
 (key-chord-define-global "nl" 'bookmark-bmenu-list)
-(key-chord-define-global ".z" 'end-of-buffer)
-(key-chord-define-global ",z" 'beginning-of-buffer)
-
+(key-chord-define-global "jk" 'evil-normal-state)
+(key-chord-define-global "cv" 'eval-last-sexp)
+(key-chord-define-global "/c" 'goto-last-change)
 (setq key-chord-two-keys-delay 0.08)
 
-;;; magit.el -- control Git from Emacs.
-(autoload 'magit-status "magit" nil t)
-(global-set-key (kbd "\C-xg") 'magit-status)
 
-;;; js2 -- an improved JavaScript editing mode
-(autoload 'js2-mode "js2-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
+(require 'evil)
+(evil-mode 1)
 
-;;; chop.el -- Interactive binary search for a line within a window.
-(autoload 'chop-move-up "chop.el"
-  "Use binary movement up (successively move the point half the
-  remaining buffer up)" t)
-(autoload 'chop-move-down "chop.el"
-  "Use binary movement down (successively move the point half the
-  remaining buffer down)" t)
-(global-set-key [(meta i)] 'chop-move-up)
-(global-set-key [(meta o)] 'chop-move-down)
+(require 'ace-jump-mode)
 
-;; Haskell mode
-;; (load "haskell-site-file")
-(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+;;(autoload 'ace-jump-mode "ace-jump-mode" "Emacs quick move minor mode" t)
+;; AceJump is a nice addition to evil's standard motions.
 
-;; Wikipedia Mode
-(autoload 'wikipedia-mode "wikipedia-mode.el"
-  "Major mode for editing documents in Wikipedia markup." t)
-(add-to-list 'auto-mode-alist
-             '("\\.wikipedia\\.org.*\\.txt\\'" . wikipedia-mode))
-(add-to-list 'auto-mode-alist
-             '("\\.wikibooks\\.org.*\\.txt\\'" . wikipedia-mode))
+;; The following definitions are necessary to define evil motions for ace-jump-mode (version 2).
 
-;; Template-mode for editing ELSE templates
-(autoload 'template-mode "template-mode" "Template Mode for ELSE templates" t)
-(add-to-list 'auto-mode-alist '("\\.lse$" . template-mode))
+;; ace-jump is actually a series of commands which makes handling by evil
+;; difficult (and with some other things as well), using this macro we let it
+;; appear as one.
 
-;; Markdown mode
-(autoload 'markdown-mode "markdown-mode"
-  "Major mode for editing documents in Markdown markup." t)
-(add-to-list 'auto-mode-alist '("\\.reddit\\.com.*\\.txt\\'" . markdown-mode))
+(defmacro evil-enclose-ace-jump (&rest body)
+  `(let ((old-mark (mark))
+         (ace-jump-mode-scope 'window))
+     (remove-hook 'pre-command-hook #'evil-visual-pre-command t)
+     (remove-hook 'post-command-hook #'evil-visual-post-command t)
+     (unwind-protect
+         (progn
+           ,@body
+           (recursive-edit))
+       (if (evil-visual-state-p)
+           (progn
+             (add-hook 'pre-command-hook #'evil-visual-pre-command nil t)
+             (add-hook 'post-command-hook #'evil-visual-post-command nil t)
+             (set-mark old-mark))
+         (push-mark old-mark)))))
 
-;; Paredit
-(autoload 'enable-paredit-mode "paredit"
-  "Minor mode for pseudo-structurally editing Lisp code."
-  t)
+(evil-define-motion evil-ace-jump-char-mode (count)
+  :type exclusive
+  (evil-enclose-ace-jump
+   (ace-jump-mode 5)))
 
-;; CSV
-(add-to-list 'auto-mode-alist '("\\.csv\\'" . csv-mode))
-(autoload 'csv-mode "csv-mode"
-  "Major mode for editing comma-separated value files." t)
-(add-hook 'csv-mode-hook 'toggle-truncate-lines)
+(evil-define-motion evil-ace-jump-line-mode (count)
+  :type line
+  (evil-enclose-ace-jump
+   (ace-jump-mode 9)))
 
-(autoload 'describe-unbound-keys "unbound"
-  "Display a list of unbound keystrokes of complexity no greater than MAX.
-Keys are sorted by their complexity; `key-complexity' determines
-  it."  t)
+(evil-define-motion evil-ace-jump-word-mode (count)
+  :type exclusive
+  (evil-enclose-ace-jump
+   (ace-jump-mode 1)))
 
-;;; easy window navigation using vim esque movement
-(global-set-key [(super meta j)] 'windmove-down)
-(global-set-key [(super meta k)] 'windmove-up)
-(global-set-key [(super meta l)] 'windmove-right)
-(global-set-key [(super meta h)] 'windmove-left)
+(add-hook 'ace-jump-mode-end-hook 'exit-recursive-edit)
 
-(autoload 'cycle-buffer "cycle-buffer" "Cycle-forward" t)
-(autoload 'cycle-buffer-backward "cycle-buffer" "Cycle backward." t)
-(autoload 'cycle-buffer-permissive "cycle-buffer"
-  "Cycle forward allowing *buffers*." t)
-(autoload 'cycle-buffer-backward-permissive "cycle-buffer"
-  "Cycle backward allowing *buffers*." t)
-(autoload 'cycle-buffer-toggle-interesting "cycle-buffer"
-  "Toggle if this buffer will be considered." t)
+;; some proposals for binding:
 
-(global-set-key (kbd "M-s-n") 'cycle-buffer)
-(global-set-key (kbd "M-s-p") 'cycle-buffer-backward)
-(global-set-key (kbd "M-n") 'cycle-buffer)
-(global-set-key (kbd "M-p") 'cycle-buffer-backward)
+(define-key evil-motion-state-map (kbd "C-SPC") #'evil-ace-jump-char-mode)
+(define-key evil-motion-state-map (kbd "SPC") #'evil-ace-jump-word-mode)
+(define-key evil-operator-state-map (kbd "S-SPC") #'evil-ace-jump-line-mode)
 
-;; (global-set-key "\C-xp" 'find-file-at-point)
-(global-set-key "\C-x\C-b" 'ido-switch-buffer)
-(global-set-key "\C-cj" 'delete-indentation)
-(global-set-key "\M-g\M-f" 'next-error)
-(global-set-key "\M-g\M-d" 'previous-error)
-(global-set-key "\C-h\M-f" 'describe-face)
+;; different jumps for different visual modes
+(defadvice evil-visual-line (before spc-for-line-jump activate)
+  (define-key evil-motion-state-map (kbd "SPC") #'evil-ace-jump-line-mode))
 
-(autoload 'ada-mode "ada-mode" "Ada mode for emacs." t)
+(defadvice evil-visual-char (before spc-for-char-jump activate)
+  (define-key evil-motion-state-map (kbd "C-SPC") #'evil-ace-jump-char-mode))
 
-;; Recognize gnat project files using the gpr-mode.el from ada-mode
-(autoload 'gpr-mode "gpr-mode" "Major mode for GNAT Project files" t)
-(add-to-list 'auto-mode-alist '("\\.gpr$" . gpr-mode))
+(defadvice evil-visual-block (before spc-for-char-jump activate)
+  (define-key evil-motion-state-map (kbd "C-SPC") #'evil-ace-jump-char-mode))
 
-(autoload 'goto-last-change "goto-last-change"
-  "Set point to the position of the last change." t)
-(key-chord-define-global "/c" 'goto-last-change)
-
-;; M-x enhancement for emacs
-(autoload 'smex-initialize "smex" nil t)
-(autoload 'smex "smex" nil t)
-(autoload 'smex-major-mode-commands "smex" nil t)
-(autoload 'smex-update-and-run "smex" nil t)
-
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-(global-set-key (kbd "C-c M-x") 'smex-update-and-run)
-;; This is the old M-x.
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-(global-set-key "\C-h\M-c" 'describe-char)
-
-(autoload 'apache-mode "apache-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.htaccess\\'"   . apache-mode))
-(add-to-list 'auto-mode-alist '("httpd\\.conf\\'"  . apache-mode))
-(add-to-list 'auto-mode-alist '("srm\\.conf\\'"    . apache-mode))
-(add-to-list 'auto-mode-alist '("access\\.conf\\'" . apache-mode))
-(add-to-list 'auto-mode-alist '("sites-\\(available\\|enabled\\)/" . apache-mode))
-
-;;; scss-mode.el --- Major mode for editing SCSS files
-(autoload 'scss-mode "scss-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
-
-(add-to-list 'auto-mode-alist '("\\.gitmodules\\'" . conf-mode))
-
-(autoload 'virtualenv-workon "virtualenv" nil t)
-(autoload 'virtualenv-default-directory "virtualenv" nil t)
-
-(autoload 'httpd-start "httpd" nil t)
-
-;; django-html-mode.el --- Major mode for editing Django HTML
-;; templates
-(autoload 'django-html-mode "django-html-mode" nil t)
-(autoload 'django-mode "django-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.djhtml$" . django-html-mode))
-
-(autoload 'rust-mode "rust-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-
-(require 'package)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
-
-;; Keep track of recent files
-(require 'recentf)
-(recentf-mode 1)
-(setq recentf-max-menu-items 25)
+(require 'ein)
