@@ -1,11 +1,1 @@
 # don't use ./ prefixes
-[submodule "packages/magit"]
-	path = packages/magit
-	url = https://github.com/magit/magit.git
-	branch = master
-[submodule "packages/evil"]
-	path = packages/evil
-	url = git://gitorious.org/evil/evil.git
-[submodule "packages/ace-jump"]
-	path = packages/ace-jump
-	url = https://github.com/winterTTr/ace-jump-mode.git
