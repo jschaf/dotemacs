@@ -1,4 +1,4 @@
-;;; Personal customizations for emacs separate from customize.
+;;; Personal customizations for Emacs
 
 ;; Unnecessary.
 (setq inhibit-startup-screen t
@@ -24,7 +24,7 @@
 ;; Replace yes with y.
 (fset 'yes-or-no-p 'y-or-n-p)
 
-(setq bookmark-default-file "~/.emacs.d/.emacs.bmk")
+(setq bookmark-default-file "~/.emacs.d/private/bookmarks")
 
 ;; Useful for regexps.
 (put 'narrow-to-region 'disabled nil)
@@ -53,12 +53,12 @@
       tramp-temp-name-prefix "~/.emacs.d/private/tramp.")
 
 ;; Emacs backups
-(setq auto-save-list-file-prefix "~/.emacs.d/private/auto-save-list/.saves-"
-      backup-by-copying t
-      backup-directory-alist  '(("." . "~/.emacs.d/private/.emacs-backups"))
-      kept-new-versions 3
-      delete-old-versions t
-      version-control t)
+(setq-default auto-save-list-file-prefix "~/.emacs.d/private/auto-save-list/.saves-"
+              backup-by-copying t
+              backup-directory-alist  '(("." . "~/.emacs.d/private/.emacs-backups"))
+              kept-new-versions 3
+              delete-old-versions t
+              version-control t)
 
 ;; Completion options
 (setq completion-ignored-extensions
@@ -70,13 +70,9 @@
 ;; Never allow tabs
 (setq-default indent-tabs-mode nil)
 
-;; Save window configs
-;; (desktop-save-mode 1)
-;; (setq desktop-path '("~/.emacs.d/private" "." "~"))
-
 ;; Change default highlight level for headers so it's easier to see
 ;; against a dark background.
-(setq rst-level-face-base-light 60)
+;; (setq rst-level-face-base-light 60)
 
 ;;; Usability tweaks
 
@@ -86,16 +82,6 @@
 ;; Toggle column number display in the mode line.
 (column-number-mode 1)
 
-;; Restore old window configurations.  By default bound to C-c
-;; <left-arrow> and C-c <right-arrow>
-(winner-mode 1)
-
-;; Auto insert closing brackets and parens automatically in js2-mode.
-(setq js2-mirror-mode t)
-
-;; Don't compile scss files on save.  I usually don't setup the
-;; compiler.
-(setq scss-compile-at-save nil)
 
 ;; Registers
 (set-register ?i '(file . "~/.emacs.d/init.el"))
@@ -127,11 +113,6 @@
             (local-set-key "\M-p" 'cycle-buffer-backward)
             ))
 
-;; Redefine the 8 primary terminal colors to look good against black
-(setq ansi-term-color-vector
-      [unspecified "#000000" "#963F3C" "#5FFB65" "#FFFD65"
-                   "#0082FF" "#FF2180" "#57DCDB" "#FFFFFF"])
-
 ;; Help
 (add-hook 'help-mode-hook
           (lambda ()
@@ -139,17 +120,6 @@
             (local-set-key "k" (lambda () (interactive) (scroll-down 1)))
             (local-set-key "l" 'help-go-back)
             (local-set-key "h" 'help-go-forward)))
-
-;; Dired
-(setq dired-listing-switches "-alh")
-
-(add-hook 'dired-load-hook
-          (lambda ()
-            (load "dired-x")
-            ;; Don't show dot files in dired
-            (setq dired-omit-files
-                  (concat dired-omit-files "\\|^\\..+$")
-                  )))
 
 (add-hook 'dired-mode-hook
           (lambda ()
@@ -161,7 +131,6 @@
 ;; Emacs lisp
 (add-hook 'emacs-lisp-mode-hook
 	  '(lambda ()
-             (local-set-key "\C-ce" 'eval-buffer)
              (subword-mode 1)
              (hs-minor-mode 1)
              (turn-on-eldoc-mode)
@@ -194,26 +163,7 @@
             ;; (local-set-key "\C-ci" 'joe/ada-incr-variable)
             (setq ada-fill-comment-postfix "-- ")
             (else-mode 1)
-            (key-chord-define ada-mode-map "ja"
-                              (lambda () (interactive) (insert ":= ")))
-            (key-chord-define ada-mode-map "jd"
-                              (lambda () (interactive) (insert "_")))
             (local-set-key [(meta \')] 'else-kill-placeholder)))
-
-(defun ada-incr-variable (&optional arg)
-  "Increment or decrement the variable before the point by ARG.
-
-If ARG is positive then increment the variable, else decrement
-the variable."
-  (interactive "p")
-  (save-excursion (re-search-backward "[ \t]+\\([a-z_0-9]+\\)"
-                                      (line-beginning-position)
-                                      'noerror))
-  (just-one-space)
-  (insert (format ":= %s %s %d;"
-                  (match-string 1)
-                  (if (<= 0 arg) "+" "-")
-                  (abs arg))))
 
 ;; ELSE
 (add-hook 'else-mode-hook
@@ -224,19 +174,6 @@ the variable."
             (local-set-key "\M-o" 'else-expand-placeholder)
             (local-set-key "\M-k" 'else-kill-placeholder)
             (local-set-key "\M-'" 'else-kill-proceed-to-next-placeholder)))
-
-;; Haskell
-(add-hook 'haskell-mode-hook
-          (lambda ()
-            (key-chord-define haskell-mode-map "ja"
-                              (lambda () (interactive) (insert "-> ")))
-            (require 'hs-lint)
-	    (local-set-key "\C-c\C-c" 'shime-cabal-build)
-	    (local-set-key "\C-cc" 'shime-cabal-ido)
-            ;; (scion-flycheck-on-save 1)
-            ;; (scion-mode 1)
-	    (local-set-key [f5] 'shime-load-file)
-            (local-set-key "\C-cl" 'hs-lint)))
 
 ;; Python
 (add-hook 'python-mode-hook
@@ -250,7 +187,6 @@ the variable."
 
 ;; Add Info for Python 2.7
 (add-to-list 'Info-default-directory-list "~/.emacs.d/info")
-(require 'pydoc-info)
 
 ;; LaTeX
 (add-hook 'latex-mode-hook
@@ -261,8 +197,8 @@ the variable."
             (set-face-attribute 'font-latex-sedate-face nil
                                 :foreground "red")))
 
-;; Automatically reload pdf/dvi files when changed.
-(add-hook 'doc-view-mode-hook 'auto-revert-mode)
+;; Automatically reload files when changed.
+(global-auto-revert-mode 1)
 
 ;; Eshell
 (setq-default eshell-directory-name "~/.emacs.d/private/eshell")
@@ -291,13 +227,19 @@ the variable."
 (define-key evil-motion-state-map "\C-j" 'scroll-up-command)
 (define-key evil-normal-state-map "\C-k" 'scroll-down-command)
 (define-key evil-motion-state-map "\C-k" 'scroll-down-command)
+;; Undefine , to use it as the leader key
 (define-key evil-normal-state-map "," nil)
+(define-key evil-motion-state-map "," nil)
 (let ((leader-map (make-sparse-keymap)))
   (define-key evil-normal-state-map "," leader-map)
+  (define-key evil-motion-state-map "," leader-map)
   (define-key leader-map "xg" 'magit-status)
-  (define-key leader-map "df" 'describe-text-properties)
+  (define-key leader-map "ht" 'describe-text-properties)
   (define-key leader-map "k" '(lambda () (interactive) (kill-buffer nil)))
   (define-key leader-map "cs" '(lambda () (interactive) (switch-to-buffer "*scratch*")))
   (define-key leader-map "o" 'delete-blank-lines)
+  (define-key leader-map "dt" 'delete-trailing-whitespace)
+  (define-key leader-map "xh" 'mark-whole-buffer)
+  (define-key leader-map "xd" 'ido-dired)
+  (define-key leader-map "ei" 'el-get-install)
   (define-key leader-map "r" 'jump-to-register))
-
