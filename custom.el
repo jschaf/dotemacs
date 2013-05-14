@@ -185,8 +185,17 @@
                  (list (function (lambda (endp delimiter) nil))))
             ))
 
-;; Add Info for Python 2.7
+;; Info customizations
+(setenv "INFOPATH" (concat (expand-file-name "~/.emacs.d/info:")
+                           (getenv "INFOPATH")))
 (add-to-list 'Info-default-directory-list "~/.emacs.d/info")
+(add-hook 'Info-mode-hook
+          (lambda ()
+            ;; Hide ^M, the carriage return
+            (setq buffer-display-table (make-display-table))
+            (aset buffer-display-table ?\^M [])
+            (add-to-list 'Info-directory-list "~/.emacs.d/info")
+    	    (setq Info-additional-directory-list Info-default-directory-list)))
 
 ;; LaTeX
 (add-hook 'latex-mode-hook

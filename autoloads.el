@@ -6,53 +6,19 @@
      (let (el-get-master-branch)
        (goto-char (point-max))
        (eval-print-last-sexp)))))
-
-(setq el-get-sources
-      '((:name el-get
-               :website "https://github.com/dimitri/el-get#readme"
-               :description "Manage the external elisp bits and pieces you depend upon."
-               :type github
-               :branch "master"
-               :pkgname "dimitri/el-get"
-               ;:info    "."
-               :load    "el-get.el")
-        (:name magit
-               :website "https://github.com/magit/magit#readme"
-               :description "It's Magit! An Emacs mode for Git."
-               :type github
-               :pkgname "magit/magit"
-               :depends (cl-lib)
-               :info "."
-               ;; let el-get care about autoloads so that it works with all OSes
-               :build `(("make" ,(format "EMACS=%s" el-get-emacs) "docs")))
-
-
-        (:name evil
-               :website "http://gitorious.org/evil/pages/Home"
-               :description "Evil is an extensible vi layer for Emacs."
-               :features evil
-               :depends undo-tree
-               :build (("make" "all")))
-     ))
+(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 
 (setq el-get-packages
       (append
-       '(;; Auto complete framework
-         auto-complete
-         ;; Magit - git mode to interact with emacs
-         magit
-         ;; Ace-jump
+       '(auto-complete
          ace-jump-mode
-         ;; Easy way to write empty HTML
+         paredit
          zencoding-mode
-         ;; Solarized color theme
          color-theme-solarized
-         ;; A smart M-x
          smex
-         ;; Key chords, pressing two keys rapidly to execute a command
-         key-chord)
-       (mapcar 'el-get-as-symbol
-               (mapcar 'el-get-source-name el-get-sources))))
+	 evil2
+         magit2
+         key-chord)))
 
 ;; install new packages and init already installed packages
 (el-get 'sync el-get-packages)
@@ -147,4 +113,4 @@
 (defadvice evil-visual-block (before spc-for-char-jump activate)
   (define-key evil-motion-state-map (kbd "C-SPC") #'evil-ace-jump-char-mode))
 
-(require 'ein)
+;;(require 'ein)
