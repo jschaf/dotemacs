@@ -86,7 +86,6 @@
 ;; Registers
 (set-register ?i '(file . "~/.emacs.d/init.el"))
 (set-register ?a '(file . "~/.emacs.d/autoloads.el"))
-(set-register ?l '(file . "~/.emacs.d/colors.el"))
 (set-register ?f '(file . "~/.emacs.d/functions.el"))
 (set-register ?c '(file . "~/.emacs.d/custom.el"))
 
@@ -222,15 +221,19 @@
 (global-set-key "\C-cs" (lambda () (interactive) (switch-to-buffer "*scratch*")))
 
 ;; Evil
+
+;; Use different colors for fonts to easily determine what mode we're in.
 (setq evil-default-cursor "#5EA0AD")
-(setq evil-motion-state-cursor evil-default-cursor)
 (setq evil-normal-state-cursor evil-default-cursor)
 (setq evil-insert-state-cursor "#AD5E5E")
+(setq evil-visual-state-cursor evil-default-cursor)
+(setq evil-replace-state-cursor evil-default-cursor)
 (setq evil-operator-state-cursor nil)
+(setq evil-motion-state-cursor evil-default-cursor)
+(setq evil-emacs-state-cursor evil-default-cursor)
+
 (setq evil-want-visual-char-semi-exclusive t)
 (setq evil-move-cursor-back nil)
-(define-key evil-normal-state-map "\C-i" 'evil-indent-line)
-
 
 (define-key evil-normal-state-map "\C-j" 'scroll-up-command)
 (define-key evil-motion-state-map "\C-j" 'scroll-up-command)
