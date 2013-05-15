@@ -11,8 +11,7 @@
 
 ;; Add the default-directory and all subdirectories to the load path.
 (let ((default-directory "~/.emacs.d/"))
-  (setq load-path (cons default-directory load-path))
-  (normal-top-level-add-subdirs-to-load-path))
+  (setq load-path (cons default-directory load-path)))
 
 ;; Start in a reasonable directory.
 (setq default-directory "~/")
