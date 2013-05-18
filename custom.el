@@ -5,11 +5,15 @@
       initial-scratch-message "")
 
 ;; Recent file mode.
-(setq recentf-mode t
-      recentf-save-file "~/.emacs.d/private/.recentf")
+(require 'recentf)
+(recentf-mode 1)
+(setq recentf-save-file "~/.emacs.d/private/.recentf")
 
 ;; Highlight when mark is active
 (setq transient-mark-mode t)
+
+;; Ignore all local variables.  The endless prompting is annoying.
+(setq-default enable-local-variables nil)
 
 ;; Kill and yank use the clipboard.
 (setq x-select-enable-clipboard t)
@@ -217,41 +221,6 @@
 ;; Misc
 (global-set-key "\C-ha" 'apropos)
 (global-set-key (kbd "<f1>") 'menu-bar-mode)
-(global-set-key (kbd "C-M-/") (lambda () (interactive) (kill-buffer nil)))
-(global-set-key "\C-cs" (lambda () (interactive) (switch-to-buffer "*scratch*")))
 
-;; Evil
-
-;; Use different colors for fonts to easily determine what mode we're in.
-(setq evil-default-cursor "#5EA0AD")
-(setq evil-normal-state-cursor evil-default-cursor)
-(setq evil-insert-state-cursor "#AD5E5E")
-(setq evil-visual-state-cursor evil-default-cursor)
-(setq evil-replace-state-cursor evil-default-cursor)
-(setq evil-operator-state-cursor nil)
-(setq evil-motion-state-cursor evil-default-cursor)
-(setq evil-emacs-state-cursor evil-default-cursor)
-
-(setq evil-want-visual-char-semi-exclusive t)
-(setq evil-move-cursor-back nil)
-
-(define-key evil-normal-state-map "\C-j" 'scroll-up-command)
-(define-key evil-motion-state-map "\C-j" 'scroll-up-command)
-(define-key evil-normal-state-map "\C-k" 'scroll-down-command)
-(define-key evil-motion-state-map "\C-k" 'scroll-down-command)
-;; Undefine , to use it as the leader key
-(define-key evil-normal-state-map "," nil)
-(define-key evil-motion-state-map "," nil)
-(let ((leader-map (make-sparse-keymap)))
-  (define-key evil-normal-state-map "," leader-map)
-  (define-key evil-motion-state-map "," leader-map)
-  (define-key leader-map "xg" 'magit-status)
-  (define-key leader-map "ht" 'describe-text-properties)
-  (define-key leader-map "k" '(lambda () (interactive) (kill-buffer nil)))
-  (define-key leader-map "cs" '(lambda () (interactive) (switch-to-buffer "*scratch*")))
-  (define-key leader-map "o" 'delete-blank-lines)
-  (define-key leader-map "dt" 'delete-trailing-whitespace)
-  (define-key leader-map "xh" 'mark-whole-buffer)
-  (define-key leader-map "xd" 'ido-dired)
-  (define-key leader-map "ei" 'el-get-install)
-  (define-key leader-map "r" 'jump-to-register))
+(autoload 'toggle-uniquify-buffer-names "uniquify" nil t)
+(toggle-uniquify-buffer-names)
