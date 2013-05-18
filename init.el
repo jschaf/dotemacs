@@ -9,7 +9,7 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-;; Add the default-directory and all subdirectories to the load path.
+;; Add the default-directory to the load path.
 (let ((default-directory "~/.emacs.d/"))
   (setq load-path (cons default-directory load-path)))
 
@@ -22,10 +22,6 @@
 (load "autoloads")
 (load "functions")
 (load "custom")
-(load-theme 'solarized-light t)
-
-;; Update smex command cache after all the loads.
-(smex-update)
 
 (require 'server)
 (or (server-running-p)
