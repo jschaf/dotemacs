@@ -218,6 +218,25 @@ the variable."
       (find-file (cdr (assoc filename
 			     file-assoc-list))))))
 
+(setq my:old-theme 'solarized-dark
+      my:new-theme 'solarized-light)
+
+(defun toggle-color-theme ()
+  "Switch between the light and dark versions of Solarized."
+  (interactive)
+  (let ((temp my:old-theme))
+    (setq my:old-theme my:new-theme)
+    (setq my:new-theme temp)
+    (disable-theme my:old-theme)
+    (load-theme my:new-theme t)))
+
+(defun info-mode ()
+  (interactive)
+  (let ((file-name (buffer-file-name)))
+    (kill-buffer (current-buffer))
+    (info file-name)))
+(add-to-list 'auto-mode-alist '("\\.info\\'" . info-mode))
+
 (global-set-key "\C-cr" 'recentf-ido-find-file)
 (global-set-key "\C-ci" 'ido-goto-symbol)
 (global-set-key "\C-x\;" 'comment-or-uncomment-line)
