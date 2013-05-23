@@ -136,7 +136,8 @@ figuring out how to reload the package."
             ("r"  . jump-to-register))
           do (define-key leader-map key func))))
 
-(eval-after-load 'evil 'my:evil-setup)
+(eval-after-load 'evil 
+  '(progn (my:evil-setup)))
 
 (eval-after-load 'ace-jump-mode
   '(progn
