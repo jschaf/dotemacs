@@ -7,7 +7,7 @@
 ;; Recent file mode.
 (require 'recentf)
 (recentf-mode 1)
-(setq recentf-save-file "~/.emacs.d/private/.recentf")
+(setq-default recentf-save-file "~/.emacs.d/private/.recentf")
 
 ;; Highlight when mark is active
 (setq transient-mark-mode t)
