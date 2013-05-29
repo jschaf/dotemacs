@@ -230,7 +230,22 @@ the variable."
     (disable-theme my:old-theme)
     (load-theme my:new-theme t)))
 
+(defun my:indent-defun-around-point ()
+  "Indent the sexp that we're currently in."
+  (interactive)
+  (save-excursion
+    (beginning-of-defun)
+    (indent-sexp)))
+
+(defun my:yank-sexp ()
+  "Yank the sexp in front of the point."
+  (interactive)
+  (save-excursion
+    (mark-sexp)
+    (kill-ring-save (point) (mark))))
+
 (defun info-mode ()
+  "A simple function to open standalone info files correctly."
   (interactive)
   (let ((file-name (buffer-file-name)))
     (kill-buffer (current-buffer))
