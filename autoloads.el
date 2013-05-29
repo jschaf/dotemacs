@@ -199,8 +199,6 @@ figuring out how to reload the package."
 
 (eval-after-load 'evil '(progn (my:evil-setup)))
 
-(defun my:ace-jump-setup ()
-  )
 (eval-after-load 'ace-jump-mode
   '(progn
      ;;(autoload 'ace-jump-mode "ace-jump-mode" "Emacs quick move minor mode" t)
