@@ -23,6 +23,12 @@
                :info nil)
         (:name key-chord
                :after (require 'key-chord))
+        (:name esup
+               :website "https://github.com/jschaf/esup"
+               :description "Emacs Start Up Profiler"
+               :type "github"
+               :branch "master"
+               :pkgname "jschaf/esup")
         (:name solarized-theme
                :after (load-theme 'solarized-light t))))
 
@@ -57,11 +63,16 @@
              ("fk" . windmove-up)
              ("fl" . windmove-right)
              ("j0" . delete-window)
+             ("jr" . delete-window)
              ("j1" . delete-other-windows)
+             ("jq" . delete-other-windows)
              ("j2" . split-window-vertically)
+             ("jw" . split-window-vertically)
              ("j3" . split-window-horizontally)
+             ("je" . split-window-horizontally)
              ("jx" . smex)
              ("jg" . keyboard-quit)
+             ("jt" . dabbrev-expand)
              ("xb" . ido-switch-buffer)
              ("/f" . ido-find-file)
              ("/r" . recentf-ido-find-file)
@@ -72,17 +83,6 @@
              ("jk" . evil-normal-state)
              ("cv" . eval-last-sexp)
              ("/c" . goto-last-change))
-           do (key-chord-define-global key func))
-
-     (loop for (key . func) in
-           '(("sh" . paredit-backward)
-             ("sl" . paredit-forward)
-             ("sj" . paredit-forward-down)
-             ("sk" . paredit-backward-up)
-             ("gh" . paredit-backward-slurp-sexp)
-             ("gl" . paredit-forward-slurp-sexp)
-             ("dl" . paredit-forward-barf-sexp)
-             ("dh" . paredit-backward-barf-sexp))
            do (key-chord-define-global key func))))
 
 ;; Evil
@@ -107,37 +107,100 @@ figuring out how to reload the package."
   (setq evil-want-visual-char-semi-exclusive t)
   (setq evil-move-cursor-back nil)
 
-  (define-key evil-normal-state-map "\C-j" 'scroll-up-command)
-  (define-key evil-motion-state-map "\C-j" 'scroll-up-command)
-  (define-key evil-normal-state-map "\C-k" 'scroll-down-command)
-  (define-key evil-motion-state-map "\C-k" 'scroll-down-command)
-  (define-key evil-normal-state-map (kbd "<tab>") 'indent-for-tab-command)
-
-  ;; Undefine the comma to use it as the leader key
+  ;; Leader key definitions
   (define-key evil-normal-state-map "," nil)
   (define-key evil-motion-state-map "," nil)
   (let ((leader-map (make-sparse-keymap)))
     (define-key evil-normal-state-map "," leader-map)
     (define-key evil-motion-state-map "," leader-map)
     (loop for (key . func) in
-          '(("xg" . magit-status)
-            ("ht" . describe-text-properties)
-            ("k"  . (lambda () (interactive) (kill-buffer nil)))
-            ("cs" . (lambda () (interactive) (switch-to-buffer "*scratch*")))
-            ("o"  . delete-blank-lines)
-            ("dtw" . delete-trailing-whitespace)
-            ("gh" . (lambda () (interactive) (find-file "~/")))
-            ("xh" . mark-whole-buffer)
-            ("xd" . ido-dired)
+          '(("ci" . ido-goto-symbol)
             ("cp" . check-parens)
-            ("ei" . el-get-install)
+            ("cs" . (lambda () (interactive) (switch-to-buffer "*scratch*")))
             ("de" . toggle-debug-on-error)
+            ("dc" . describe-char)
+            ("dtw" . delete-trailing-whitespace)
+            ("eb" . eval-buffer)
+            ("ed" . eval-defun)
+            ("ee" . edebug-eval-top-level-form)
+            ("ei" . el-get-install)
+            ("ff" . find-function)
+            ("fp" . find-function-at-point)
+            ("gc" . goto-char)
+            ("gj" . next-error)
+            ("gk" . previous-error)
+            ("gh" . (lambda () (interactive) (find-file "~/")))
+            ("ht" . describe-text-properties)
+            ("is" . my:indent-defun-around-point)
+            ("js" . just-one-space)
+            ("k"  . (lambda () (interactive) (kill-buffer nil)))
+            ("ms" . mark-sexp)
+            ("o"  . delete-blank-lines)
+            ("pes" . profile-emacs-startup)
+            ("r"  . jump-to-register)
+            ("sp" . eval-print-last-sexp)
             ("ts" . toggle-color-theme)
-            ("r"  . jump-to-register))
-          do (define-key leader-map key func))))
+            ("xd" . ido-dired)
+            ("xg" . magit-status)
+            ("xh" . mark-whole-buffer)
+            ("xrs" . copy-to-register)
+            ("xr " . point-to-register))
+          do (define-key leader-map key func)))
 
-(eval-after-load 'evil 'my:evil-setup)
+  ;; Commands for both the normal and motion state
+  (loop for (key . func) in
+        `(("zk" . beginning-of-defun)
+          ("zj" . end-of-defun)
+          ("zl" . forward-sexp)
+          ("zh" . backward-sexp)
+          ("zu" . paredit-backward-up)
+          ("H" . evil-first-non-blank)
+          ("L" . evil-end-of-line)
+          ("zdy" . my:yank-sexp)
+          (,(kbd "C-<return>") . newline)
+          ("\C-j" . scroll-up-command)
+          ("\C-k" . scroll-down-command))
+        do
+        (define-key evil-normal-state-map key func)
+        (define-key evil-motion-state-map key func))
 
+  ;; Commands for only the normal state map
+  (loop for (key . func) in
+        `((,(kbd "<tab>")  . indent-for-tab-command)
+          ("z," . comment-dwim)
+          ("zn" . evil-toggle-fold)
+          ("z;" . comment-or-uncomment-line))
+        do
+        (define-key evil-normal-state-map key func))
+
+  ;; Paredit Mode
+  (add-hook 'paredit-mode-hook
+            (lambda () (loop for (key . func) in
+                             '(("zsh" . paredit-backward)
+                               ("zsl" . paredit-forward)
+                               ("zsj" . paredit-forward-down)
+                               ("zsk" . paredit-backward-up)
+                               ("zdl" . paredit-forward-barf-sexp)
+                               ("zdh" . paredit-backward-barf-sexp)
+                               ("zfh" . paredit-backward-slurp-sexp)
+                               ("zfl" . paredit-forward-slurp-sexp)
+                               ("zfc" . paredit-convolute-sexp)
+                               ("z9" . paredit-wrap-round)
+                               ("zdk" . kill-sexp)
+                               ("zss" . paredit-splice-sexp)
+                               ("zsd" . paredit-join-sexps)
+                               ("z'" . paredit-meta-doublequote))
+                             do (define-key evil-normal-state-map key func))))
+  (add-hook 'Info-mode-hook
+            (lambda () (loop for (key . func) in
+                             '(("H" . Info-history-back)
+                               ("L" . Info-history-forward))
+                             do (define-key Info-mode-map key func)))))
+
+(eval-after-load 'evil '(progn (my:evil-setup)))
+
+(defun my:ace-jump-setup ()
+  )
 (eval-after-load 'ace-jump-mode
   '(progn
      ;;(autoload 'ace-jump-mode "ace-jump-mode" "Emacs quick move minor mode" t)
@@ -184,7 +247,7 @@ figuring out how to reload the package."
 
      ;; some proposals for binding:
 
-     (define-key evil-motion-state-map (kbd "C-SPC") #'evil-ace-jump-char-mode)
+     (define-key evil-motion-state-map (kbd "C-SPC") #'evil-ace-jump-line-mode)
      (define-key evil-motion-state-map (kbd "SPC") #'evil-ace-jump-word-mode)
      (define-key evil-operator-state-map (kbd "S-SPC") #'evil-ace-jump-line-mode)
 
@@ -202,3 +265,10 @@ figuring out how to reload the package."
   '(progn
      ;; Update smex command cache after all the loads.
      (smex-update)))
+
+(eval-after-load 'magit
+  '(progn
+     (add-hook 'magit-mode-hook 
+               '(lambda () 
+                  (local-set-key "j" #'evil-next-line)
+                  (local-set-key "k" #'evil-previous-line)))))
