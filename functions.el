@@ -244,6 +244,13 @@ the variable."
     (mark-sexp)
     (kill-ring-save (point) (mark))))
 
+(defun my:find-function-at-point-this-window ()
+  "Find function at point."
+  (interactive)
+  (let ((symb (function-called-at-point)))
+    (when symb
+      (find-function symb))))
+
 (defun info-mode ()
   "A simple function to open standalone info files correctly."
   (interactive)
