@@ -34,16 +34,17 @@
 
 (setq el-get-packages
       (append
-       '(el-get
-         evil
+       '(ace-jump-mode
          auto-complete
-         ace-jump-mode
-         paredit
-         zencoding-mode
-         solarized-theme
-         smex
+         evil
+         key-chord
          magit
-         key-chord)
+         markdown-mode
+         paredit
+         smex
+         solarized-theme
+         zencoding-mode
+         el-get)
        (mapcar 'el-get-source-name el-get-sources)))
 
 ;; We can get whole repositories later if we want to hack on them.
