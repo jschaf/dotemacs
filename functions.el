@@ -41,21 +41,6 @@
       ))
   (indent-according-to-mode))
 
-(defun ada-incr-variable (&optional arg)
-  "Increment or decrement the variable before the point by ARG.
-
-If ARG is positive then increment the variable, else decrement
-the variable."
-  (interactive "p")
-  (save-excursion (re-search-backward "[ \t]+\\([a-z_0-9]+\\)"
-                                      (line-beginning-position)
-                                      'noerror))
-  (just-one-space)
-  (insert (format ":= %s %s %d;"
-                  (match-string 1)
-                  (if (<= 0 arg) "+" "-")
-                  (abs arg))))
-
 (defun rename-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
