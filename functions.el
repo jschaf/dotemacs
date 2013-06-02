@@ -1,4 +1,5 @@
-(eval-when-compile (require 'cl))
+(eval-when-compile
+ (require 'cl-lib))
 
 (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
   "Prevent annoying 'Active processes exist' query when you quit Emacs."
@@ -106,24 +107,24 @@
        ((overlayp position)
         (goto-char (overlay-start position)))
        (t
-        (goto-char position)))))
-   ((listp symbol-list)
-    (dolist (symbol symbol-list)
-      (let (name position)
-        (cond
-         ((and (listp symbol) (imenu--subalist-p symbol))
-          (ido-goto-symbol symbol))
-         ((listp symbol)
-          (setq name (car symbol))
-          (setq position (cdr symbol)))
-         ((stringp symbol)
-          (setq name symbol)
-          (setq position
-                (get-text-property 1 'org-imenu-marker symbol))))
-        (unless (or (null position) (null name)
-                    (string= (car imenu--rescan-item) name))
-          (add-to-list 'symbol-names name)
-          (add-to-list 'name-and-pos (cons name position))))))))
+        (goto-char position)))
+      (when (listp symbol-list)
+        (dolist (symbol symbol-list)
+          (let (name position)
+            (cond
+             ((and (listp symbol) (imenu--subalist-p symbol))
+              (ido-goto-symbol symbol))
+             ((listp symbol)
+              (setq name (car symbol))
+              (setq position (cdr symbol)))
+             ((stringp symbol)
+              (setq name symbol)
+              (setq position
+                    (get-text-property 1 'org-imenu-marker symbol))))
+            (unless (or (null position) (null name)
+                        (string= (car imenu--rescan-item) name))
+              (add-to-list 'symbol-names name)
+              (add-to-list 'name-and-pos (cons name position))))))))))
 
 (defun recentf-ido-find-file ()
   "Find a recent file using Ido."
@@ -134,8 +135,8 @@
 			  x))
 		  recentf-list))
 	 (filename-list
-	  (remove-duplicates (mapcar #'car file-assoc-list)
-			     :test #'string=))
+	  (cl-remove-duplicates (mapcar #'car file-assoc-list)
+                                :test #'string=))
 	 (filename (ido-completing-read "Choose recent file: "
 					filename-list
 					nil
