@@ -13,8 +13,8 @@
 (let ((default-directory "~/.emacs.d/"))
   (setq load-path (cons default-directory load-path)))
 
-;; Adjust GC threshold to 20 megs
-(setq gc-cons-threshold 20000000)
+;; Adjust GC threshold to 20 megabytes.
+(setq gc-cons-threshold (* 20 1024 1024))
 
 ;; Start in a reasonable directory.
 (setq default-directory "~/")
