@@ -92,6 +92,7 @@
 (set-register ?a '(file . "~/.emacs.d/autoloads.el"))
 (set-register ?f '(file . "~/.emacs.d/functions.el"))
 (set-register ?c '(file . "~/.emacs.d/custom.el"))
+(set-register ?e '(file . "~/.emacs.d/el-get/esup/esup.el"))
 
 ;; Aliases
 (defalias 'dtw 'delete-trailing-whitespace)
