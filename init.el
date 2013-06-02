@@ -9,9 +9,8 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-;; Add the default-directory to the load path.
-(let ((default-directory "~/.emacs.d/"))
-  (setq load-path (cons default-directory load-path)))
+;; Add the Emacs directory to the load path.
+(setq load-path (cons user-emacs-directory load-path))
 
 ;; Adjust GC threshold to 20 megabytes.
 (setq gc-cons-threshold (* 20 1024 1024))
