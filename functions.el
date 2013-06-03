@@ -164,7 +164,6 @@
                (setq k (nth 0 bindings)
                      d (nth 1 bindings)
                      bindings (cddr bindings))
-               (message "setting key %s to def %s" k d)
                (evil-define-key state keymap k d)))))
 
 (global-set-key "\C-cr" 'recentf-ido-find-file)
