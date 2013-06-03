@@ -165,28 +165,6 @@
       ada-xref-create-ali nil
       ada-xref-other-buffer t)
 
-(add-hook 'ada-mode-hook
-          (lambda ()
-            (outline-minor-mode 1)
-            (local-set-key "\M-_" 'hide-leaves)
-            (local-set-key "\M-=" 'show-entry)
-            (local-set-key "\C-cm" 'ada-method-header)
-            (local-set-key "\C-xnd" 'ada-narrow-to-defun)
-            ;; (local-set-key "\C-ci" 'joe/ada-incr-variable)
-            (setq ada-fill-comment-postfix "-- ")
-            (else-mode 1)
-            (local-set-key [(meta \')] 'else-kill-placeholder)))
-
-;; ELSE
-(add-hook 'else-mode-hook
-          (lambda ()
-            (local-set-key "\M-n" 'else-next-placeholder)
-            (local-set-key "\M-p" 'else-previous-placeholder)
-            (local-set-key "\M-i" 'else-insert-placeholder)
-            (local-set-key "\M-o" 'else-expand-placeholder)
-            (local-set-key "\M-k" 'else-kill-placeholder)
-            (local-set-key "\M-'" 'else-kill-proceed-to-next-placeholder)))
-
 ;; Python
 (add-hook 'python-mode-hook
           (lambda ()
