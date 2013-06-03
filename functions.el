@@ -58,14 +58,6 @@
   (comment-or-uncomment-region (line-beginning-position)
                                (line-end-position)))
 
-(defun get-or-create-term-buffer ()
-  "Switch to the *terminal* buffer if there is one, else create one."
-  (interactive)
-  (switch-to-buffer
-   (or (get-buffer "*terminal*")
-       (make-term "terminal" (getenv "SHELL"))))
-  (term-char-mode))
-
 (defun unfill-paragraph (&optional region)
   "Replace newline characters with a single space."
   (interactive)
@@ -203,5 +195,4 @@
 (global-set-key "\C-w" 'kill-region-or-backward-kill-word)
 (global-set-key "\C-cv" 'copy-line)
 (global-set-key "\C-o" 'open-line-and-indent)
-(global-set-key "\C-ct" 'get-or-create-term-buffer)
 (global-set-key "\M-Q" 'unfill-paragraph)
