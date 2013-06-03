@@ -133,13 +133,13 @@
 
 
 ;; Emacs lisp
-(add-hook 'emacs-lisp-mode-hook
-	  '(lambda ()
-             (subword-mode 1)
-             (hs-minor-mode 1)
-             (turn-on-eldoc-mode)
-             (enable-paredit-mode)))
-
+(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
+(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+(add-hook 'emacs-lisp-mode-hook 'subword-mode)
+(add-hook 'emacs-lisp-mode-hook 'my:maybe-byte-compile-on-save)
+(add-hook 'emacs-lisp-mode-hook 'my:delete-trailing-whitespace-on-save)
 
 (add-hook 'lisp-interaction-mode-hook
           (lambda ()

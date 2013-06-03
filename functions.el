@@ -38,8 +38,7 @@
   (save-excursion
     (while (> arg 0)
       (newline-and-indent)
-      (setq arg (1- arg))
-      ))
+      (setq arg (1- arg))))
   (indent-according-to-mode))
 
 (defun rename-file-and-buffer (new-name)
@@ -185,6 +184,35 @@
     (kill-buffer (current-buffer))
     (info file-name)))
 (add-to-list 'auto-mode-alist '("\\.info\\'" . info-mode))
+
+
+(defun my:back-to-indentation-or-beginning ()
+  "Go back to indentation, or beginning of line on second press."
+  (interactive)
+  (if (eq last-command 'my:back-to-indentation-or-beginning)
+      (evil-beginning-of-line)
+    (evil-first-non-blank)))
+
+(defun my:last-non-blank-or-end-of-line ()
+  "Go to last non blank, or end of line on second press."
+  (interactive)
+  (if (eq last-command 'my:last-non-blank-or-end-of-line)
+      (evil-end-of-line)
+    (evil-last-non-blank)))
+
+(defun my:maybe-byte-compile ()
+"Byte compile current file if .elc file exists."
+  (interactive)
+  (when (file-exists-p (byte-compile-dest-file buffer-file-name))
+    (byte-compile-file buffer-file-name)))
+
+(defun my:maybe-byte-compile-on-save ()
+  "Add `my:maybe-byte-compile' to the local `after-save-hook'."
+  (add-hook (make-local-variable 'after-save-hook) 'my:maybe-byte-compile))
+
+(defun my:delete-trailing-whitespace-on-save ()
+  "Add `delete-trailing-whitespace' to the local `after-save-hook'."
+  (add-hook (make-local-variable 'after-save-hook) 'delete-trailing-whitespace))
 
 (global-set-key "\C-cr" 'recentf-ido-find-file)
 (global-set-key "\C-ci" 'ido-goto-symbol)
