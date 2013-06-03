@@ -185,6 +185,28 @@
   "Add `delete-trailing-whitespace' to the local `after-save-hook'."
   (add-hook (make-local-variable 'before-save-hook) 'delete-trailing-whitespace))
 
+(defun my:highlight-long-lines ()
+  "Highlight long lines."
+  (interactive)
+  (require 'whitespace)
+  (set (make-local-variable 'whitespace-style) '(face lines-tail))
+  (set (make-local-variable 'whitespace-line-column) 80)
+  (whitespace-mode 1))
+
+(defun my:evil-define-keys (states keymaps key def &rest bindings)
+  "Run `evil-define-key' over all STATES and KEYMAPS."
+  (loop for state in states
+        for keymap in keymaps
+        do
+        (evil-define-key state keymap key def)
+        (let (k d (b bindings))
+             (while bindings
+               (setq k (nth 0 bindings)
+                     d (nth 1 bindings)
+                     bindings (cddr bindings))
+               (message "setting key %s to def %s" k d)
+               (evil-define-key state keymap k d)))))
+
 (global-set-key "\C-cr" 'recentf-ido-find-file)
 (global-set-key "\C-ci" 'ido-goto-symbol)
 (global-set-key "\C-x\;" 'comment-or-uncomment-line)
