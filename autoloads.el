@@ -16,29 +16,37 @@
       (eval-print-last-sexp))))
 
 (setq el-get-sources
-      '((:name evil
+      '((:name esup
+               :website "https://github.com/jschaf/esup"
+               :description "Emacs Start Up Profiler"
+               :type "github"
+               :branch "master"
+               :pkgname "jschaf/esup")
+        (:name evil
                :after (require 'evil)
                :build (("make" "all"))
                ;; makeinfo fails
                :info nil)
         (:name key-chord
                :after (require 'key-chord))
-        (:name esup
-               :website "https://github.com/jschaf/esup"
-               :description "Emacs Start Up Profiler"
+        (:name page-break-lines
+               :website "https://github.com/purcell/page-break-lines"
                :type "github"
-               :branch "master"
-               :pkgname "jschaf/esup")))
+               :brank "master"
+               :pkgname "purcell/page-break-lines")))
 
 (setq el-get-packages
       (append
        '(ace-jump-mode
          auto-complete
          el-get
+         elisp-slime-nav
          evil
+         git-modes
          key-chord
          magit
          markdown-mode
+         page-break-lines
          paredit
          rainbow-delimiters
          smex
