@@ -158,8 +158,12 @@
 (loop for hook in my:elisp-hooks
       do
       (add-hook 'emacs-lisp-mode-hook hook))
-(evil-define-key 'normal emacs-lisp-mode-map "g." 'elisp-slime-nav-find-elisp-thing-at-point)
-(evil-define-key 'normal emacs-lisp-mode-map "g," 'pop-tag-mark)
+
+(my:evil-define-keys '(normal motion)
+                     (list emacs-lisp-mode-map lisp-interaction-mode-map)
+                     "g." 'elisp-slime-nav-find-elisp-thing-at-point
+                     "g," 'pop-tag-mark
+                     "gh" 'elisp-slime-nav-describe-thing-at-point)
 
 (add-hook 'lisp-interaction-mode-hook
           (lambda ()
