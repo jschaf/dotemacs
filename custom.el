@@ -133,13 +133,21 @@
 
 
 ;; Emacs lisp
-(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
-(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
-(add-hook 'emacs-lisp-mode-hook 'subword-mode)
-(add-hook 'emacs-lisp-mode-hook 'my:maybe-byte-compile-after-save)
-(add-hook 'emacs-lisp-mode-hook 'my:delete-trailing-whitespace-before-save)
+(defvar my:elisp-hooks
+  '(elisp-slime-nav-mode
+    enable-paredit-mode
+    hs-minor-mode
+    my:delete-trailing-whitespace-before-save
+    my:maybe-byte-compile-after-save
+    rainbow-delimiters-mode
+    subword-mode
+    turn-on-eldoc-mode
+    turn-on-page-break-lines-mode))
+(loop for hook in my:elisp-hooks
+      do
+      (add-hook 'emacs-lisp-mode-hook hook))
+(evil-define-key 'normal emacs-lisp-mode-map "g." 'elisp-slime-nav-find-elisp-thing-at-point)
+(evil-define-key 'normal emacs-lisp-mode-map "g," 'pop-tag-mark)
 
 (add-hook 'lisp-interaction-mode-hook
           (lambda ()
