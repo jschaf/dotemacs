@@ -36,15 +36,16 @@
       (append
        '(ace-jump-mode
          auto-complete
+         el-get
          evil
          key-chord
          magit
          markdown-mode
          paredit
+         rainbow-delimiters
          smex
          solarized-theme
-         zencoding-mode
-         el-get)
+         zencoding-mode)
        (mapcar 'el-get-source-name el-get-sources)))
 
 ;; We can get whole repositories later if we want to hack on them.
