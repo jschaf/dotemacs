@@ -149,6 +149,7 @@
     enable-paredit-mode
     hs-minor-mode
     my:delete-trailing-whitespace-before-save
+    my:highlight-long-lines
     my:maybe-byte-compile-after-save
     rainbow-delimiters-mode
     subword-mode
