@@ -138,8 +138,8 @@
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
 (add-hook 'emacs-lisp-mode-hook 'subword-mode)
-(add-hook 'emacs-lisp-mode-hook 'my:maybe-byte-compile-on-save)
-(add-hook 'emacs-lisp-mode-hook 'my:delete-trailing-whitespace-on-save)
+(add-hook 'emacs-lisp-mode-hook 'my:maybe-byte-compile-after-save)
+(add-hook 'emacs-lisp-mode-hook 'my:delete-trailing-whitespace-before-save)
 
 (add-hook 'lisp-interaction-mode-hook
           (lambda ()

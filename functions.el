@@ -3,7 +3,7 @@
 
 (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
   "Prevent annoying 'Active processes exist' query when you quit Emacs."
-  (cl-flet ((process-list ())) ad-do-it))
+  (cl-letf ((process-list ())) ad-do-it))
 
 (defun kill-region-or-backward-kill-word ()
   "`kill-region' if the mark is active, else `backward-kill-word'."
@@ -181,13 +181,13 @@
   (when (file-exists-p (byte-compile-dest-file buffer-file-name))
     (byte-compile-file buffer-file-name)))
 
-(defun my:maybe-byte-compile-on-save ()
+(defun my:maybe-byte-compile-after-save ()
   "Add `my:maybe-byte-compile' to the local `after-save-hook'."
   (add-hook (make-local-variable 'after-save-hook) 'my:maybe-byte-compile))
 
-(defun my:delete-trailing-whitespace-on-save ()
+(defun my:delete-trailing-whitespace-before-save ()
   "Add `delete-trailing-whitespace' to the local `after-save-hook'."
-  (add-hook (make-local-variable 'after-save-hook) 'delete-trailing-whitespace))
+  (add-hook (make-local-variable 'before-save-hook) 'delete-trailing-whitespace))
 
 (global-set-key "\C-cr" 'recentf-ido-find-file)
 (global-set-key "\C-ci" 'ido-goto-symbol)
