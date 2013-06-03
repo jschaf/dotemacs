@@ -73,46 +73,6 @@
       (setq-default line-spacing nil)
     (setq-default line-spacing 7)))
 
-(defun ido-goto-symbol (&optional symbol-list)
-  "Refresh imenu and jump to a place in the buffer using Ido."
-  (interactive)
-  (require 'imenu)
-  (cond
-   ((not symbol-list)
-    (let ((ido-mode ido-mode)
-          name-and-pos symbol-names position)
-      (while (progn
-               (imenu--cleanup)
-               (setq imenu--index-alist nil)
-               (ido-goto-symbol (imenu--make-index-alist))
-	       (setq initial-entry (car (member (thing-at-point 'symbol) symbol-names)))
-               (setq selected-symbol
-                     (ido-completing-read "Symbol? " symbol-names nil nil initial-entry))
-               (string= (car imenu--rescan-item) selected-symbol)))
-      (setq position (cdr (assoc selected-symbol name-and-pos)))
-      (cond
-       ((overlayp position)
-        (goto-char (overlay-start position)))
-       (t
-        (goto-char position)))
-      (when (listp symbol-list)
-        (dolist (symbol symbol-list)
-          (let (name position)
-            (cond
-             ((and (listp symbol) (imenu--subalist-p symbol))
-              (ido-goto-symbol symbol))
-             ((listp symbol)
-              (setq name (car symbol))
-              (setq position (cdr symbol)))
-             ((stringp symbol)
-              (setq name symbol)
-              (setq position
-                    (get-text-property 1 'org-imenu-marker symbol))))
-            (unless (or (null position) (null name)
-                        (string= (car imenu--rescan-item) name))
-              (add-to-list 'symbol-names name)
-              (add-to-list 'name-and-pos (cons name position))))))))))
-
 (defvar my:dark-theme 'solarized-dark)
 (defvar my:light-theme 'solarized-light)
 (defvar my:current-theme my:light-theme)
