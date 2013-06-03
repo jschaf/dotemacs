@@ -54,6 +54,15 @@
 ;; Install all the packages asynchronusly
 (el-get nil el-get-packages)
 
+(defun my:eval-after-init (form)
+  "Add `(lambda () FORM)' to `after-init-hook'.
+If Emacs has already finished initialization, also eval FORM
+immediately."
+  (let ((func (list 'lambda nil form)))
+    (add-hook 'after-init-hook func)
+    (when after-init-time
+      (eval form))))
+
 ;; Key Chord
 (eval-after-load 'key-chord
   '(progn
@@ -262,14 +271,14 @@ figuring out how to reload the package."
      (defadvice evil-visual-block (before spc-for-char-jump activate)
        (define-key evil-motion-state-map (kbd "C-SPC") #'evil-ace-jump-char-mode))))
 
-(eval-after-load 'smex
+(my:eval-after-init
   '(progn
      ;; Update smex command cache after all the loads.
      (smex-update)))
 
 (eval-after-load 'magit
   '(progn
-     (add-hook 'magit-mode-hook 
-               '(lambda () 
+     (add-hook 'magit-mode-hook
+               '(lambda ()
                   (local-set-key "j" #'evil-next-line)
                   (local-set-key "k" #'evil-previous-line)))))
