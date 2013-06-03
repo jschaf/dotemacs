@@ -214,3 +214,10 @@
 (global-set-key "\C-cv" 'copy-line)
 (global-set-key "\C-o" 'open-line-and-indent)
 (global-set-key "\M-Q" 'unfill-paragraph)
+
+;; Enable lexical binding.  Shouldn't affect Emacsen without lexbind
+;; support.
+;;
+;; Local Variables:
+;; lexical-binding: t
+;; End:
