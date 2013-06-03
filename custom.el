@@ -36,16 +36,27 @@
 ;; Helpful for csv files.
 (put 'scroll-left 'disabled nil)
 
+;; Whitespace
+(set-face-attribute 'whitespace-line nil
+                    :background nil
+                    :foreground nil
+                    :underline "red"
+                    :weight 'normal)
+
 ;; Ido
 (ido-mode t)
-(ido-everywhere t)
+(ido-ubiquitous-mode 1)
+(setq ido-use-faces nil)
+(flx-ido-mode 1)
+(ido-vertical-mode)
 (setq ido-enable-flex-matching t)
 (setq ido-use-filename-at-point nil)
-(setq ido-auto-merge-work-directories-length -1)
+;; (setq ido-auto-merge-work-directories-length -1)
 (add-hook 'ido-setup-hook
 	  (lambda ()
 	    (setq ido-enable-flex-matching t)))
-(setq ido-ignore-files '("\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./" "\\`b~")
+(setq ido-ignore-files
+      '("\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./" "\\`b~")
       ido-use-filename-at-point nil)
 (setq ido-save-directory-list-file "~/.emacs.d/private/.ido.last")
 
