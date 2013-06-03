@@ -27,22 +27,35 @@
                :build (("make" "all"))
                ;; makeinfo fails
                :info nil)
+        (:name flx
+               :website "https://github.com/lewang/flx"
+               :type "github"
+               :branch "master"
+               :pkgname "lewang/flx")
+        (:name ido-ubiquitous
+               :website "https://github.com/DarwinAwardWinner/ido-ubiquitous"
+               :type "github"
+               :branch "master"
+               :pkgname "DarwinAwardWinner/ido-ubiquitous")
         (:name key-chord
                :after (require 'key-chord))
         (:name page-break-lines
                :website "https://github.com/purcell/page-break-lines"
                :type "github"
-               :brank "master"
+               :branch "master"
                :pkgname "purcell/page-break-lines")))
 
 (setq el-get-packages
       (append
        '(ace-jump-mode
          auto-complete
+         buffer-move
          el-get
          elisp-slime-nav
          evil
          git-modes
+         ido-ubiquitous
+         ido-vertical-mode
          key-chord
          magit
          markdown-mode
@@ -79,6 +92,10 @@ immediately."
              ("fj" . windmove-down)
              ("fk" . windmove-up)
              ("fl" . windmove-right)
+             ("gh" . buf-move-left)
+             ("gj" . buf-move-down)
+             ("gk" . buf-move-up)
+             ("gl" . buf-move-right)
              ("j0" . delete-window)
              ("jr" . delete-window)
              ("j1" . delete-other-windows)
