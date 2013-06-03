@@ -125,36 +125,19 @@
               (add-to-list 'symbol-names name)
               (add-to-list 'name-and-pos (cons name position))))))))))
 
-(defun recentf-ido-find-file ()
-  "Find a recent file using Ido."
-  (interactive)
-  (let* ((file-assoc-list
-	  (mapcar (lambda (x)
-		    (cons (file-name-nondirectory x)
-			  x))
-		  recentf-list))
-	 (filename-list
-	  (cl-remove-duplicates (mapcar #'car file-assoc-list)
-                                :test #'string=))
-	 (filename (ido-completing-read "Choose recent file: "
-					filename-list
-					nil
-					t)))
-    (when filename
-      (find-file (cdr (assoc filename
-			     file-assoc-list))))))
-
-(setq my:old-theme 'solarized-dark
-      my:new-theme 'solarized-light)
+(defvar my:dark-theme 'solarized-dark)
+(defvar my:light-theme 'solarized-light)
+(defvar my:current-theme my:light-theme)
+(load-theme my:current-theme t)
 
 (defun toggle-color-theme ()
-  "Switch between the light and dark versions of Solarized."
+  "Switch between the `my:dark-theme' and `my:light-theme'."
   (interactive)
-  (let ((temp my:old-theme))
-    (setq my:old-theme my:new-theme)
-    (setq my:new-theme temp)
-    (disable-theme my:old-theme)
-    (load-theme my:new-theme t)))
+  (disable-theme my:current-theme)
+  (if (eq my:current-theme my:dark-theme)
+      (setq my:current-theme my:light-theme)
+    (setq my:current-theme my:dark-theme))
+  (load-theme my:current-theme t))
 
 (defun my:indent-defun-around-point ()
   "Indent the sexp that we're currently in."
