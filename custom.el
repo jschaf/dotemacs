@@ -220,6 +220,13 @@
 ;; Emacs server
 (setq-default server-auth-dir "~/.emacs.d/private/server")
 
+(eval-after-load 'magit
+  '(progn
+     (require 'git-commit-mode)
+     (add-hook 'magit-mode-hook
+               '(lambda ()
+                  (local-set-key "j" #'evil-next-line)
+                  (local-set-key "k" #'evil-previous-line)))))
 ;; Misc
 (global-set-key "\C-ha" 'apropos)
 (global-set-key (kbd "<f1>") 'menu-bar-mode)

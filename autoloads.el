@@ -299,13 +299,6 @@ figuring out how to reload the package."
      ;; Update smex command cache after all the loads.
      (smex-update)))
 
-(eval-after-load 'magit
-  '(progn
-     (add-hook 'magit-mode-hook
-               '(lambda ()
-                  (local-set-key "j" #'evil-next-line)
-                  (local-set-key "k" #'evil-previous-line)))))
-
 ;; Enable lexical binding.
 ;;
 ;; Local Variables:
