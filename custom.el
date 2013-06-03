@@ -188,8 +188,7 @@
             ;; Set Paredit to not insert a space when inserting
             ;; parens, but only in python-mode
             (set (make-local-variable 'paredit-space-for-delimiter-predicates)
-                 (list (function (lambda (endp delimiter) nil))))
-            ))
+                 (list (function (lambda (endp delimiter) nil))))))
 
 ;; Info customizations
 (setenv "INFOPATH" (concat (expand-file-name "~/.emacs.d/info:")
