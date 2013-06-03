@@ -58,7 +58,7 @@
   (comment-or-uncomment-region (line-beginning-position)
                                (line-end-position)))
 
-(defun unfill-paragraph (&optional region)
+(defun unfill-paragraph ()
   "Replace newline characters with a single space."
   (interactive)
   (let ((fill-column 90002000))
@@ -76,15 +76,11 @@
 (defun ido-goto-symbol (&optional symbol-list)
   "Refresh imenu and jump to a place in the buffer using Ido."
   (interactive)
-  (unless (featurep 'imenu)
-    (require 'imenu nil t))
+  (require 'imenu)
   (cond
    ((not symbol-list)
     (let ((ido-mode ido-mode)
           name-and-pos symbol-names position)
-      (unless ido-mode
-        (ido-mode 1)
-        (setq ido-enable-flex-matching t))
       (while (progn
                (imenu--cleanup)
                (setq imenu--index-alist nil)
@@ -176,7 +172,7 @@
     (evil-last-non-blank)))
 
 (defun my:maybe-byte-compile ()
-"Byte compile current file if .elc file exists."
+  "Byte compile current file if .elc file exists."
   (interactive)
   (when (file-exists-p (byte-compile-dest-file buffer-file-name))
     (byte-compile-file buffer-file-name)))
