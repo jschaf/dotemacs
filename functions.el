@@ -215,8 +215,7 @@
 (global-set-key "\C-o" 'open-line-and-indent)
 (global-set-key "\M-Q" 'unfill-paragraph)
 
-;; Enable lexical binding.  Shouldn't affect Emacsen without lexbind
-;; support.
+;; Enable lexical binding.
 ;;
 ;; Local Variables:
 ;; lexical-binding: t

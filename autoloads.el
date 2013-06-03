@@ -305,3 +305,9 @@ figuring out how to reload the package."
                '(lambda ()
                   (local-set-key "j" #'evil-next-line)
                   (local-set-key "k" #'evil-previous-line)))))
+
+;; Enable lexical binding.
+;;
+;; Local Variables:
+;; lexical-binding: t
+;; End:

@@ -1,6 +1,6 @@
 ;; Joe Schafer's .emacs
 
-;; Use a decent font. 
+;; Use a decent font.
 (modify-all-frames-parameters
  '((font . "Consolas 12")))
 
@@ -28,3 +28,9 @@
 (require 'server)
 (or (server-running-p)
     (server-start))
+
+;; Enable lexical binding.
+;;
+;; Local Variables:
+;; lexical-binding: t
+;; End:

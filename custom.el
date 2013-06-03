@@ -226,3 +226,9 @@
 
 (autoload 'toggle-uniquify-buffer-names "uniquify" nil t)
 (toggle-uniquify-buffer-names)
+
+;; Enable lexical binding.
+;;
+;; Local Variables:
+;; lexical-binding: t
+;; End:
