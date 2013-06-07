@@ -163,7 +163,7 @@
                      (list emacs-lisp-mode-map lisp-interaction-mode-map)
                      "g." 'elisp-slime-nav-find-elisp-thing-at-point
                      "g," 'pop-tag-mark
-                     "gh" 'elisp-slime-nav-describe-thing-at-point)
+                     "gh" 'elisp-slime-nav-describe-elisp-thing-at-point)
 
 (add-hook 'lisp-interaction-mode-hook
           (lambda ()
@@ -222,7 +222,6 @@
 
 (eval-after-load 'magit
   '(progn
-     (require 'git-commit-mode)
      (add-hook 'magit-mode-hook
                '(lambda ()
                   (local-set-key "j" #'evil-next-line)
