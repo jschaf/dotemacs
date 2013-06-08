@@ -147,7 +147,9 @@
     rainbow-delimiters-mode
     subword-mode
     turn-on-eldoc-mode
-    turn-on-page-break-lines-mode))
+    turn-on-page-break-lines-mode
+    elisp-slime-nav-mode))
+
 (loop for hook in my:elisp-hooks
       do
       (add-hook 'emacs-lisp-mode-hook hook))
