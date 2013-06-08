@@ -132,10 +132,13 @@
             ;;(dired-omit-mode 1)
             ))
 
+;; Highlight the current line.
+(global-hl-line-mode 1)
 
 ;; Emacs lisp
 (defvar my:elisp-hooks
-  '(elisp-slime-nav-mode
+  '(
+    ;; auto-complete-mode
     enable-paredit-mode
     hs-minor-mode
     my:delete-trailing-whitespace-before-save
