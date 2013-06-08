@@ -36,12 +36,9 @@
 ;; Helpful for csv files.
 (put 'scroll-left 'disabled nil)
 
-;; Whitespace
-(set-face-attribute 'whitespace-line nil
-                    :background nil
-                    :foreground nil
-                    :underline "red"
-                    :weight 'normal)
+;; Scrolling goes back to the same place.  It's less jarring to figure
+;; out where you are.
+(setq scroll-preserve-screen-position t)
 
 ;; Ido
 (ido-mode t)
@@ -145,8 +142,8 @@
     enable-paredit-mode
     hs-minor-mode
     my:delete-trailing-whitespace-before-save
-    my:highlight-long-lines
     my:maybe-byte-compile-after-save
+    my:show-column-80
     rainbow-delimiters-mode
     subword-mode
     turn-on-eldoc-mode
