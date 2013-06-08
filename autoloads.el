@@ -288,7 +288,6 @@ figuring out how to reload the package."
 
      (define-key evil-motion-state-map (kbd "C-SPC") #'evil-ace-jump-line-mode)
      (define-key evil-motion-state-map (kbd "SPC") #'evil-ace-jump-word-mode)
-     (define-key evil-operator-state-map (kbd "S-SPC") #'evil-ace-jump-line-mode)
 
      ;; different jumps for different visual modes
      (defadvice evil-visual-line (before spc-for-line-jump activate)
