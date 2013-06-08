@@ -140,6 +140,11 @@
         fci-rule-width 2)
   (fci-mode 1))
 
+(defun my:enable-auto-complete-mode ()
+  "Enable auto-complete mode."
+  (require 'auto-complete-config)
+  (auto-complete-mode 1))
+
 (defun my:evil-define-keys (states keymaps key def &rest bindings)
   "Run `evil-define-key' over all STATES and KEYMAPS."
   (loop for state in states
