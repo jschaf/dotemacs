@@ -76,7 +76,6 @@
 (defvar my:dark-theme 'solarized-dark)
 (defvar my:light-theme 'solarized-light)
 (defvar my:current-theme my:light-theme)
-(load-theme my:current-theme t)
 
 (defun toggle-color-theme ()
   "Switch between the `my:dark-theme' and `my:light-theme'."
