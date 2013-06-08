@@ -55,6 +55,7 @@
          el-get
          elisp-slime-nav
          evil
+         fill-column-indicator
          git-modes
          ido-ubiquitous
          key-chord
