@@ -300,11 +300,6 @@ figuring out how to reload the package."
      (defadvice evil-visual-block (before spc-for-char-jump activate)
        (define-key evil-motion-state-map (kbd "C-SPC") #'evil-ace-jump-char-mode))))
 
-(my:eval-after-init
-  '(progn
-     ;; Update smex command cache after all the loads.
-     (smex-update)))
-
 ;; Enable lexical binding.
 ;;
 ;; Local Variables:
