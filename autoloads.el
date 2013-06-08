@@ -285,13 +285,13 @@ figuring out how to reload the package."
        (define-key evil-motion-state-map (kbd "SPC") #'evil-ace-jump-line-mode))
 
      (defadvice evil-visual-char (before spc-for-char-jump activate)
-       (define-key evil-motion-state-map (kbd "C-SPC") #'evil-ace-jump-char-mode))
+       (define-key evil-motion-state-map (kbd "C-SPC")
+         #'evil-ace-jump-char-mode))
 
      (defadvice evil-visual-block (before spc-for-char-jump activate)
-       (define-key evil-motion-state-map (kbd "C-SPC") #'evil-ace-jump-char-mode))))
+       (define-key evil-motion-state-map (kbd "C-SPC")
+         #'evil-ace-jump-char-mode))))
 
-;; Enable lexical binding.
-;;
 ;; Local Variables:
 ;; lexical-binding: t
 ;; End:
