@@ -37,11 +37,6 @@
                :type "github"
                :branch "master"
                :pkgname "DarwinAwardWinner/ido-ubiquitous")
-        (:name ido-vertical
-               :website "https://github.com/rson/ido-vertical-mode.el"
-               :type "github"
-               :branch "master"
-               :pkgname "rson/ido-vertical-mode.el")
         (:name key-chord
                :after (require 'key-chord))
         (:name page-break-lines
