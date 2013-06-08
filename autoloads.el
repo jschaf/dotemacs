@@ -300,7 +300,7 @@ figuring out how to reload the package."
        (add-to-list 'completion-at-point-functions 'auto-complete-mode-maybe))
      (add-hook 'auto-complete-mode-hook
                'set-auto-complete-as-completion-at-point-function)
-
+     (setq ac-comphist "~/.emacs.d/private/ac-comphist.dat")
      (set-default 'ac-sources
                   '(ac-source-imenu
                     ac-source-dictionary
