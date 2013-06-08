@@ -105,16 +105,6 @@
 (set-register ?c '(file . "~/.emacs.d/custom.el"))
 (set-register ?e '(file . "~/.emacs.d/el-get/esup/esup.el"))
 
-;; Aliases
-(defalias 'dtw 'delete-trailing-whitespace)
-(defalias 'ar  'align-regexp)
-(defalias 'rr  'replace-regexp)
-(defalias 'qrr 'query-replace-regexp)
-(defalias 'ap 'apropos)
-(defalias 'cv 'customize-variable)
-(defalias 'cg 'customize-group)
-(defalias 'ttl 'toggle-truncate-lines)
-
 ;; Hide-show
 (add-hook 'hs-minor-mode-hook
           (lambda ()
