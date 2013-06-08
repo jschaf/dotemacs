@@ -195,6 +195,8 @@ figuring out how to reload the package."
           ("zl" . forward-sexp)
           ("zh" . backward-sexp)
           ("zu" . paredit-backward-up)
+          ("J" . (lambda () (interactive) (evil-next-line 5)))
+          ("K" . (lambda () (interactive) (evil-previous-line 5)))
           ("H" . my:back-to-indentation-or-beginning)
           ("L" . my:last-non-blank-or-end-of-line)
           ("zdy" . my:yank-sexp)
