@@ -134,14 +134,15 @@ figuring out how to reload the package."
   (evil-mode 1)
 
   ;; Use different colors for fonts to easily determine what mode we're in.
-  (setq evil-default-cursor "#5EA0AD")
+  (setq evil-default-cursor "#0971B2")
+  ;; (setq evil-default-cursor "#5EA0AD")
   (setq evil-normal-state-cursor evil-default-cursor)
   (setq evil-insert-state-cursor "#AD5E5E")
   (setq evil-visual-state-cursor evil-default-cursor)
   (setq evil-replace-state-cursor evil-default-cursor)
   (setq evil-operator-state-cursor nil)
   (setq evil-motion-state-cursor evil-default-cursor)
-  (setq evil-emacs-state-cursor evil-default-cursor)
+  (setq evil-emacs-state-cursor "#00FF48")
 
   (setq evil-want-visual-char-semi-exclusive t)
   (setq evil-move-cursor-back nil)
