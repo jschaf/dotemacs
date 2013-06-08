@@ -137,11 +137,10 @@
 
 ;; Emacs lisp
 (defvar my:elisp-hooks
-  '(
-    ;; auto-complete-mode
-    enable-paredit-mode
+  '(enable-paredit-mode
     hs-minor-mode
     my:delete-trailing-whitespace-before-save
+    my:enable-auto-complete-mode
     my:maybe-byte-compile-after-save
     my:show-column-80
     rainbow-delimiters-mode
