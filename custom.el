@@ -13,7 +13,7 @@
 (setq transient-mark-mode t)
 
 ;; Ignore all local variables.  The endless prompting is annoying.
-(setq-default enable-local-variables nil)
+(setq-default enable-local-variables :safe)
 
 ;; Kill and yank use the clipboard.
 (setq x-select-enable-clipboard t)
