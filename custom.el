@@ -76,6 +76,9 @@
               version-control t)
 
 ;; Completion options
+(setq tab-always-indent 'complete)
+(add-to-list 'completion-styles 'initials t)
+
 (setq completion-ignored-extensions
       '(".o" "~" ".bin" ".bak" ".obj" ".map" ".ico" ".pif" ".lnk" ".a" ".ln"
         ".blg" ".aux" ".dvi" ".toc" ".out" ".snm" ".pyc"))
@@ -105,16 +108,6 @@
 (set-register ?c '(file . "~/.emacs.d/custom.el"))
 (set-register ?e '(file . "~/.emacs.d/el-get/esup/esup.el"))
 
-;; Aliases
-(defalias 'dtw 'delete-trailing-whitespace)
-(defalias 'ar  'align-regexp)
-(defalias 'rr  'replace-regexp)
-(defalias 'qrr 'query-replace-regexp)
-(defalias 'ap 'apropos)
-(defalias 'cv 'customize-variable)
-(defalias 'cg 'customize-group)
-(defalias 'ttl 'toggle-truncate-lines)
-
 ;; Hide-show
 (add-hook 'hs-minor-mode-hook
           (lambda ()
@@ -142,10 +135,13 @@
             ;;(dired-omit-mode 1)
             ))
 
+;; Highlight the current line.
+(global-hl-line-mode 1)
 
 ;; Emacs lisp
 (defvar my:elisp-hooks
-  '(elisp-slime-nav-mode
+  '(
+    ;; auto-complete-mode
     enable-paredit-mode
     hs-minor-mode
     my:delete-trailing-whitespace-before-save
@@ -154,7 +150,9 @@
     rainbow-delimiters-mode
     subword-mode
     turn-on-eldoc-mode
-    turn-on-page-break-lines-mode))
+    turn-on-page-break-lines-mode
+    elisp-slime-nav-mode))
+
 (loop for hook in my:elisp-hooks
       do
       (add-hook 'emacs-lisp-mode-hook hook))

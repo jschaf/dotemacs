@@ -37,11 +37,6 @@
                :type "github"
                :branch "master"
                :pkgname "DarwinAwardWinner/ido-ubiquitous")
-        (:name ido-vertical
-               :website "https://github.com/rson/ido-vertical-mode.el"
-               :type "github"
-               :branch "master"
-               :pkgname "rson/ido-vertical-mode.el")
         (:name key-chord
                :after (require 'key-chord))
         (:name page-break-lines
@@ -98,30 +93,23 @@ immediately."
              ("fj" . windmove-down)
              ("fk" . windmove-up)
              ("fl" . windmove-right)
-             ("gh" . buf-move-left)
-             ("gj" . buf-move-down)
-             ("gk" . buf-move-up)
-             ("gl" . buf-move-right)
-             ("j0" . delete-window)
+             ("vh" . buf-move-left)
+             ("vj" . buf-move-down)
+             ("vk" . buf-move-up)
+             ("vl" . buf-move-right)
              ("jr" . delete-window)
-             ("j1" . delete-other-windows)
              ("jq" . delete-other-windows)
-             ("j2" . split-window-vertically)
              ("jw" . split-window-vertically)
-             ("j3" . split-window-horizontally)
              ("je" . split-window-horizontally)
              ("jx" . smex)
-             ("jg" . keyboard-quit)
              ("jt" . dabbrev-expand)
              ("xb" . ido-switch-buffer)
              ("/f" . ido-find-file)
-             ("/r" . recentf-ido-find-file)
              ("/s" . save-buffer)
              ("nb" . bookmark-jump)
              ("nm" . bookmark-set)
              ("nl" . bookmark-bmenu-list)
              ("jk" . evil-normal-state)
-             ("cv" . eval-last-sexp)
              ("/c" . goto-last-change))
            do (key-chord-define-global key func))))
 
@@ -135,14 +123,15 @@ figuring out how to reload the package."
   (evil-mode 1)
 
   ;; Use different colors for fonts to easily determine what mode we're in.
-  (setq evil-default-cursor "#5EA0AD")
+  (setq evil-default-cursor "#0971B2")
+  ;; (setq evil-default-cursor "#5EA0AD")
   (setq evil-normal-state-cursor evil-default-cursor)
   (setq evil-insert-state-cursor "#AD5E5E")
   (setq evil-visual-state-cursor evil-default-cursor)
   (setq evil-replace-state-cursor evil-default-cursor)
   (setq evil-operator-state-cursor nil)
   (setq evil-motion-state-cursor evil-default-cursor)
-  (setq evil-emacs-state-cursor evil-default-cursor)
+  (setq evil-emacs-state-cursor "#00FF48")
 
   (setq evil-want-visual-char-semi-exclusive t)
   (setq evil-move-cursor-back nil)
@@ -195,6 +184,8 @@ figuring out how to reload the package."
           ("zl" . forward-sexp)
           ("zh" . backward-sexp)
           ("zu" . paredit-backward-up)
+          ("J" . (lambda () (interactive) (evil-next-line 5)))
+          ("K" . (lambda () (interactive) (evil-previous-line 5)))
           ("H" . my:back-to-indentation-or-beginning)
           ("L" . my:last-non-blank-or-end-of-line)
           ("zdy" . my:yank-sexp)
@@ -288,7 +279,6 @@ figuring out how to reload the package."
 
      (define-key evil-motion-state-map (kbd "C-SPC") #'evil-ace-jump-line-mode)
      (define-key evil-motion-state-map (kbd "SPC") #'evil-ace-jump-word-mode)
-     (define-key evil-operator-state-map (kbd "S-SPC") #'evil-ace-jump-line-mode)
 
      ;; different jumps for different visual modes
      (defadvice evil-visual-line (before spc-for-line-jump activate)
@@ -299,11 +289,6 @@ figuring out how to reload the package."
 
      (defadvice evil-visual-block (before spc-for-char-jump activate)
        (define-key evil-motion-state-map (kbd "C-SPC") #'evil-ace-jump-char-mode))))
-
-(my:eval-after-init
-  '(progn
-     ;; Update smex command cache after all the loads.
-     (smex-update)))
 
 ;; Enable lexical binding.
 ;;
