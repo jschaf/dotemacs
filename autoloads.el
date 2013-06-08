@@ -48,7 +48,9 @@
                :website "https://github.com/purcell/page-break-lines"
                :type "github"
                :branch "master"
-               :pkgname "purcell/page-break-lines")))
+               :pkgname "purcell/page-break-lines")
+        (:name solarized-theme
+               :after (load-theme 'solarized-light))))
 
 (setq el-get-packages
       (append
@@ -60,7 +62,6 @@
          evil
          git-modes
          ido-ubiquitous
-         ido-vertical-mode
          key-chord
          magit
          markdown-mode
