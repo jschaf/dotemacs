@@ -293,6 +293,20 @@ figuring out how to reload the package."
        (define-key evil-motion-state-map (kbd "C-SPC")
          #'evil-ace-jump-char-mode))))
 
+
+(eval-after-load 'auto-complete-config
+  '(progn
+     (defun set-auto-complete-as-completion-at-point-function ()
+       (add-to-list 'completion-at-point-functions 'auto-complete-mode-maybe))
+     (add-hook 'auto-complete-mode-hook
+               'set-auto-complete-as-completion-at-point-function)
+
+     (set-default 'ac-sources
+                  '(ac-source-imenu
+                    ac-source-dictionary
+                    ac-source-words-in-buffer
+                    ac-source-words-in-same-mode-buffers
+                    ac-source-words-in-all-buffer))))
 ;; Local Variables:
 ;; lexical-binding: t
 ;; End:
