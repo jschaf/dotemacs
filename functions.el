@@ -1,23 +1,12 @@
 (eval-when-compile
  (require 'cl-lib))
 
-(defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
-  "Prevent annoying 'Active processes exist' query when you quit Emacs."
-  (cl-letf ((process-list ())) ad-do-it))
-
 (defun kill-region-or-backward-kill-word ()
   "`kill-region' if the mark is active, else `backward-kill-word'."
   (interactive)
   (if mark-active
       (call-interactively 'kill-region)
     (call-interactively 'backward-kill-word)))
-
-(defun copy-line (arg)
-  "Copy ARG lines into the kill ring"
-  (interactive "p")
-  (kill-ring-save (line-beginning-position)
-                  (line-beginning-position (+ 1 arg)))
-  (message "%d line%s copied" arg (if (= 1 arg) "" "s")))
 
 (defadvice yank (after indent-region activate)
   "Indent region after it is yanked."
@@ -31,15 +20,6 @@
 					   c-mode c++-mode objc-mode ada-mode
 					   latex-mode plain-tex-mode))
       (indent-region (region-beginning) (region-end) nil)))
-
-(defun open-line-and-indent (&optional arg)
-  "Same as `open-line' but it indents the line that is pushed down"
-  (interactive "p")
-  (save-excursion
-    (while (> arg 0)
-      (newline-and-indent)
-      (setq arg (1- arg))))
-  (indent-according-to-mode))
 
 (defun rename-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
@@ -166,13 +146,7 @@
                      bindings (cddr bindings))
                (evil-define-key state keymap k d)))))
 
-(global-set-key "\C-cr" 'recentf-ido-find-file)
-(global-set-key "\C-ci" 'ido-goto-symbol)
-(global-set-key "\C-x\;" 'comment-or-uncomment-line)
 (global-set-key "\C-w" 'kill-region-or-backward-kill-word)
-(global-set-key "\C-cv" 'copy-line)
-(global-set-key "\C-o" 'open-line-and-indent)
-(global-set-key "\M-Q" 'unfill-paragraph)
 
 ;; Enable lexical binding.
 ;;
