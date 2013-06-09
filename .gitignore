@@ -7,7 +7,6 @@ CVS/
 # Personal files
 private/*
 # need at least one file for git to keep it
-!private/filler
 
 # Info
 # ignore huge info files

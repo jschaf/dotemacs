@@ -43,7 +43,9 @@
                :website "https://github.com/purcell/page-break-lines"
                :type "github"
                :branch "master"
-               :pkgname "purcell/page-break-lines")))
+               :pkgname "purcell/page-break-lines")
+        (:name solarized-theme
+               :after (load-theme 'solarized-light))))
 
 (setq el-get-packages
       (append
@@ -53,9 +55,9 @@
          el-get
          elisp-slime-nav
          evil
+         fill-column-indicator
          git-modes
          ido-ubiquitous
-         ido-vertical-mode
          key-chord
          magit
          markdown-mode
@@ -284,13 +286,27 @@ figuring out how to reload the package."
        (define-key evil-motion-state-map (kbd "SPC") #'evil-ace-jump-line-mode))
 
      (defadvice evil-visual-char (before spc-for-char-jump activate)
-       (define-key evil-motion-state-map (kbd "C-SPC") #'evil-ace-jump-char-mode))
+       (define-key evil-motion-state-map (kbd "C-SPC")
+         #'evil-ace-jump-char-mode))
 
      (defadvice evil-visual-block (before spc-for-char-jump activate)
-       (define-key evil-motion-state-map (kbd "C-SPC") #'evil-ace-jump-char-mode))))
+       (define-key evil-motion-state-map (kbd "C-SPC")
+         #'evil-ace-jump-char-mode))))
 
-;; Enable lexical binding.
-;;
+
+(eval-after-load 'auto-complete-config
+  '(progn
+     (defun set-auto-complete-as-completion-at-point-function ()
+       (add-to-list 'completion-at-point-functions 'auto-complete-mode-maybe))
+     (add-hook 'auto-complete-mode-hook
+               'set-auto-complete-as-completion-at-point-function)
+     (setq ac-comphist "~/.emacs.d/private/ac-comphist.dat")
+     (set-default 'ac-sources
+                  '(ac-source-imenu
+                    ac-source-dictionary
+                    ac-source-words-in-buffer
+                    ac-source-words-in-same-mode-buffers
+                    ac-source-words-in-all-buffer))))
 ;; Local Variables:
 ;; lexical-binding: t
 ;; End:

@@ -62,7 +62,6 @@
 (defvar my:dark-theme 'solarized-dark)
 (defvar my:light-theme 'solarized-light)
 (defvar my:current-theme my:light-theme)
-(load-theme my:current-theme t)
 
 (defun toggle-color-theme ()
   "Switch between the `my:dark-theme' and `my:light-theme'."
@@ -129,8 +128,21 @@
   (interactive)
   (require 'whitespace)
   (set (make-local-variable 'whitespace-style) '(face lines-tail))
-  (set (make-local-variable 'whitespace-line-column) 80)
+  (set (make-local-variable 'whitespace-line-column) (max 80 fill-column))
   (whitespace-mode 1))
+
+(defun my:show-column-80 ()
+  "Enable a rule at column 80."
+  (interactive)
+  (require 'fill-column-indicator)
+  (setq fci-rule-column 80
+        fci-rule-width 2)
+  (fci-mode 1))
+
+(defun my:enable-auto-complete-mode ()
+  "Enable auto-complete mode."
+  (require 'auto-complete-config)
+  (auto-complete-mode 1))
 
 (defun my:evil-define-keys (states keymaps key def &rest bindings)
   "Run `evil-define-key' over all STATES and KEYMAPS."

@@ -13,7 +13,7 @@
 (setq transient-mark-mode t)
 
 ;; Ignore all local variables.  The endless prompting is annoying.
-(setq-default enable-local-variables nil)
+(setq-default enable-local-variables :safe)
 
 ;; Kill and yank use the clipboard.
 (setq x-select-enable-clipboard t)
@@ -36,12 +36,9 @@
 ;; Helpful for csv files.
 (put 'scroll-left 'disabled nil)
 
-;; Whitespace
-(set-face-attribute 'whitespace-line nil
-                    :background nil
-                    :foreground nil
-                    :underline "red"
-                    :weight 'normal)
+;; Scrolling goes back to the same place.  It's less jarring to figure
+;; out where you are.
+(setq scroll-preserve-screen-position t)
 
 ;; Ido
 (ido-mode t)
@@ -140,13 +137,12 @@
 
 ;; Emacs lisp
 (defvar my:elisp-hooks
-  '(
-    ;; auto-complete-mode
-    enable-paredit-mode
+  '(enable-paredit-mode
     hs-minor-mode
     my:delete-trailing-whitespace-before-save
-    my:highlight-long-lines
+    my:enable-auto-complete-mode
     my:maybe-byte-compile-after-save
+    my:show-column-80
     rainbow-delimiters-mode
     subword-mode
     turn-on-eldoc-mode
