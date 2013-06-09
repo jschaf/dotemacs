@@ -138,10 +138,10 @@
         for keymap in keymaps
         do
         (evil-define-key state keymap key def)
-        (let (k d (b bindings))
+        (let (key' def')
              (while bindings
-               (setq k (nth 0 bindings)
-                     d (nth 1 bindings)
+               (setq key' (nth 0 bindings)
+                     def' (nth 1 bindings)
                      bindings (cddr bindings))
                (evil-define-key state keymap k d)))))
 
