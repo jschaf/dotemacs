@@ -146,16 +146,18 @@
 
 (defun my:evil-define-keys (states keymaps key def &rest bindings)
   "Run `evil-define-key' over all STATES and KEYMAPS."
-  (loop for state in states
-        for keymap in keymaps
-        do
-        (evil-define-key state keymap key def)
-        (let (key' def')
-             (while bindings
-               (setq key' (nth 0 bindings)
-                     def' (nth 1 bindings)
-                     bindings (cddr bindings))
-               (evil-define-key state keymap k d)))))
+  (let* ( ;; Keep bindings unmodified to use for all iterations
+         (bindings (append (list key def) bindings))
+         ;; Destructively modify k, d and bs.
+         bs k d)
+    (dolist (state states)
+      (dolist (keymap keymaps)
+        (setq bs bindings)
+        (while bs
+          (setq k (pop bs)
+                d (pop bs))
+          (evil-define-key state keymap k d)
+          (message "defined state %s in %s of %s:%s" state keymap k d))))))
 
 (global-set-key "\C-w" 'kill-region-or-backward-kill-word)
 
