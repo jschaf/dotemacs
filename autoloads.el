@@ -104,7 +104,7 @@ immediately."
              ("jt" . dabbrev-expand)
              ("xb" . ido-switch-buffer)
              ("/f" . ido-find-file)
-             ("/s" . save-buffer)
+             ("/s" . my:save-buffer)
              ("nb" . bookmark-jump)
              ("nm" . bookmark-set)
              ("nl" . bookmark-bmenu-list)

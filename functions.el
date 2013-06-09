@@ -21,6 +21,12 @@
 					   latex-mode plain-tex-mode))
       (indent-region (region-beginning) (region-end) nil)))
 
+(defun my:save-buffer (&optional args)
+  "If trying to save the *scratch* buffer, do nothing."
+  (interactive)
+  (unless (eq (current-buffer) (get-buffer "*scratch*"))
+    (save-buffer args)))
+
 (defun rename-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
@@ -80,13 +86,6 @@
   (save-excursion
     (mark-sexp)
     (kill-ring-save (point) (mark))))
-
-(defun my:find-function-at-point-this-window ()
-  "Find function at point."
-  (interactive)
-  (let ((symb (function-called-at-point)))
-    (when symb
-      (find-function symb))))
 
 (defun info-mode ()
   "A simple function to open standalone info files correctly."
