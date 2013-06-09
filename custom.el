@@ -176,13 +176,7 @@
       ada-xref-other-buffer t)
 
 ;; Python
-(add-hook 'python-mode-hook
-          (lambda ()
-            (hs-minor-mode)
-            ;; Set Paredit to not insert a space when inserting
-            ;; parens, but only in python-mode
-            (set (make-local-variable 'paredit-space-for-delimiter-predicates)
-                 (list (function (lambda (endp delimiter) nil))))))
+(add-hook 'python-mode-hook 'hs-minor-mode)
 
 ;; Info customizations
 (setenv "INFOPATH" (concat (expand-file-name "~/.emacs.d/info:")
