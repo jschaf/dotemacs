@@ -153,15 +153,15 @@
       do
       (add-hook 'emacs-lisp-mode-hook hook))
 
-(my:evil-define-keys '(normal motion)
-                     (list emacs-lisp-mode-map lisp-interaction-mode-map)
-                     "g." 'elisp-slime-nav-find-elisp-thing-at-point
-                     "g," 'pop-tag-mark
-                     "gh" 'elisp-slime-nav-describe-elisp-thing-at-point)
-
-(add-hook 'lisp-interaction-mode-hook
-          (lambda ()
-            (local-set-key "\C-\M-j" 'eval-print-last-sexp)))
+(loop for (key . func) in
+      '(("g." . elisp-slime-nav-find-elisp-thing-at-point)
+        ("g," . pop-tag-mark)
+        ("gh" . elisp-slime-nav-describe-elisp-thing-at-point))
+      do
+      (evil-define-key 'normal emacs-lisp-mode-map key func)
+      (evil-define-key 'normal lisp-interaction-mode-map key func)
+      (evil-define-key 'motion emacs-lisp-mode-map key func)
+      (evil-define-key 'motion lisp-interaction-mode-map key func))
 
 ;; Ada mode
 (setq ada-case-attribute 'ada-loose-case-word
