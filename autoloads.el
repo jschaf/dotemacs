@@ -59,6 +59,7 @@
          git-modes
          ido-ubiquitous
          key-chord
+         keydef
          magit
          markdown-mode
          page-break-lines
