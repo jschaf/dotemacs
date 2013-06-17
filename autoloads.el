@@ -1,21 +1,32 @@
-;; Use my fork of el-get
-(setq el-get-git-install-url "http://github.com/jschaf/el-get.git")
+;;; autoloads.el --- bootstrap packages to improve the Emacs experience.
 
-;; This takes forever and I don't want to install stuff from
-;; emacswiki.
-(setq el-get-install-skip-emacswiki-recipes t)
+;;; Commentary:
 
-;; Require el-get
+;; Use el-get to bootstrap packages.  el-get has the advantage that it
+;; will automatically byte-compile, add auto-loads and install info
+;; for our packages.
+
+;;; Code:
+
+;; Use my fork of el-get.
+(defvar el-get-git-install-url "http://github.com/jschaf/el-get.git")
+
+;; Installing from Emacswiki is slow and insecure
+(defvar el-get-install-skip-emacswiki-recipes t)
+
+;; Require el-get and bootstrap if it doesn't exist.
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
       (url-retrieve-synchronously
        "https://raw.github.com/jschaf/el-get/master/el-get-install.el")
-    (let (el-get-master-branch)
+    (let ((el-get-master-branch t))
+      (when el-get-master-branch
+        (message "Bootstrapping el-get with master branch."))
       (goto-char (point-max))
       (eval-print-last-sexp))))
 
-(setq el-get-sources
+(defvar el-get-sources
       '((:name esup
                :website "https://github.com/jschaf/esup"
                :description "Emacs Start Up Profiler"
@@ -44,36 +55,43 @@
                :type "github"
                :branch "master"
                :pkgname "purcell/page-break-lines")
+        (:name powershell
+               :website "https://github.com/jschaf/powershell.el"
+               :type "github"
+               :branch "master"
+               :pkgname "jschaf/powershell.el")
         (:name solarized-theme
                :after (load-theme 'solarized-light))))
 
-(setq el-get-packages
+(defvar el-get-packages
       (append
        '(ace-jump-mode
          auto-complete
          buffer-move
+         dash
          el-get
          elisp-slime-nav
          evil
          fill-column-indicator
+         flycheck
          git-modes
          ido-ubiquitous
          key-chord
          keydef
          magit
          markdown-mode
-         page-break-lines
          paredit
          rainbow-delimiters
+         s
          smex
          solarized-theme
          zencoding-mode)
        (mapcar 'el-get-source-name el-get-sources)))
 
 ;; We can get whole repositories later if we want to hack on them.
-(setq el-get-git-shallow-clone t)
+(defvar el-get-git-shallow-clone t)
 
-;; Install all the packages asynchronusly
+;; Install all the packages asynchronusly. Waaaay faster.
 (el-get nil el-get-packages)
 
 (defun my:eval-after-init (form)
@@ -189,7 +207,7 @@ figuring out how to reload the package."
           ("J" . (lambda () (interactive) (evil-next-line 5)))
           ("K" . (lambda () (interactive) (evil-previous-line 5)))
           ("H" . my:back-to-indentation-or-beginning)
-          ("L" . my:last-non-blank-or-end-of-line)
+          ("L" . evil-end-of-line)
           ("zdy" . my:yank-sexp)
           (,(kbd "C-<return>") . newline)
           ("\C-j" . scroll-up-command)
@@ -308,6 +326,10 @@ figuring out how to reload the package."
                     ac-source-words-in-buffer
                     ac-source-words-in-same-mode-buffers
                     ac-source-words-in-all-buffer))))
+
 ;; Local Variables:
 ;; lexical-binding: t
 ;; End:
+
+(provide 'autoloads)
+;;; autoloads.el ends here

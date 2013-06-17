@@ -1,3 +1,10 @@
+;;; functions.el --- Personal functions for Emacs.
+
+;;; Commentary:
+;;
+
+;;; Code:
+
 (eval-when-compile
  (require 'cl-lib))
 
@@ -36,7 +43,8 @@
         (message "Buffer '%s' is not visiting a file!" name)
       (if (get-buffer new-name)
           (message "A buffer named '%s' already exists!" new-name)
-        (progn (rename-file name new-name 1) (rename-buffer new-name) (set-visited-file-name new-name) (set-buffer-modified-p nil))))))
+        (progn (rename-file name new-name 1) (rename-buffer new-name)
+               (set-visited-file-name new-name) (set-buffer-modified-p nil))))))
 
 (defun comment-or-uncomment-line ()
   "Either comments the current line or uncomments it."
@@ -136,8 +144,24 @@
   (interactive)
   (require 'fill-column-indicator)
   (setq fci-rule-column 80
-        fci-rule-width 2)
+        fci-rule-width 1)
   (fci-mode 1))
+
+(defun my:local-comment-auto-fill ()
+  (set (make-local-variable 'comment-auto-fill-only-comments) t)
+  (auto-fill-mode t))
+
+(defun my:pretty-lambdas ()
+  (font-lock-add-keywords
+   nil `(("(?\\(lambda\\>\\)"
+          (0 (progn (compose-region (match-beginning 1) (match-end 1)
+                                    ,(make-char 'greek-iso8859-7 107))
+                    nil))))))
+
+(defun my:add-watchwords ()
+  (font-lock-add-keywords
+   nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\|HACK\\|REFACTOR\\|NOCOMMIT\\)"
+          1 font-lock-warning-face t))))
 
 (defun my:enable-auto-complete-mode ()
   "Enable auto-complete mode."
@@ -161,8 +185,10 @@
 
 (global-set-key "\C-w" 'kill-region-or-backward-kill-word)
 
-;; Enable lexical binding.
-;;
 ;; Local Variables:
 ;; lexical-binding: t
 ;; End:
+
+(provide 'functions)
+
+;;; functions.el ends here

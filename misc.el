@@ -1,4 +1,8 @@
-;;; Personal customizations for Emacs
+;;; misc.el --- Personal customizations for Emacs.
+
+;;; Commentary:
+
+;;; Code:
 
 ;; Unnecessary.
 (setq inhibit-startup-screen t
@@ -28,7 +32,7 @@
 ;; Replace yes with y.
 (fset 'yes-or-no-p 'y-or-n-p)
 
-(setq bookmark-default-file "~/.emacs.d/private/bookmarks")
+(setq-default bookmark-default-file "~/.emacs.d/private/bookmarks")
 
 ;; Useful for regexps.
 (put 'narrow-to-region 'disabled nil)
@@ -38,13 +42,19 @@
 
 ;; Scrolling goes back to the same place.  It's less jarring to figure
 ;; out where you are.
-(setq scroll-preserve-screen-position t)
+(setq scroll-preserve-screen-position 'keep)
+
+;; Store our the position we last visited.
+(require 'saveplace)
+(setq save-place t
+      save-place-file "~/.emacs.d/private/save-place")
 
 ;; Ido
 (ido-mode t)
 (ido-ubiquitous-mode 1)
 (setq ido-use-faces nil)
-(flx-ido-mode 1)
+
+;; (flx-ido-mode 1)
 (ido-vertical-mode)
 (setq ido-enable-flex-matching t)
 (setq ido-use-filename-at-point nil)
@@ -85,10 +95,7 @@
 ;; Never allow tabs
 (setq-default indent-tabs-mode nil)
 
-;; Change default highlight level for headers so it's easier to see
-;; against a dark background.
-;; (setq rst-level-face-base-light 60)
-
+
 ;;; Usability tweaks
 
 ;; Toggle visualization of matching parens.
@@ -97,34 +104,17 @@
 ;; Toggle column number display in the mode line.
 (column-number-mode 1)
 
-
 ;; Registers
 (set-register ?i '(file . "~/.emacs.d/init.el"))
 (set-register ?a '(file . "~/.emacs.d/autoloads.el"))
 (set-register ?f '(file . "~/.emacs.d/functions.el"))
-(set-register ?c '(file . "~/.emacs.d/custom.el"))
+(set-register ?c '(file . "~/.emacs.d/misc.el"))
 (set-register ?e '(file . "~/.emacs.d/el-get/esup/esup.el"))
 
-;; Hide-show
-(add-hook 'hs-minor-mode-hook
-          (lambda ()
-            (local-set-key "\M-=" 'hs-toggle-hiding)
-            (local-set-key "\M-_" 'hs-hide-all)
-            (local-set-key "\M-+" 'hs-show-all)))
-
-(add-hook 'compilation-mode-hook
-          (lambda ()
-            (local-set-key "\M-n" 'cycle-buffer)
-            (local-set-key "\M-p" 'cycle-buffer-backward)
-            ))
-
 ;; Help
-(add-hook 'help-mode-hook
-          (lambda ()
-            (local-set-key "j" (lambda () (interactive) (scroll-up 1)))
-            (local-set-key "k" (lambda () (interactive) (scroll-down 1)))
-            (local-set-key "l" 'help-go-back)
-            (local-set-key "h" 'help-go-forward)))
+(keydef (help "k") (scroll-down 1))
+(keydef (help "L") help-go-back)
+(keydef (help "H") help-go-back)
 
 (add-hook 'dired-mode-hook
           (lambda ()
@@ -132,17 +122,28 @@
             ;;(dired-omit-mode 1)
             ))
 
-;; Highlight the current line.
-(global-hl-line-mode 1)
+(keydef "<RET>" newline-and-indent)
 
-;; Emacs lisp
+;; All programming modes
+(defvar my:prog-mode-hooks
+  '(my:add-watchwords
+    my:local-comment-auto-fill))
+
+(loop for hook in my:prog-mode-hooks
+      do
+      (add-hook 'prog-mode-hook hook))
+
+
+;; Emacs Lisp
 (defvar my:elisp-hooks
   '(enable-paredit-mode
+    flycheck-mode
     hs-minor-mode
     my:delete-trailing-whitespace-before-save
     my:enable-auto-complete-mode
     my:maybe-byte-compile-after-save
-    my:show-column-80
+    my:pretty-lambdas
+    ;; my:show-column-80
     rainbow-delimiters-mode
     subword-mode
     turn-on-eldoc-mode
@@ -162,6 +163,14 @@
       (evil-define-key 'normal lisp-interaction-mode-map key func)
       (evil-define-key 'motion emacs-lisp-mode-map key func)
       (evil-define-key 'motion lisp-interaction-mode-map key func))
+
+(defvar my:compilation-hooks
+  '(page-break-lines-mode))
+
+(loop for hook in my:compilation-hooks
+      do
+      (add-hook 'compilation-mode-hook hook))
+
 
 ;; Ada mode
 (setq ada-case-attribute 'ada-loose-case-word
@@ -194,10 +203,9 @@
 (add-hook 'latex-mode-hook
           (lambda ()
             (turn-on-reftex)
-            (set (make-local-variable sentence-end) "[.?!][]\"')}]*\\($\\|     \\|  \\)[
-]*")
-            (set-face-attribute 'font-latex-sedate-face nil
-                                :foreground "red")))
+            (set (make-local-variable sentence-end)
+                 "[.?!][]\"')}]*\\($\\|     \\|  \\)[
+]*")))
 
 ;; Automatically reload files when changed.
 (global-auto-revert-mode 1)
@@ -221,8 +229,9 @@
 (autoload 'toggle-uniquify-buffer-names "uniquify" nil t)
 (toggle-uniquify-buffer-names)
 
-;; Enable lexical binding.
-;;
 ;; Local Variables:
 ;; lexical-binding: t
 ;; End:
+
+(provide 'misc)
+;;; misc.el ends here
