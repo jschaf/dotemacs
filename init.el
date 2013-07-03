@@ -36,6 +36,8 @@
 (require 'functions)
 (require 'misc)
 
+(load-theme 'solarized-light)
+
 (require 'server)
 (or (server-running-p)
     (server-start))

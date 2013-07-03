@@ -60,8 +60,7 @@
                :type "github"
                :branch "master"
                :pkgname "jschaf/powershell.el")
-        (:name solarized-theme
-               :after (load-theme 'solarized-light))))
+        (:name solarized-theme)))
 
 (defvar el-get-packages
       (append
