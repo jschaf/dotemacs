@@ -137,7 +137,7 @@
 ;; Emacs Lisp
 (defvar my:elisp-hooks
   '(enable-paredit-mode
-    flycheck-mode
+    ;; flycheck-mode
     hs-minor-mode
     my:delete-trailing-whitespace-before-save
     my:enable-auto-complete-mode
