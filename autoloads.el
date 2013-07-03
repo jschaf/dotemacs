@@ -75,6 +75,7 @@
          fill-column-indicator
          flycheck
          git-modes
+         haskell-mode
          ido-ubiquitous
          key-chord
          keydef
