@@ -13,6 +13,12 @@
 (recentf-mode 1)
 (setq-default recentf-save-file "~/.emacs.d/private/.recentf")
 
+;; Saveplace - go to the last point when opening a previously closed
+;; file.
+(require 'saveplace)
+(setq-default save-place t)
+(setq save-place-file "~/.emacs.d/private/places")
+
 ;; Highlight when mark is active
 (setq transient-mark-mode t)
 
