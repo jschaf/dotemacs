@@ -32,9 +32,9 @@
 ;;; Code Load
 (setq custom-file "~/.emacs.d/private/emacs-custom.el")
 (load custom-file)
-(require 'autoloads)
-(require 'functions)
-(require 'misc)
+(load "autoloads")
+(load "functions")
+(load "misc")
 
 (require 'server)
 (or (server-running-p)
