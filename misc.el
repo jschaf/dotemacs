@@ -22,7 +22,8 @@
 ;; Highlight when mark is active
 (setq transient-mark-mode t)
 
-;; Ignore all local variables.  The endless prompting is annoying.
+;; Ignore all safe local variables.  The endless prompting is
+;; annoying.
 (setq-default enable-local-variables :safe)
 
 ;; Kill and yank use the clipboard.
