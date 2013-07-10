@@ -144,7 +144,7 @@
 ;; Emacs Lisp
 (defvar my:elisp-hooks
   '(enable-paredit-mode
-    flycheck-mode
+    ;; flycheck-mode
     hs-minor-mode
     my:delete-trailing-whitespace-before-save
     my:enable-auto-complete-mode
@@ -211,6 +211,12 @@
             (add-to-list 'Info-directory-list "~/.emacs.d/info")
     	    (setq Info-additional-directory-list Info-default-directory-list)))
 
+;; Haskell
+(defvar my:haskell-mode-hooks
+  '(turn-on-haskell-indentation))
+(loop for hook in my:haskell-mode-hooks
+      do
+      (add-hook 'haskell-mode-hook hook))
 ;; LaTeX
 (add-hook 'latex-mode-hook
           (lambda ()
