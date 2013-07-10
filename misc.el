@@ -178,7 +178,12 @@
       do
       (add-hook 'compilation-mode-hook hook))
 
+(defvar my:org-hooks
+  '(auto-fill-mode))
 
+(loop for hook in my:org-hooks
+      do
+      (add-hook 'org-mode-hook hook))
 ;; Ada mode
 (setq ada-case-attribute 'ada-loose-case-word
       ada-case-exception-file '("~/.emacs.d/.ada_case_exceptions")
