@@ -302,7 +302,7 @@ figuring out how to reload the package."
 
      ;; different jumps for different visual modes
      (defadvice evil-visual-line (before spc-for-line-jump activate)
-       (define-key evil-motion-state-map (kbd "SPC") #'evil-ace-jump-line-mode))
+       (define-key evil-motion-state-map (kbd "C-SPC") #'evil-ace-jump-line-mode))
 
      (defadvice evil-visual-char (before spc-for-char-jump activate)
        (define-key evil-motion-state-map (kbd "C-SPC")
