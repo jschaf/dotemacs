@@ -84,6 +84,7 @@
          rainbow-delimiters
          s
          smex
+         smartparens
          solarized-theme
          zencoding-mode)
        (mapcar 'el-get-source-name el-get-sources)))
