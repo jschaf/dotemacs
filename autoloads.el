@@ -217,6 +217,7 @@ figuring out how to reload the package."
           ("\C-k" . scroll-down-command))
         do
         (define-key evil-normal-state-map key func)
+        (define-key evil-visual-state-map key func)
         (define-key evil-motion-state-map key func))
 
   ;; Commands for only the normal state map
