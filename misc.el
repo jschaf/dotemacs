@@ -197,7 +197,25 @@
       ada-xref-other-buffer t)
 
 ;; Python
-(add-hook 'python-mode-hook 'hs-minor-mode)
+(defvar my:python-mode-hooks
+  '(hs-minor-mode
+    my:pretty-lambdas
+    jedi:setup))
+
+(loop for hook in my:python-mode-hooks
+      do
+      (add-hook 'python-mode-hook hook))
+
+(eval-after-load 'jedi
+  '(progn
+     (setq jedi:complete-on-dot t)
+     (loop for (key . func) in
+           '(("g." . jedi:goto-definition)
+             ("g," . jedi:goto-definition-pop-marker)
+             ("gh" . jedi:show-doc))
+           do
+           (evil-define-key 'normal python-mode-map key func)
+           (evil-define-key 'motion python-mode-map key func))))
 
 ;; Info customizations
 (setenv "INFOPATH" (concat (expand-file-name "~/.emacs.d/info:")
