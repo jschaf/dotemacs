@@ -200,7 +200,7 @@ figuring out how to reload the package."
             ("xr " . point-to-register))
           do (define-key leader-map key func)))
 
-  ;; Commands for both the normal and motion state
+  ;; Commands for both the normal, motion and visual state
   (loop for (key . func) in
         `(("zk" . beginning-of-defun)
           ("zj" . end-of-defun)
