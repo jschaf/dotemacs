@@ -262,6 +262,7 @@
                   (local-set-key "k" #'evil-previous-line)))))
 ;; Misc
 (global-set-key "\C-ha" 'apropos)
+(global-set-key "\C-h\C-w" 'where-is)
 (global-set-key (kbd "<f1>") 'menu-bar-mode)
 
 (autoload 'toggle-uniquify-buffer-names "uniquify" nil t)
