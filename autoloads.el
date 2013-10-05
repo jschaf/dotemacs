@@ -64,7 +64,7 @@
          ido-ubiquitous
          jedi
          key-chord
-         keydef
+         ;; keydef
          magit
          markdown-mode
          page-break-lines
