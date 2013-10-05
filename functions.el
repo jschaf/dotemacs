@@ -144,7 +144,10 @@
   (interactive)
   (require 'fill-column-indicator)
   (setq fci-rule-column 80
-        fci-rule-width 1)
+        fci-rule-width 1
+        fci-always-use-textual-rule t
+        fci-rule-color "#E8E2D0"
+        fci-rule-character ?│)
   (fci-mode 1))
 
 (defun my:local-comment-auto-fill ()
