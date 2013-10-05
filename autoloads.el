@@ -73,6 +73,7 @@
          evil
          fill-column-indicator
          flycheck
+         git-gutter
          git-modes
          haskell-mode
          ido-ubiquitous
