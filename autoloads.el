@@ -28,39 +28,23 @@
 
 (defvar el-get-sources
       '((:name esup
-               :website "https://github.com/jschaf/esup"
-               :description "Emacs Start Up Profiler"
-               :type "github"
-               :branch "master"
-               :pkgname "jschaf/esup")
+                  :website "https://github.com/jschaf/esup"
+                  :description "Emacs Start Up Profiler"
+                  :type "github"
+                  :branch "master"
+                  :pkgname "jschaf/esup")
         (:name evil
                :after (require 'evil)
                :build (("make" "all"))
                ;; makeinfo fails
                :info nil)
-        (:name flx
-               :website "https://github.com/lewang/flx"
-               :type "github"
-               :branch "master"
-               :pkgname "lewang/flx")
-        (:name ido-ubiquitous
-               :website "https://github.com/DarwinAwardWinner/ido-ubiquitous"
-               :type "github"
-               :branch "master"
-               :pkgname "DarwinAwardWinner/ido-ubiquitous")
         (:name key-chord
                :after (require 'key-chord))
-        (:name page-break-lines
-               :website "https://github.com/purcell/page-break-lines"
-               :type "github"
-               :branch "master"
-               :pkgname "purcell/page-break-lines")
         (:name powershell
                :website "https://github.com/jschaf/powershell.el"
                :type "github"
                :branch "master"
-               :pkgname "jschaf/powershell.el")
-        (:name solarized-theme)))
+               :pkgname "jschaf/powershell.el")))
 
 (defvar el-get-packages
       (append
@@ -72,6 +56,7 @@
          elisp-slime-nav
          evil
          fill-column-indicator
+         flx
          flycheck
          git-gutter
          git-modes
@@ -82,6 +67,7 @@
          keydef
          magit
          markdown-mode
+         page-break-lines
          paredit
          pymacs
          rainbow-delimiters
