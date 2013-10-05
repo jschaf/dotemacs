@@ -76,11 +76,13 @@
          git-modes
          haskell-mode
          ido-ubiquitous
+         jedi
          key-chord
          keydef
          magit
          markdown-mode
          paredit
+         pymacs
          rainbow-delimiters
          s
          smex
