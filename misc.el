@@ -140,6 +140,7 @@
       do
       (add-hook 'prog-mode-hook hook))
 
+(global-git-gutter-mode 1)
 
 ;; Emacs Lisp
 (defvar my:elisp-hooks
@@ -235,6 +236,7 @@
 (loop for hook in my:haskell-mode-hooks
       do
       (add-hook 'haskell-mode-hook hook))
+
 ;; LaTeX
 (add-hook 'latex-mode-hook
           (lambda ()
