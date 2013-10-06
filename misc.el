@@ -57,18 +57,13 @@
       save-place-file "~/.emacs.d/private/save-place")
 
 ;; Ido
+(require 'ido)
 (ido-mode t)
 (ido-ubiquitous-mode 1)
 (setq ido-use-faces nil)
-
-;; (flx-ido-mode 1)
+(flx-ido-mode 1)
 (ido-vertical-mode)
-(setq ido-enable-flex-matching t)
-(setq ido-use-filename-at-point nil)
-;; (setq ido-auto-merge-work-directories-length -1)
-(add-hook 'ido-setup-hook
-	  (lambda ()
-	    (setq ido-enable-flex-matching t)))
+
 (setq ido-ignore-files
       '("\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./" "\\`b~")
       ido-use-filename-at-point nil)
