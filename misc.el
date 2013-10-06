@@ -129,6 +129,7 @@
 ;; All programming modes
 (defvar my:prog-mode-hooks
   '(my:add-watchwords
+    my:show-column-80
     my:local-comment-auto-fill))
 
 (loop for hook in my:prog-mode-hooks
@@ -146,7 +147,6 @@
     my:enable-auto-complete-mode
     my:maybe-byte-compile-after-save
     my:pretty-lambdas
-    ;; my:show-column-80
     rainbow-delimiters-mode
     subword-mode
     turn-on-eldoc-mode
