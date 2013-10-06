@@ -250,6 +250,9 @@
 ;; Emacs server
 (setq-default server-auth-dir "~/.emacs.d/private/server")
 
+;; Projectile
+(setq-default projectile-cache-file "~/.emacs.d/private/projectile.cache")
+
 (eval-after-load 'magit
   '(progn
      (add-hook 'magit-mode-hook
