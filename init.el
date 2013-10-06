@@ -11,8 +11,7 @@
 ;;; Code:
 
 ;; Use a decent font.
-(modify-all-frames-parameters
- '((font . "Consolas 12")))
+(set-face-attribute 'default nil :font "Consolas 12")
 
 ;; Remove distractions.
 (menu-bar-mode -1)
