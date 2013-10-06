@@ -136,6 +136,7 @@
       do
       (add-hook 'prog-mode-hook hook))
 
+(yas-global-mode 1)
 (global-git-gutter-mode 1)
 
 ;; Emacs Lisp
