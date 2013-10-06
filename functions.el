@@ -143,7 +143,7 @@
   "Enable a rule at column 80."
   (interactive)
   (require 'fill-column-indicator)
-  (setq fci-rule-column 80
+  (setq fci-rule-column 79
         fci-rule-width 1
         fci-always-use-textual-rule t
         fci-rule-color "#E8E2D0"
