@@ -313,7 +313,8 @@ figuring out how to reload the package."
                'set-auto-complete-as-completion-at-point-function)
      (setq-default ac-comphist "~/.emacs.d/private/ac-comphist.dat")
      (set-default 'ac-sources
-                  '(ac-source-imenu
+                  '(ac-source-yasnippet
+                    ac-source-imenu
                     ac-source-dictionary
                     ac-source-words-in-buffer
                     ac-source-words-in-same-mode-buffers
