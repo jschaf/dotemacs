@@ -311,14 +311,14 @@ figuring out how to reload the package."
        (add-to-list 'completion-at-point-functions 'auto-complete-mode-maybe))
      (add-hook 'auto-complete-mode-hook
                'set-auto-complete-as-completion-at-point-function)
-     (setq-default ac-comphist "~/.emacs.d/private/ac-comphist.dat")
-     (set-default 'ac-sources
-                  '(ac-source-yasnippet
-                    ac-source-imenu
-                    ac-source-dictionary
-                    ac-source-words-in-buffer
-                    ac-source-words-in-same-mode-buffers
-                    ac-source-words-in-all-buffer))))
+     (setq-default ac-comphist-file "~/.emacs.d/private/ac-comphist.dat")
+     (setq-default ac-sources
+                   '(ac-source-yasnippet
+                     ac-source-imenu
+                     ac-source-dictionary
+                     ac-source-words-in-buffer
+                     ac-source-words-in-same-mode-buffers
+                     ac-source-words-in-all-buffer))))
 
 ;; Local Variables:
 ;; lexical-binding: t
