@@ -69,6 +69,7 @@
          markdown-mode
          page-break-lines
          paredit
+         projectile
          pymacs
          rainbow-delimiters
          s
