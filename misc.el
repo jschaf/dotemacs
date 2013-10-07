@@ -129,15 +129,14 @@
 ;; All programming modes
 (defvar my:prog-mode-hooks
   '(my:add-watchwords
+    yas-minor-mode
+    git-gutter-mode
     my:show-column-80
     my:local-comment-auto-fill))
 
 (loop for hook in my:prog-mode-hooks
       do
       (add-hook 'prog-mode-hook hook))
-
-(yas-global-mode 1)
-(global-git-gutter-mode 1)
 
 ;; Emacs Lisp
 (defvar my:elisp-hooks
@@ -251,7 +250,8 @@
 (setq-default server-auth-dir "~/.emacs.d/private/server")
 
 ;; Projectile
-(setq-default projectile-cache-file "~/.emacs.d/private/projectile.cache")
+(setq-default projectile-cache-file "~/.emacs.d/private/projectile.cache"
+              projectile-known-projects-file "~/.emacs.d/private/projectile-bookmarks.eld")
 
 (eval-after-load 'magit
   '(progn
