@@ -250,6 +250,9 @@
 (setq-default projectile-cache-file "~/.emacs.d/private/projectile.cache"
               projectile-known-projects-file "~/.emacs.d/private/projectile-bookmarks.eld")
 
+;; We need to add text before we can edit it.
+(add-to-list 'evil-insert-state-modes 'git-commit-mode)
+
 (eval-after-load 'magit
   '(progn
      (add-hook 'magit-mode-hook
