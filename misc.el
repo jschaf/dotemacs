@@ -245,6 +245,8 @@
 (autoload 'toggle-uniquify-buffer-names "uniquify" nil t)
 (toggle-uniquify-buffer-names)
 
+(setq eval-expression-print-level nil
+      eval-expression-print-length nil)
 ;; Local Variables:
 ;; lexical-binding: t
 ;; End:
