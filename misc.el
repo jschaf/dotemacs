@@ -77,9 +77,11 @@
       tramp-temp-name-prefix "~/.emacs.d/private/tramp.")
 
 ;; Emacs backups
-(setq-default auto-save-list-file-prefix "~/.emacs.d/private/auto-save-list/.saves-"
+(setq-default auto-save-list-file-prefix
+              "~/.emacs.d/private/auto-save-list/.saves-"
               backup-by-copying t
-              backup-directory-alist  '(("." . "~/.emacs.d/private/.emacs-backups"))
+              backup-directory-alist
+              '(("." . "~/.emacs.d/private/.emacs-backups"))
               kept-new-versions 3
               delete-old-versions t
               version-control t)
@@ -224,7 +226,8 @@
 
 ;; Projectile
 (setq-default projectile-cache-file "~/.emacs.d/private/projectile.cache"
-              projectile-known-projects-file "~/.emacs.d/private/projectile-bookmarks.eld")
+              projectile-known-projects-file
+              "~/.emacs.d/private/projectile-bookmarks.eld")
 
 ;; We need to add text before we can edit it.
 (add-to-list 'evil-insert-state-modes 'git-commit-mode)

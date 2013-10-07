@@ -265,7 +265,8 @@ figuring out how to reload the package."
             (if (evil-visual-state-p)
                 (progn
                   (add-hook 'pre-command-hook #'evil-visual-pre-command nil t)
-                  (add-hook 'post-command-hook #'evil-visual-post-command nil t)
+                  (add-hook 'post-command-hook #'evil-visual-post-command
+                            nil t)
                   (set-mark old-mark))
               (push-mark old-mark)))))
 
@@ -293,7 +294,8 @@ figuring out how to reload the package."
 
      ;; different jumps for different visual modes
      (defadvice evil-visual-line (before spc-for-line-jump activate)
-       (define-key evil-motion-state-map (kbd "C-SPC") #'evil-ace-jump-line-mode))
+       (define-key evil-motion-state-map (kbd "C-SPC")
+         #'evil-ace-jump-line-mode))
 
      (defadvice evil-visual-char (before spc-for-char-jump activate)
        (define-key evil-motion-state-map (kbd "C-SPC")

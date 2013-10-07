@@ -44,7 +44,8 @@
       (if (get-buffer new-name)
           (message "A buffer named '%s' already exists!" new-name)
         (progn (rename-file name new-name 1) (rename-buffer new-name)
-               (set-visited-file-name new-name) (set-buffer-modified-p nil))))))
+               (set-visited-file-name new-name)
+               (set-buffer-modified-p nil))))))
 
 (defun comment-or-uncomment-line ()
   "Either comments the current line or uncomments it."
@@ -129,7 +130,8 @@
 
 (defun my:delete-trailing-whitespace-before-save ()
   "Add `delete-trailing-whitespace' to the local `after-save-hook'."
-  (add-hook (make-local-variable 'before-save-hook) 'delete-trailing-whitespace))
+  (add-hook (make-local-variable 'before-save-hook)
+            'delete-trailing-whitespace))
 
 (defun my:highlight-long-lines ()
   "Highlight long lines."
