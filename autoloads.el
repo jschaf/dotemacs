@@ -64,7 +64,7 @@
          ido-ubiquitous
          jedi
          key-chord
-         ;; keydef
+         keydef
          magit
          markdown-mode
          page-break-lines
@@ -243,17 +243,16 @@ figuring out how to reload the package."
 
 (eval-after-load 'evil '(progn (my:evil-setup)))
 
+;; AceJump is a nice addition to evil's standard motions.
+
+;; The following definitions are necessary to define evil motions
+;; for ace-jump-mode (version 2).
+
+;; ace-jump is actually a series of commands which makes handling
+;; by evil difficult (and with some other things as well), using
+;; this macro we let it appear as one.
 (eval-after-load 'ace-jump-mode
   '(progn
-     ;;(autoload 'ace-jump-mode "ace-jump-mode" "Emacs quick move minor mode" t)
-     ;; AceJump is a nice addition to evil's standard motions.
-
-     ;; The following definitions are necessary to define evil motions for ace-jump-mode (version 2).
-
-     ;; ace-jump is actually a series of commands which makes handling by evil
-     ;; difficult (and with some other things as well), using this macro we let it
-     ;; appear as one.
-
      (defmacro evil-enclose-ace-jump (&rest body)
        `(let ((old-mark (mark))
               (ace-jump-mode-scope 'window))
