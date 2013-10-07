@@ -88,9 +88,9 @@
 (setq tab-always-indent 'complete)
 (add-to-list 'completion-styles 'initials t)
 
-(setq completion-ignored-extensions
-      '(".o" "~" ".bin" ".bak" ".obj" ".map" ".ico" ".pif" ".lnk" ".a" ".ln"
-        ".blg" ".aux" ".dvi" ".toc" ".out" ".snm" ".pyc"))
+(nconc completion-ignored-extensions
+       '(".pyc" ".toc" ".aux" ".blg" ".ln" ".a" ".lnk" ".pif" ".ico" ".map"
+         ".obj" ".bak" ".bin" "~" ".o"))
 
 (setq completion-pcm-word-delimiters "-_. ")
 
