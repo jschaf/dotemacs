@@ -161,6 +161,12 @@
                                     ,(make-char 'greek-iso8859-7 107))
                     nil))))))
 
+(defun my:add-hooks (mode functions)
+  "Call `add-hook' for each function in FUNCTIONS into MODE."
+  (loop for hook in functions
+        do
+        (add-hook mode hook)))
+
 (defun my:add-watchwords ()
   (font-lock-add-keywords
    nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\|HACK\\|REFACTOR\\|NOCOMMIT\\)"

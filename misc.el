@@ -124,35 +124,27 @@
 (keydef "<RET>" newline-and-indent)
 
 ;; All programming modes
-(defvar my:prog-mode-hooks
+(my:add-hooks 'prog-mode-hook
   '(my:add-watchwords
     yas-minor-mode
     git-gutter-mode
     my:show-column-80
     my:local-comment-auto-fill))
 
-(loop for hook in my:prog-mode-hooks
-      do
-      (add-hook 'prog-mode-hook hook))
-
 ;; Emacs Lisp
-(defvar my:elisp-hooks
-  '(enable-paredit-mode
-    ;; flycheck-mode
-    hs-minor-mode
-    my:delete-trailing-whitespace-before-save
-    my:enable-auto-complete-mode
-    my:maybe-byte-compile-after-save
-    my:pretty-lambdas
-    rainbow-delimiters-mode
-    subword-mode
-    turn-on-eldoc-mode
-    turn-on-page-break-lines-mode
-    elisp-slime-nav-mode))
-
-(loop for hook in my:elisp-hooks
-      do
-      (add-hook 'emacs-lisp-mode-hook hook))
+(my:add-hooks 'emacs-lisp-mode-hook
+              '(enable-paredit-mode
+                ;; flycheck-mode
+                hs-minor-mode
+                my:delete-trailing-whitespace-before-save
+                my:enable-auto-complete-mode
+                my:maybe-byte-compile-after-save
+                my:pretty-lambdas
+                rainbow-delimiters-mode
+                subword-mode
+                turn-on-eldoc-mode
+                turn-on-page-break-lines-mode
+                elisp-slime-nav-mode))
 
 (loop for (key . func) in
       '(("g." . elisp-slime-nav-find-elisp-thing-at-point)
@@ -164,19 +156,12 @@
       (evil-define-key 'motion emacs-lisp-mode-map key func)
       (evil-define-key 'motion lisp-interaction-mode-map key func))
 
-(defvar my:compilation-hooks
+(my:add-hooks 'compilation-mode-hook
   '(page-break-lines-mode))
 
-(loop for hook in my:compilation-hooks
-      do
-      (add-hook 'compilation-mode-hook hook))
+(my:add-hooks 'org-mode-hook
+              '(auto-fill-mode))
 
-(defvar my:org-hooks
-  '(auto-fill-mode))
-
-(loop for hook in my:org-hooks
-      do
-      (add-hook 'org-mode-hook hook))
 ;; Ada mode
 (setq ada-case-attribute 'ada-loose-case-word
       ada-case-exception-file '("~/.emacs.d/.ada_case_exceptions")
@@ -190,14 +175,10 @@
       ada-xref-other-buffer t)
 
 ;; Python
-(defvar my:python-mode-hooks
+(my:add-hooks 'python-mode-hook
   '(hs-minor-mode
     my:pretty-lambdas
     jedi:setup))
-
-(loop for hook in my:python-mode-hooks
-      do
-      (add-hook 'python-mode-hook hook))
 
 (eval-after-load 'jedi
   '(progn
@@ -223,11 +204,8 @@
     	    (setq Info-additional-directory-list Info-default-directory-list)))
 
 ;; Haskell
-(defvar my:haskell-mode-hooks
+(my:add-hooks 'haskell-mode-hook
   '(turn-on-haskell-indentation))
-(loop for hook in my:haskell-mode-hooks
-      do
-      (add-hook 'haskell-mode-hook hook))
 
 ;; LaTeX
 (add-hook 'latex-mode-hook
