@@ -92,8 +92,6 @@
        '(".pyc" ".toc" ".aux" ".blg" ".ln" ".a" ".lnk" ".pif" ".ico" ".map"
          ".obj" ".bak" ".bin" "~" ".o"))
 
-(setq completion-pcm-word-delimiters "-_. ")
-
 ;; Never allow tabs
 (setq-default indent-tabs-mode nil)
 
