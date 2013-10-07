@@ -100,9 +100,6 @@
 
 ;;; Usability tweaks
 
-;; Toggle visualization of matching parens.
-(show-paren-mode 1)
-
 ;; Toggle column number display in the mode line.
 (column-number-mode 1)
 
