@@ -234,6 +234,10 @@
 
 (eval-after-load 'magit
   '(progn
+     (defadvice magit-key-mode-popup-committing (after toggle-verbose-commits)
+       "Enable the verbose option for commiting."
+       (magit-key-mode-toggle-option 'committing "--verbose"))
+     (ad-activate 'magit-key-mode-popup-committing)
      (add-hook 'magit-mode-hook
                '(lambda ()
                   (local-set-key "j" #'evil-next-line)
