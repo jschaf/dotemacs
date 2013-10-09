@@ -247,6 +247,11 @@
 (global-set-key "\C-h\C-w" 'where-is)
 (global-set-key (kbd "<f1>") 'menu-bar-mode)
 
+(eval-after-load 'git-gutter
+  '(progn
+     ;; Turn off annoying "here is not git repository" message
+     (setq git-gutter:verbosity 0)))
+
 (autoload 'toggle-uniquify-buffer-names "uniquify" nil t)
 (toggle-uniquify-buffer-names)
 
