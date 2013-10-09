@@ -253,6 +253,9 @@
 (global-set-key "\C-h\C-w" 'where-is)
 (global-set-key (kbd "<f1>") 'menu-bar-mode)
 
+;; Anzu mode - show the number of matches when searching
+(global-anzu-mode 1)
+
 (eval-after-load 'git-gutter
   '(progn
      ;; Turn off annoying "here is not git repository" message
