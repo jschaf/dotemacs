@@ -75,6 +75,7 @@
          smex
          smartparens
          solarized-theme
+         virtualenv
          zencoding-mode)
        (mapcar 'el-get-source-name el-get-sources)))
 
