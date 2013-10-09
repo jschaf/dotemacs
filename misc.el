@@ -191,6 +191,12 @@
            (evil-define-key 'normal python-mode-map key func)
            (evil-define-key 'motion python-mode-map key func))))
 
+;; SGML and HTML
+(add-hook 'sgml-mode-hook 'emmet-mode)
+
+;; CSS
+(add-hook 'css-mode-hook 'emmet-mode)
+
 ;; Info customizations
 (setenv "INFOPATH" (concat (expand-file-name "~/.emacs.d/info:")
                            (getenv "INFOPATH")))
