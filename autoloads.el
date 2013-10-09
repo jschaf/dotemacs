@@ -133,6 +133,7 @@ figuring out how to reload the package."
   (interactive)
   (evil-mode 1)
 
+  (setq evil-highlight-closing-paren-at-point-states nil)
   ;; Use different colors for fonts to easily determine what mode we're in.
   (setq evil-default-cursor "#0971B2")
   ;; (setq evil-default-cursor "#5EA0AD")
