@@ -178,6 +178,7 @@
 (my:add-hooks 'python-mode-hook
   '(hs-minor-mode
     my:pretty-lambdas
+    virtualenv-minor-mode
     jedi:setup))
 
 (eval-after-load 'jedi
