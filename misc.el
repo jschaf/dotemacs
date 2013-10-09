@@ -257,6 +257,9 @@
 ;; Anzu mode - show the number of matches when searching
 (global-anzu-mode 1)
 
+;; Global project management mode.
+(projectile-global-mode 1)
+
 (eval-after-load 'git-gutter
   '(progn
      ;; Turn off annoying "here is not git repository" message
