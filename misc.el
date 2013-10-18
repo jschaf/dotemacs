@@ -51,6 +51,10 @@
 ;; out where you are.
 (setq scroll-preserve-screen-position 'keep)
 
+;; Buffer cycling
+(keydef "C-M-j" bs-cycle-next)
+(keydef "C-M-k" bs-cycle-previous)
+
 ;; Store our the position we last visited.
 (require 'saveplace)
 (setq save-place t
