@@ -118,6 +118,8 @@
 (keydef (help "k") (scroll-down 1))
 (keydef (help "L") help-go-back)
 (keydef (help "H") help-go-back)
+(keydef (help "<tab>") forward-button)
+(keydef (help "<shift>-<tab>") bacward-button)
 
 (add-hook 'dired-mode-hook
           (lambda ()
