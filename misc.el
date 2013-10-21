@@ -284,6 +284,16 @@
      ;; Turn off annoying "here is not git repository" message
      (setq git-gutter:verbosity 0)))
 
+(require 'smartparens)
+(require 'smartparens-config)
+(smartparens-global-mode 1)
+
+(eval-after-load 'smartparens
+  '(progn
+     ;; (sp-local-pair 'jinja2-mode "{" nil :actions :rem)
+     ;; (sp-local-pair 'jinja2-mode "{%" "%}")
+     )
+  )
 (autoload 'toggle-uniquify-buffer-names "uniquify" nil t)
 (toggle-uniquify-buffer-names)
 
