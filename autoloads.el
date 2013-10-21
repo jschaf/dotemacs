@@ -94,13 +94,21 @@ immediately."
     (when after-init-time
       (eval form))))
 
+
+(defun not-in-minibuffer (fn &rest args)
+  "Execute FN normally, but in the minibuffer, do nothing."
+  `(lambda ()
+     (interactive)
+     (unless (window-minibuffer-p)
+       (apply (quote ,fn) ,args))))
+
 ;; Key Chord
 (eval-after-load 'key-chord
   '(progn
      (key-chord-mode 1)
      (setq key-chord-two-keys-delay 0.08)
      (loop for (key . func) in
-           '(("fh" . windmove-left)
+           `(("fh" . windmove-left)
              ("fj" . windmove-down)
              ("fk" . windmove-up)
              ("fl" . windmove-right)
@@ -111,7 +119,8 @@ immediately."
              ("jr" . delete-window)
              ("jq" . delete-other-windows)
              ("jw" . split-window-vertically)
-             ("je" . split-window-horizontally)
+             ;; je is a substring of projectile.
+             ("je" . ,(not-in-minibuffer 'split-window-horizontally))
              ("jx" . smex)
              ("jt" . dabbrev-expand)
              ("xb" . ido-switch-buffer)
