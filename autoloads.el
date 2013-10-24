@@ -210,13 +210,14 @@ figuring out how to reload the package."
           ("H" . my:back-to-indentation-or-beginning)
           ("L" . evil-end-of-line)
           ("zdy" . my:yank-sexp)
-          (,(kbd "C-<return>") . evil-open-below)
           ("\C-j" . scroll-up-command)
           ("\C-k" . scroll-down-command))
         do
         (define-key evil-normal-state-map key func)
         (define-key evil-visual-state-map key func)
         (define-key evil-motion-state-map key func))
+
+  (define-key evil-insert-state-map (kbd "C-<return>") 'evil-open-below)
 
   ;; Commands for only the normal state map
   (loop for (key . func) in
