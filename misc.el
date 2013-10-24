@@ -39,6 +39,9 @@
 ;; Replace yes with y.
 (fset 'yes-or-no-p 'y-or-n-p)
 
+;; Disable cursor blinking
+(blink-cursor-mode 0)
+
 (setq-default bookmark-default-file "~/.emacs.d/private/bookmarks")
 
 ;; Useful for regexps.
