@@ -17,3 +17,6 @@ tramp
 *.elc
 elpa/
 el-get/
+/places
+/projectile-bookmarks.eld
+/projectile.cache
