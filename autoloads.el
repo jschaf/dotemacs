@@ -76,6 +76,8 @@
          smartparens
          solarized-theme
          virtualenv
+         yasnippet
+         yasnippet-snippets
          zencoding-mode)
        (mapcar 'el-get-source-name el-get-sources)))
 
