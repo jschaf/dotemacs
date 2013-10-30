@@ -132,10 +132,15 @@
 
 (keydef "<RET>" newline-and-indent)
 
+(run-with-idle-timer 2 nil
+                     (lambda ()
+                       (require 'yasnippet)
+                       (setq yas-verbosity 1)
+                       (yas-global-mode 1)))
+
 ;; All programming modes
 (my:add-hooks 'prog-mode-hook
   '(my:add-watchwords
-    yas-minor-mode
     git-gutter-mode
     my:show-column-80
     my:local-comment-auto-fill))
