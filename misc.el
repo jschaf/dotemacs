@@ -257,9 +257,6 @@
 ;; Eshell
 (setq-default eshell-directory-name "~/.emacs.d/private/eshell")
 
-;; Emacs server
-(setq-default server-auth-dir "~/.emacs.d/private/server")
-
 ;; We need to add text before we can edit it.
 (add-to-list 'evil-insert-state-modes 'git-commit-mode)
 
