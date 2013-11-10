@@ -49,6 +49,7 @@
 (defvar el-get-packages
       (append
        '(ace-jump-mode
+         anzu
          auto-complete
          buffer-move
          dash
@@ -57,12 +58,12 @@
          evil
          fill-column-indicator
          flx
-         flycheck
          git-gutter
          git-modes
-         haskell-mode
          ido-ubiquitous
+         ido-vertical-mode
          jedi
+         keydef
          key-chord
          magit
          markdown-mode
@@ -71,6 +72,7 @@
          projectile
          pymacs
          rainbow-delimiters
+         rust-mode
          s
          smex
          smartparens
