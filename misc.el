@@ -2,6 +2,8 @@
 
 ;;; Commentary:
 
+(require 'functions)
+
 ;;; Code:
 
 ;; Unnecessary.
