@@ -86,7 +86,8 @@
 ;; We can get whole repositories later if we want to hack on them.
 (defvar el-get-git-shallow-clone t)
 
-;; Install all the packages asynchronusly. Waaaay faster.
+;; nil, the second parameter means install all the packages
+;; asynchronusly. Waaaay faster.
 (el-get nil el-get-packages)
 
 (defun my:eval-after-init (form)
