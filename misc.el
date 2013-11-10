@@ -134,7 +134,7 @@
 
 (keydef "<RET>" newline-and-indent)
 
-(run-with-idle-timer 2 nil
+(run-with-idle-timer 1 nil
                      (lambda ()
                        (require 'yasnippet)
                        (setq yas-verbosity 1)
