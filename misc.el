@@ -137,7 +137,7 @@
 (run-with-idle-timer 1 nil
                      (lambda ()
                        (require 'yasnippet)
-                       (setq yas-verbosity 1)
+                       (setq yas-verbosity 0)
                        (yas-global-mode 1)))
 
 ;; All programming modes
