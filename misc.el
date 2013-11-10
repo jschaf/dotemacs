@@ -35,6 +35,12 @@
 ;; minibuffer.
 (setq show-help-function nil)
 
+;; TODO: why doesn't minibuffer-avoid-prompt work?
+(setq minibuffer-prompt-properties
+      (quote (point-entered minibuffer-avoid-prompt
+              read-only t
+              face minibuffer-prompt)))
+
 ;; Follow symlinks to source controlled files without prompting.
 (setq vc-follow-symlinks t)
 
