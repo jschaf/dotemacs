@@ -162,6 +162,11 @@ figuring out how to reload the package."
   (setq evil-want-visual-char-semi-exclusive t)
   (setq evil-move-cursor-back nil)
 
+  (key-chord-define evil-normal-state-map "jk" 'evil-force-normal-state)
+  (key-chord-define evil-visual-state-map "jk" 'evil-change-to-previous-state)
+  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+  (key-chord-define evil-replace-state-map "jk" 'evil-normal-state)
+
   ;; Leader key definitions
   (define-key evil-normal-state-map "," nil)
   (define-key evil-motion-state-map "," nil)
