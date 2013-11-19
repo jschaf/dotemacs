@@ -184,6 +184,8 @@
 (my:add-hooks 'org-mode-hook
               '(auto-fill-mode))
 
+(my:add-hooks 'rst-mode-hook
+              '(auto-fill-mode))
 ;; Ada mode
 (setq ada-case-attribute 'ada-loose-case-word
       ada-case-exception-file '("~/.emacs.d/.ada_case_exceptions")
@@ -257,6 +259,32 @@
                  "[.?!][]\"')}]*\\($\\|     \\|  \\)[
 ]*")))
 
+(defvar my:rust-compiled-buffer nil)
+
+(defun my:rust-save-compile (&optional arg)
+  (interactive "p")
+  (save-buffer)
+  (compile (concat "rustc " (buffer-file-name)))
+  (setq my:rust-compiled-buffer (current-buffer)))
+
+(defun my:run-in-eshell (buffer msg)
+  (when (string-match "^finished" msg)
+    (unless (get-buffer "*eshell*")
+      (eshell))
+    (with-current-buffer "*eshell*"
+      (goto-char (point-max))
+      (insert (file-name-sans-extension
+               (buffer-file-name my:rust-compiled-buffer)))
+      (eshell-send-input))
+    (switch-to-buffer-other-window "*eshell*")))
+
+(add-to-list 'compilation-finish-functions
+             'my:run-in-eshell)
+
+(keydef (rust "C-c C-c") my:rust-save-compile)
+
+;; (add-hook 'rust-mode-hook
+;;           )
 ;; Automatically reload files when changed.
 (global-auto-revert-mode 1)
 
