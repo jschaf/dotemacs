@@ -151,6 +151,7 @@
   '(my:add-watchwords
     git-gutter-mode
     my:show-column-80
+    my:enable-auto-complete-mode
     my:local-comment-auto-fill))
 
 ;; Emacs Lisp
@@ -159,7 +160,6 @@
                 ;; flycheck-mode
                 hs-minor-mode
                 my:delete-trailing-whitespace-before-save
-                my:enable-auto-complete-mode
                 my:maybe-byte-compile-after-save
                 my:pretty-lambdas
                 rainbow-delimiters-mode
