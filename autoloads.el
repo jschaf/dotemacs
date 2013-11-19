@@ -58,6 +58,7 @@
          evil
          fill-column-indicator
          flx
+         gist
          git-gutter
          git-modes
          ido-ubiquitous
