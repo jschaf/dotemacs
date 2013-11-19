@@ -38,6 +38,8 @@
                :build (("make" "all"))
                ;; makeinfo fails
                :info nil)
+        (:name ido-ubiquitous
+               :after (ido-ubiquitous-mode))
         (:name key-chord
                :after (require 'key-chord))
         (:name powershell
