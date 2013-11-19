@@ -130,7 +130,7 @@
 (keydef (help "L") help-go-back)
 (keydef (help "H") help-go-back)
 (keydef (help "<tab>") forward-button)
-(keydef (help "<shift>-<tab>") bacward-button)
+(keydef (help "<shift>-<tab>") backward-button)
 
 (add-hook 'dired-mode-hook
           (lambda ()
