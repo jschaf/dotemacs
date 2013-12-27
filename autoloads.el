@@ -119,7 +119,7 @@ immediately."
            `(("fh" . windmove-left)
              ("fj" . windmove-down)
              ("fk" . windmove-up)
-             ("fl" . windmove-right)
+             ("fl" . ,(not-in-minibuffer 'windmove-right))
              ("vh" . buf-move-left)
              ("vj" . buf-move-down)
              ("vk" . buf-move-up)
