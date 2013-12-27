@@ -60,6 +60,7 @@
          evil
          fill-column-indicator
          flx
+         flycheck
          gist
          git-gutter
          git-modes
@@ -104,7 +105,8 @@ immediately."
 
 
 (defun not-in-minibuffer (fn &rest args)
-  "Execute FN normally, but in the minibuffer, do nothing."
+  "Execute FN normally, but in the minibuffer, do nothing.
+Apply ARGS normally."
   `(lambda ()
      (interactive)
      (unless (window-minibuffer-p)
