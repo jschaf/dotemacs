@@ -281,6 +281,24 @@
 (add-to-list 'compilation-finish-functions
              'my:run-in-eshell)
 
+(eval-after-load 'jinja2-mode
+  '(progn
+     (defun my-jinja2-block (id action context)
+       (insert " ")
+       (save-excursion
+         (insert " ")))
+
+     ;; Remove curly brace binding because it prevents a binding for
+     ;; Jinja constructs.
+     (sp-local-pair 'jinja2-mode "{" "}" :actions nil)
+     (sp-local-pair 'jinja2-mode "{%" "%}"
+                    :post-handlers '(:add my-jinja2-block)
+                    :trigger "jjb")
+     (sp-local-pair 'jinja2-mode "{{" "}}"
+                    :post-handlers '(:add my-jinja2-block)
+                    :trigger "jji")))
+
+
 (keydef (rust "C-c C-c") my:rust-save-compile)
 
 ;; (add-hook 'rust-mode-hook
@@ -325,12 +343,6 @@
 (smartparens-global-mode 1)
 (show-paren-mode 1)
 
-(eval-after-load 'smartparens
-  '(progn
-     ;; (sp-local-pair 'jinja2-mode "{" nil :actions :rem)
-     ;; (sp-local-pair 'jinja2-mode "{%" "%}")
-     )
-  )
 (autoload 'toggle-uniquify-buffer-names "uniquify" nil t)
 (toggle-uniquify-buffer-names)
 
