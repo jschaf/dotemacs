@@ -57,6 +57,7 @@
          dash
          el-get
          elisp-slime-nav
+         emmet-mode
          evil
          fill-column-indicator
          flx
@@ -67,6 +68,7 @@
          ido-ubiquitous
          ido-vertical-mode
          jedi
+         jinja2-mode
          keydef
          key-chord
          magit
