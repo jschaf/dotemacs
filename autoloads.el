@@ -19,7 +19,7 @@
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
       (url-retrieve-synchronously
-       "https://raw.github.com/jschaf/el-get/master/el-get-install.el")
+       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
     (let ((el-get-master-branch t))
       (when el-get-master-branch
         (message "Bootstrapping el-get with master branch."))
