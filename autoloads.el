@@ -241,6 +241,9 @@
                :after (add-hook 'emacs-lisp-mode-hook
                                 'rainbow-delimiters-mode))
 
+        (:name rst-mode
+               :url "http://svn.code.sf.net/p/docutils/code/trunk/docutils/tools/editors/emacs/rst.el")
+
         (:name rust-mode
 
                :after
