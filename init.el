@@ -29,18 +29,18 @@
 (setq default-directory "~/")
 
 ;;; Code Load
+(load "misc")
 (setq custom-file "~/.emacs.d/private/emacs-custom.el")
 (load custom-file)
 (load "autoloads")
 (load "functions")
-(load "misc")
 
 (load-theme 'solarized-light)
 
 (require 'server)
 (or (server-running-p)
     (server-start))
-
+(setq tls-program '("openssl.exe s_client -connect %h:%p -no_ssl2 -ign_eof"))
 ;; Local Variables:
 ;; lexical-binding: t
 ;; End:

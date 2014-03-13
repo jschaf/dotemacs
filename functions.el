@@ -141,16 +141,131 @@
   (set (make-local-variable 'whitespace-line-column) (max 80 fill-column))
   (whitespace-mode 1))
 
-(defun my:show-column-80 ()
-  "Enable a rule at column 80."
+(defun my:evil-setup ()
+  "The initial customization for evil mode.
+
+This is separated into a function so I can edit it without
+figuring out how to reload the package."
   (interactive)
-  (require 'fill-column-indicator)
-  (setq fci-rule-column 79
-        fci-rule-width 1
-        fci-always-use-textual-rule t
-        fci-rule-color "#E8E2D0"
-        fci-rule-character ?│)
-  (fci-mode 1))
+  (evil-mode 1)
+
+  ;; We need to add text before we can edit it.
+  (add-to-list 'evil-insert-state-modes 'git-commit-mode)
+
+  (setq evil-highlight-closing-paren-at-point-states nil)
+  ;; Use different colors for fonts to easily determine what mode we're in.
+  (setq evil-default-cursor "#0971B2")
+  ;; (setq evil-default-cursor "#5EA0AD")
+  (setq evil-normal-state-cursor evil-default-cursor)
+  (setq evil-insert-state-cursor "#AD5E5E")
+  (setq evil-visual-state-cursor evil-default-cursor)
+  (setq evil-replace-state-cursor evil-default-cursor)
+  (setq evil-operator-state-cursor nil)
+  (setq evil-motion-state-cursor evil-default-cursor)
+  (setq evil-emacs-state-cursor "#00FF48")
+
+  (setq evil-want-visual-char-semi-exclusive t)
+  (setq evil-move-cursor-back nil)
+
+  (key-chord-define evil-normal-state-map "jk" 'evil-force-normal-state)
+  (key-chord-define evil-visual-state-map "jk" 'evil-change-to-previous-state)
+  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+  (key-chord-define evil-replace-state-map "jk" 'evil-normal-state)
+
+  ;; Leader key definitions
+  (define-key evil-normal-state-map "," nil)
+  (define-key evil-motion-state-map "," nil)
+  (let ((leader-map (make-sparse-keymap)))
+    (define-key evil-normal-state-map "," leader-map)
+    (define-key evil-motion-state-map "," leader-map)
+    (loop for (key . func) in
+          '(("ci" . ido-goto-symbol)
+            ("cp" . check-parens)
+            ("cs" . (lambda () (interactive) (switch-to-buffer "*scratch*")))
+            ("de" . toggle-debug-on-error)
+            ("dc" . describe-char)
+            ("dtw" . delete-trailing-whitespace)
+            ("eb" . eval-buffer)
+            ("ed" . eval-defun)
+            ("ee" . edebug-eval-top-level-form)
+            ("ei" . el-get-install)
+            ("ff" . find-function)
+            ("fp" . my:find-function-at-point-this-window)
+            ("fP" . find-function-at-point)
+            ("gc" . goto-char)
+            ("gj" . next-error)
+            ("gk" . previous-error)
+            ("gh" . (lambda () (interactive) (find-file "~/")))
+            ("ht" . describe-text-properties)
+            ("is" . my:indent-defun-around-point)
+            ("js" . just-one-space)
+            ("k"  . (lambda () (interactive) (kill-buffer nil)))
+            ("ms" . mark-sexp)
+            ("o"  . delete-blank-lines)
+            ("r"  . jump-to-register)
+            ("sp" . eval-print-last-sexp)
+            ("ts" . toggle-color-theme)
+            ("xd" . ido-dired)
+            ("xg" . magit-status)
+            ("xh" . mark-whole-buffer)
+            ("xrs" . copy-to-register)
+            ("xr " . point-to-register))
+          do (define-key leader-map key func)))
+
+  ;; Commands for both the normal, motion and visual state
+  (loop for (key . func) in
+        `(("zk" . beginning-of-defun)
+          ("zj" . end-of-defun)
+          ("zl" . forward-sexp)
+          ("zh" . backward-sexp)
+          ("zu" . paredit-backward-up)
+          ("J" . (lambda () (interactive) (evil-next-line 5)))
+          ("K" . (lambda () (interactive) (evil-previous-line 5)))
+          ("gj" . evil-join)
+          ("H" . my:back-to-indentation-or-beginning)
+          ("L" . evil-end-of-line)
+          ("zdy" . my:yank-sexp)
+          ("\C-j" . scroll-up-command)
+          ("\C-k" . scroll-down-command))
+        do
+        (define-key evil-normal-state-map key func)
+        (define-key evil-visual-state-map key func)
+        (define-key evil-motion-state-map key func))
+
+  (define-key evil-insert-state-map (kbd "C-<return>") 'evil-open-below)
+
+  ;; Commands for only the normal state map
+  (loop for (key . func) in
+        `((,(kbd "<tab>")  . indent-for-tab-command)
+          ("z," . comment-dwim)
+          ("zn" . evil-toggle-fold)
+          ("z;" . comment-or-uncomment-line))
+        do
+        (define-key evil-normal-state-map key func))
+
+  ;; Paredit Mode
+  (add-hook 'paredit-mode-hook
+            (lambda () (loop for (key . func) in
+                             '(("zsh" . paredit-backward)
+                               ("zsl" . paredit-forward)
+                               ("zsj" . paredit-forward-down)
+                               ("zsk" . paredit-backward-up)
+                               ("zdl" . paredit-forward-barf-sexp)
+                               ("zdh" . paredit-backward-barf-sexp)
+                               ("zfh" . paredit-backward-slurp-sexp)
+                               ("zfl" . paredit-forward-slurp-sexp)
+                               ("zfc" . paredit-convolute-sexp)
+                               ("z9" . paredit-wrap-round)
+                               ("zdk" . kill-sexp)
+                               ("zss" . paredit-splice-sexp)
+                               ("zsd" . paredit-join-sexps)
+                               ("z'" . paredit-meta-doublequote))
+                             do (define-key evil-normal-state-map key func))))
+  (add-hook 'Info-mode-hook
+            (lambda () (loop for (key . func) in
+                             '(("H" . Info-history-back)
+                               ("L" . Info-history-forward))
+                             do (define-key Info-mode-map key func)))))
 
 (defun my:local-comment-auto-fill ()
   (set (make-local-variable 'comment-auto-fill-only-comments) t)
@@ -165,19 +280,22 @@
 
 (defun my:add-hooks (mode functions)
   "Call `add-hook' for each function in FUNCTIONS into MODE."
-  (loop for hook in functions
+  (cl-loop for hook in functions
         do
         (add-hook mode hook)))
+
+(defun not-in-minibuffer (fn &rest args)
+  "Execute FN normally, but in the minibuffer, do nothing.
+Apply ARGS normally."
+  `(lambda ()
+     (interactive)
+     (unless (window-minibuffer-p)
+       (apply (quote ,fn) ,args))))
 
 (defun my:add-watchwords ()
   (font-lock-add-keywords
    nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\|HACK\\|REFACTOR\\|NOCOMMIT\\)"
           1 font-lock-warning-face t))))
-
-(defun my:enable-auto-complete-mode ()
-  "Enable auto-complete mode."
-  (require 'auto-complete-config)
-  (auto-complete-mode 1))
 
 (defun my:evil-define-keys (states keymaps key def &rest bindings)
   "Run `evil-define-key' over all STATES and KEYMAPS."

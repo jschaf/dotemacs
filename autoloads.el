@@ -8,9 +8,6 @@
 
 ;;; Code:
 
-;; Use my fork of el-get.
-(defvar el-get-git-install-url "http://github.com/jschaf/el-get.git")
-
 ;; Installing from Emacswiki is slow and insecure
 (defvar el-get-install-skip-emacswiki-recipes t)
 
@@ -19,257 +16,311 @@
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
       (url-retrieve-synchronously
-       "https://raw.github.com/jschaf/el-get/master/el-get-install.el")
+       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
     (let ((el-get-master-branch t))
       (when el-get-master-branch
         (message "Bootstrapping el-get with master branch."))
       (goto-char (point-max))
       (eval-print-last-sexp))))
 
-(defvar el-get-sources
-      '((:name esup
-                  :website "https://github.com/jschaf/esup"
-                  :description "Emacs Start Up Profiler"
-                  :type "github"
-                  :branch "master"
-                  :pkgname "jschaf/esup")
-        (:name evil
-               :after (require 'evil)
-               :build (("make" "all"))
-               ;; makeinfo fails
-               :info nil)
-        (:name ido-ubiquitous
-               :after (ido-ubiquitous-mode))
-        (:name key-chord
-               :after (require 'key-chord))
-        (:name powershell
-               :website "https://github.com/jschaf/powershell.el"
+(setq el-get-sources
+      '(
+
+        ;; Anzu mode - show the number of matches when searching
+        (:name anzu
+               :after (global-anzu-mode 1))
+
+        (:name auto-complete
+               :submodule nil
+
+               :after (progn (require 'auto-complete-config)
+                             (global-auto-complete-mode 1)
+                             (eval-after-load 'auto-complete-config
+                               '(progn
+                                  (defun set-auto-complete-as-completion-at-point-function ()
+                                    (add-to-list 'completion-at-point-functions 'auto-complete-mode-maybe))
+                                  (add-hook 'auto-complete-mode-hook
+                                            'set-auto-complete-as-completion-at-point-function)
+                                  (setq-default ac-comphist-file "~/.emacs.d/private/ac-comphist.dat")
+                                  (setq-default ac-sources
+                                                '(ac-source-yasnippet
+                                                  ac-source-imenu
+                                                  ac-source-dictionary
+                                                  ac-source-words-in-buffer
+                                                  ac-source-words-in-same-mode-buffers
+                                                  ac-source-words-in-all-buffer))))))
+
+        (:name esup
+               :website "https://github.com/jschaf/esup"
+               :description "Emacs Start Up Profiler"
                :type "github"
                :branch "master"
-               :pkgname "jschaf/powershell.el")))
+               :pkgname "jschaf/esup")
 
+        (:name elisp-slime-nav
+               :after
+               (progn
+                 (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode)
+                 (eval-after-load 'evil
+                   '(progn
+                      (cl-loop for (key . func) in
+                               '(("g." . elisp-slime-nav-find-elisp-thing-at-point)
+                                 ("g," . pop-tag-mark)
+                                 ("gh" . elisp-slime-nav-describe-elisp-thing-at-point))
+                               do
+                               (evil-define-key 'normal emacs-lisp-mode-map key func)
+                               (evil-define-key 'normal lisp-interaction-mode-map key func)
+                               (evil-define-key 'motion emacs-lisp-mode-map key func)
+                               (evil-define-key 'motion lisp-interaction-mode-map key func))))))
+
+        (:name emmet-mode
+               :after (progn
+                        (add-hook 'sgml-mode-hook 'emmet-mode)
+                        (add-hook 'css-mode-hook 'emmet-mode)))
+
+        (:name evil
+               ;; remove info from make target
+	       :build (("make" "all"))
+               ;; I can't use the git protocol at work, which is the
+               ;; only protocol gitorious supports.
+	       :url "https://github.com/emacsmirror/evil.git"
+               ;; makeinfo fails on Windows
+               :info nil
+               :after (my:evil-setup))
+
+        (:name fill-column-indicator
+               :after
+               (progn
+                 (defun my:show-column-80 ()
+                   "Enable a rule at column 80."
+                   (interactive)
+                   (require 'fill-column-indicator)
+                   (setq fci-rule-column 79
+                         fci-rule-width 1
+                         fci-always-use-textual-rule t
+                         fci-rule-color "#E8E2D0"
+                         fci-rule-character ?│)
+                   (fci-mode 1))
+                 (add-hook 'prog-mode-hook 'my:show-column-80)))
+
+        (:name flx
+               :after (flx-ido-mode 1))
+
+        (:name fuzzy
+               ;; fuzzy-el ert from github, which is empty because
+               ;; it's included in Emacs trunk
+               :submodule nil)
+
+        (:name git-gutter
+               :after
+               (progn (add-hook 'prog-mode-hook 'git-gutter-mode)
+                      (eval-after-load 'git-gutter
+                        '(progn
+                           ;; Turn off annoying "here is not git
+                           ;; repository" message
+                           (setq git-gutter:verbosity 0)))))
+
+        (:name ido-ubiquitous
+               :description "Use ido (nearly) everywhere"
+               :type github
+               :pkgname "technomancy/ido-ubiquitous"
+               :after (ido-ubiquitous-mode 1))
+
+        (:name ido-vertical-mode
+               :after (ido-vertical-mode 1))
+
+        (:name jedi
+               :after
+               (progn
+                 (eval-after-load 'jedi
+                   '(progn
+                      (add-hook 'python-mode-hook
+                                'jedi:setup)
+                      (setq jedi:complete-on-dot t)
+                      (loop for (key . func) in
+                            '(("g." . jedi:goto-definition)
+                              ("g," . jedi:goto-definition-pop-marker)
+                              ("gh" . jedi:show-doc))
+                            do
+                            (evil-define-key 'normal python-mode-map key func)
+                            (evil-define-key 'motion python-mode-map key func))))))
+
+        (:name jinja2-mode
+               :after
+               (eval-after-load 'jinja2-mode
+                 '(progn
+                    (defun my-jinja2-block (id action context)
+                      (insert " ")
+                      (save-excursion
+                        (insert " ")))
+
+                    ;; Remove curly brace binding because it prevents
+                    ;; a binding for Jinja constructs.
+                    (sp-local-pair 'jinja2-mode "{" "}" :actions nil)
+                    (sp-local-pair 'jinja2-mode "{%" "%}"
+                                   :post-handlers '(:add my-jinja2-block)
+                                   :trigger "jjb")
+                    (sp-local-pair 'jinja2-mode "{{" "}}"
+                                   :post-handlers '(:add my-jinja2-block)
+                                   :trigger "jji"))))
+
+        (:name key-chord
+               :after
+               (progn
+                 (key-chord-mode 1)
+                 (setq key-chord-two-keys-delay 0.08)
+                 (loop for (key . func) in
+                       `(("fh" . windmove-left)
+                         ("fj" . windmove-down)
+                         ("fk" . windmove-up)
+                         ("fl" . ,(not-in-minibuffer 'windmove-right))
+                         ("vh" . buf-move-left)
+                         ("vj" . buf-move-down)
+                         ("vk" . buf-move-up)
+                         ("vl" . buf-move-right)
+                         ("jr" . delete-window)
+                         ("jq" . delete-other-windows)
+                         ("jw" . split-window-vertically)
+                         ;; je is a substring of projectile.
+                         ("je" . ,(not-in-minibuffer 'split-window-horizontally))
+                         ("jx" . smex)
+                         ("jt" . dabbrev-expand)
+                         ("xb" . ido-switch-buffer)
+                         ("/f" . ido-find-file)
+                         ("/s" . my:save-buffer)
+                         ("nb" . bookmark-jump)
+                         ("nm" . bookmark-set)
+                         ("nl" . bookmark-bmenu-list)
+                         ("jk" . evil-normal-state)
+                         ("/c" . goto-last-change))
+                       do (key-chord-define-global key func))))
+
+        (:name keydef
+               :description "A simpler way to define keys in Emacs."
+               :type github
+               :pkgname "jschaf/keydef.el"
+               (progn (keydef "C-M-j" bs-cycle-next)
+                      (keydef "C-M-k" bs-cycle-previous)
+
+                      ;; Help
+                      (keydef (help "k") (scroll-down 1))
+                      (keydef (help "L") help-go-back)
+                      (keydef (help "H") help-go-back)
+                      (keydef (help "<tab>") forward-button)
+                      (keydef (help "<shift>-<tab>") backward-button)))
+
+        (:name magit
+               :after
+               (eval-after-load 'magit
+                 '(progn
+                    (defadvice magit-key-mode-popup-committing (after toggle-verbose-commits)
+                      "Enable the verbose option for commiting."
+                      (magit-key-mode-toggle-option 'committing "--verbose"))
+                    (ad-activate 'magit-key-mode-popup-committing)
+                    (add-hook 'magit-mode-hook
+                              '(lambda ()
+                                 (local-set-key "j" #'evil-next-line)
+                                 (local-set-key "k" #'evil-previous-line))))))
+
+
+        (:name page-break-lines
+               :after (progn
+                        (add-hook 'emacs-lisp-mode-hook
+                                  'turn-on-page-break-lines-mode)
+
+                        (add-hook 'compilation-mode-hook
+                                  'page-break-lines-mode)))
+
+        (:name popup
+               :submodule nil)
+
+        (:name projectile
+               :after (projectile-global-mode 1))
+
+        (:name rainbow-delimiters
+               :after (add-hook 'emacs-lisp-mode-hook
+                                'rainbow-delimiters-mode))
+
+        (:name rust-mode
+
+               :after
+               (progn
+                 (keydef (rust "C-c C-c") my:rust-save-compile)
+
+                 (defvar my:rust-compiled-buffer nil)
+
+                 (defun my:rust-save-compile (&optional arg)
+                   (interactive "p")
+                   (save-buffer)
+                   (compile (concat "rustc " (buffer-file-name)))
+                   (setq my:rust-compiled-buffer (current-buffer)))
+
+                 (defun my:run-in-eshell (buffer msg)
+                   (when (string-match "^finished" msg)
+                     (unless (get-buffer "*eshell*")
+                       (eshell))
+                     (with-current-buffer "*eshell*"
+                       (goto-char (point-max))
+                       (insert (file-name-sans-extension
+                                (buffer-file-name my:rust-compiled-buffer)))
+                       (eshell-send-input))
+                     (switch-to-buffer-other-window "*eshell*")))
+
+                 (add-to-list 'compilation-finish-functions 'my:run-in-eshell)))
+
+        (:name smartparens
+               :after (progn
+                        (require 'smartparens)
+                        (require 'smartparens-config)
+                        (smartparens-global-mode 1)
+                        (show-paren-mode 1)))
+
+        ;; (:name yasnippet
+        ;;        :after
+        ;;        (run-with-idle-timer 1 nil
+        ;;                             (lambda ()
+        ;;                               (require 'yasnippet)
+        ;;                               (setq yas-verbosity 0)
+        ;;                               (yas-global-mode 1))))
+        ))
+
+(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 (defvar el-get-packages
       (append
        '(ace-jump-mode
-         anzu
-         auto-complete
          buffer-move
          dash
          el-get
-         elisp-slime-nav
-         emmet-mode
-         evil
-         fill-column-indicator
-         flx
          flycheck
-         gist
-         git-gutter
+;;         gist
+         ;;git-gutter
          git-modes
-         ido-ubiquitous
-         ido-vertical-mode
-         jedi
-         jinja2-mode
-         keydef
-         key-chord
+;;         jedi
+;;         jinja2-mode
          magit
-         markdown-mode
-         page-break-lines
+         ;;markdown-mode
          paredit
          projectile
-         pymacs
-         rainbow-delimiters
-         rust-mode
+;;         pymacs
+;;         rust-mode
          s
          smex
          smartparens
          solarized-theme
-         virtualenv
-         yasnippet
-         yasnippet-snippets
+         ;;yasnippet
          zencoding-mode)
        (mapcar 'el-get-source-name el-get-sources)))
 
 ;; We can get whole repositories later if we want to hack on them.
 (defvar el-get-git-shallow-clone t)
 
+;; Delete locally installed packages that aren't listed in
+;; `el-get-sources'
+(el-get-cleanup el-get-packages)
+
 ;; nil, the second parameter means install all the packages
 ;; asynchronusly. Waaaay faster.
 (el-get nil el-get-packages)
-
-(defun my:eval-after-init (form)
-  "Add `(lambda () FORM)' to `after-init-hook'.
-If Emacs has already finished initialization, also eval FORM
-immediately."
-  (let ((func (list 'lambda nil form)))
-    (add-hook 'after-init-hook func)
-    (when after-init-time
-      (eval form))))
-
-
-(defun not-in-minibuffer (fn &rest args)
-  "Execute FN normally, but in the minibuffer, do nothing.
-Apply ARGS normally."
-  `(lambda ()
-     (interactive)
-     (unless (window-minibuffer-p)
-       (apply (quote ,fn) ,args))))
-
-;; Key Chord
-(eval-after-load 'key-chord
-  '(progn
-     (key-chord-mode 1)
-     (setq key-chord-two-keys-delay 0.08)
-     (loop for (key . func) in
-           `(("fh" . windmove-left)
-             ("fj" . windmove-down)
-             ("fk" . windmove-up)
-             ("fl" . ,(not-in-minibuffer 'windmove-right))
-             ("vh" . buf-move-left)
-             ("vj" . buf-move-down)
-             ("vk" . buf-move-up)
-             ("vl" . buf-move-right)
-             ("jr" . delete-window)
-             ("jq" . delete-other-windows)
-             ("jw" . split-window-vertically)
-             ;; je is a substring of projectile.
-             ("je" . ,(not-in-minibuffer 'split-window-horizontally))
-             ("jx" . smex)
-             ("jt" . dabbrev-expand)
-             ("xb" . ido-switch-buffer)
-             ("/f" . ido-find-file)
-             ("/s" . my:save-buffer)
-             ("nb" . bookmark-jump)
-             ("nm" . bookmark-set)
-             ("nl" . bookmark-bmenu-list)
-             ("jk" . evil-normal-state)
-             ("/c" . goto-last-change))
-           do (key-chord-define-global key func))))
-
-;; Evil
-(defun my:evil-setup ()
-  "The initial customization for evil mode.
-
-This is separated into a function so I can edit it without
-figuring out how to reload the package."
-  (interactive)
-  (evil-mode 1)
-
-  (setq evil-highlight-closing-paren-at-point-states nil)
-  ;; Use different colors for fonts to easily determine what mode we're in.
-  (setq evil-default-cursor "#0971B2")
-  ;; (setq evil-default-cursor "#5EA0AD")
-  (setq evil-normal-state-cursor evil-default-cursor)
-  (setq evil-insert-state-cursor "#AD5E5E")
-  (setq evil-visual-state-cursor evil-default-cursor)
-  (setq evil-replace-state-cursor evil-default-cursor)
-  (setq evil-operator-state-cursor nil)
-  (setq evil-motion-state-cursor evil-default-cursor)
-  (setq evil-emacs-state-cursor "#00FF48")
-
-  (setq evil-want-visual-char-semi-exclusive t)
-  (setq evil-move-cursor-back nil)
-
-  (key-chord-define evil-normal-state-map "jk" 'evil-force-normal-state)
-  (key-chord-define evil-visual-state-map "jk" 'evil-change-to-previous-state)
-  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-  (key-chord-define evil-replace-state-map "jk" 'evil-normal-state)
-
-  ;; Leader key definitions
-  (define-key evil-normal-state-map "," nil)
-  (define-key evil-motion-state-map "," nil)
-  (let ((leader-map (make-sparse-keymap)))
-    (define-key evil-normal-state-map "," leader-map)
-    (define-key evil-motion-state-map "," leader-map)
-    (loop for (key . func) in
-          '(("ci" . ido-goto-symbol)
-            ("cp" . check-parens)
-            ("cs" . (lambda () (interactive) (switch-to-buffer "*scratch*")))
-            ("de" . toggle-debug-on-error)
-            ("dc" . describe-char)
-            ("dtw" . delete-trailing-whitespace)
-            ("eb" . eval-buffer)
-            ("ed" . eval-defun)
-            ("ee" . edebug-eval-top-level-form)
-            ("ei" . el-get-install)
-            ("ff" . find-function)
-            ("fp" . my:find-function-at-point-this-window)
-            ("fP" . find-function-at-point)
-            ("gc" . goto-char)
-            ("gj" . next-error)
-            ("gk" . previous-error)
-            ("gh" . (lambda () (interactive) (find-file "~/")))
-            ("ht" . describe-text-properties)
-            ("is" . my:indent-defun-around-point)
-            ("js" . just-one-space)
-            ("k"  . (lambda () (interactive) (kill-buffer nil)))
-            ("ms" . mark-sexp)
-            ("o"  . delete-blank-lines)
-            ("r"  . jump-to-register)
-            ("sp" . eval-print-last-sexp)
-            ("ts" . toggle-color-theme)
-            ("xd" . ido-dired)
-            ("xg" . magit-status)
-            ("xh" . mark-whole-buffer)
-            ("xrs" . copy-to-register)
-            ("xr " . point-to-register))
-          do (define-key leader-map key func)))
-
-  ;; Commands for both the normal, motion and visual state
-  (loop for (key . func) in
-        `(("zk" . beginning-of-defun)
-          ("zj" . end-of-defun)
-          ("zl" . forward-sexp)
-          ("zh" . backward-sexp)
-          ("zu" . paredit-backward-up)
-          ("J" . (lambda () (interactive) (evil-next-line 5)))
-          ("K" . (lambda () (interactive) (evil-previous-line 5)))
-          ("gj" . evil-join)
-          ("H" . my:back-to-indentation-or-beginning)
-          ("L" . evil-end-of-line)
-          ("zdy" . my:yank-sexp)
-          ("\C-j" . scroll-up-command)
-          ("\C-k" . scroll-down-command))
-        do
-        (define-key evil-normal-state-map key func)
-        (define-key evil-visual-state-map key func)
-        (define-key evil-motion-state-map key func))
-
-  (define-key evil-insert-state-map (kbd "C-<return>") 'evil-open-below)
-
-  ;; Commands for only the normal state map
-  (loop for (key . func) in
-        `((,(kbd "<tab>")  . indent-for-tab-command)
-          ("z," . comment-dwim)
-          ("zn" . evil-toggle-fold)
-          ("z;" . comment-or-uncomment-line))
-        do
-        (define-key evil-normal-state-map key func))
-
-  ;; Paredit Mode
-  (add-hook 'paredit-mode-hook
-            (lambda () (loop for (key . func) in
-                             '(("zsh" . paredit-backward)
-                               ("zsl" . paredit-forward)
-                               ("zsj" . paredit-forward-down)
-                               ("zsk" . paredit-backward-up)
-                               ("zdl" . paredit-forward-barf-sexp)
-                               ("zdh" . paredit-backward-barf-sexp)
-                               ("zfh" . paredit-backward-slurp-sexp)
-                               ("zfl" . paredit-forward-slurp-sexp)
-                               ("zfc" . paredit-convolute-sexp)
-                               ("z9" . paredit-wrap-round)
-                               ("zdk" . kill-sexp)
-                               ("zss" . paredit-splice-sexp)
-                               ("zsd" . paredit-join-sexps)
-                               ("z'" . paredit-meta-doublequote))
-                             do (define-key evil-normal-state-map key func))))
-  (add-hook 'Info-mode-hook
-            (lambda () (loop for (key . func) in
-                             '(("H" . Info-history-back)
-                               ("L" . Info-history-forward))
-                             do (define-key Info-mode-map key func)))))
-
-(eval-after-load 'evil '(progn (my:evil-setup)))
 
 ;; AceJump is a nice addition to evil's standard motions.
 
@@ -332,22 +383,6 @@ figuring out how to reload the package."
      (defadvice evil-visual-block (before spc-for-char-jump activate)
        (define-key evil-motion-state-map (kbd "C-SPC")
          #'evil-ace-jump-char-mode))))
-
-
-(eval-after-load 'auto-complete-config
-  '(progn
-     (defun set-auto-complete-as-completion-at-point-function ()
-       (add-to-list 'completion-at-point-functions 'auto-complete-mode-maybe))
-     (add-hook 'auto-complete-mode-hook
-               'set-auto-complete-as-completion-at-point-function)
-     (setq-default ac-comphist-file "~/.emacs.d/private/ac-comphist.dat")
-     (setq-default ac-sources
-                   '(ac-source-yasnippet
-                     ac-source-imenu
-                     ac-source-dictionary
-                     ac-source-words-in-buffer
-                     ac-source-words-in-same-mode-buffers
-                     ac-source-words-in-all-buffer))))
 
 ;; Local Variables:
 ;; lexical-binding: t
