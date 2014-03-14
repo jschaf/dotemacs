@@ -126,9 +126,6 @@
             (local-set-key "\C-\M-k" 'dired-kill-subdir)
             ;;(dired-omit-mode 1)
             ))
-;; I don't think I need this
-;; (keydef "<RET>" newline-and-indent)
-
 
 
 ;; All programming modes
