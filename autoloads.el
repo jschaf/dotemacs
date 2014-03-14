@@ -203,7 +203,7 @@
                              (keydef "C-M-k" bs-cycle-previous)
 
                              ;; save a character
-                             (keydef "<RET>" newline-and-indent)
+                             (keydef "<" newline-and-indent)
 
                              ;; Help
                              (keydef (help "k") (scroll-down 1))
