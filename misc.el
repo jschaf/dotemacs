@@ -126,22 +126,17 @@
             (local-set-key "\C-\M-k" 'dired-kill-subdir)
             ;;(dired-omit-mode 1)
             ))
-;; I don't think I need this
-;; (keydef "<RET>" newline-and-indent)
-
 
 
 ;; All programming modes
 (my:add-hooks 'prog-mode-hook
   '(my:add-watchwords
-    my:show-column-80
     my:delete-trailing-whitespace-before-save
     my:local-comment-auto-fill))
 
 ;; Emacs Lisp
 (my:add-hooks 'emacs-lisp-mode-hook
-              '(enable-paredit-mode
-                ;; flycheck-mode
+              '(;; flycheck-mode
                 hs-minor-mode
                 my:maybe-byte-compile-after-save
                 my:pretty-lambdas

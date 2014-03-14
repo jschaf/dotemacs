@@ -212,6 +212,18 @@ figuring out how to reload the package."
             ("xr " . point-to-register))
           do (define-key leader-map key func)))
 
+  (evil-define-motion evil-next-line-5 (count)
+    "Move the cursor COUNT lines down."
+    :type line
+    (let (line-move-visual)
+      (evil-line-move (* 5 (or count 1)))))
+
+  (evil-define-motion evil-previous-line-5 (count)
+    "Move the cursor COUNT lines up."
+    :type line
+    (let (line-move-visual)
+      (evil-line-move (* -5 (or count 1)))))
+
   ;; Commands for both the normal, motion and visual state
   (loop for (key . func) in
         `(("zk" . beginning-of-defun)
@@ -219,8 +231,8 @@ figuring out how to reload the package."
           ("zl" . forward-sexp)
           ("zh" . backward-sexp)
           ("zu" . paredit-backward-up)
-          ("J" . (lambda () (interactive) (evil-next-line 5)))
-          ("K" . (lambda () (interactive) (evil-previous-line 5)))
+          ("J" . evil-next-line-5)
+          ("K" . evil-previous-line-5)
           ("gj" . evil-join)
           ("H" . my:back-to-indentation-or-beginning)
           ("L" . evil-end-of-line)
@@ -246,26 +258,90 @@ figuring out how to reload the package."
   ;; Paredit Mode
   (add-hook 'paredit-mode-hook
             (lambda () (loop for (key . func) in
-                             '(("zsh" . paredit-backward)
-                               ("zsl" . paredit-forward)
-                               ("zsj" . paredit-forward-down)
-                               ("zsk" . paredit-backward-up)
-                               ("zdl" . paredit-forward-barf-sexp)
-                               ("zdh" . paredit-backward-barf-sexp)
-                               ("zfh" . paredit-backward-slurp-sexp)
-                               ("zfl" . paredit-forward-slurp-sexp)
-                               ("zfc" . paredit-convolute-sexp)
-                               ("z9" . paredit-wrap-round)
-                               ("zdk" . kill-sexp)
-                               ("zss" . paredit-splice-sexp)
-                               ("zsd" . paredit-join-sexps)
-                               ("z'" . paredit-meta-doublequote))
-                             do (define-key evil-normal-state-map key func))))
+                        '(("zsh" . paredit-backward)
+                          ("zsl" . paredit-forward)
+                          ("zsj" . paredit-forward-down)
+                          ("zsk" . paredit-backward-up)
+                          ("zdl" . paredit-forward-barf-sexp)
+                          ("zdh" . paredit-backward-barf-sexp)
+                          ("zfh" . paredit-backward-slurp-sexp)
+                          ("zfl" . paredit-forward-slurp-sexp)
+                          ("zfc" . paredit-convolute-sexp)
+                          ("z9" . paredit-wrap-round)
+                          ("zdk" . kill-sexp)
+                          ("zss" . paredit-splice-sexp)
+                          ("zsd" . paredit-join-sexps)
+                          ("z'" . paredit-meta-doublequote))
+                        do (define-key evil-normal-state-map key func))))
+
+  ;; AceJump is a nice addition to evil's standard motions.
+
+  ;; The following definitions are necessary to define evil motions
+  ;; for ace-jump-mode (version 2).
+
+  ;; ace-jump is actually a series of commands which makes handling
+  ;; by evil difficult (and with some other things as well), using
+  ;; this macro we let it appear as one.
+  (eval-after-load 'ace-jump-mode
+    '(progn
+       (defmacro evil-enclose-ace-jump (&rest body)
+         `(let ((old-mark (mark))
+                (ace-jump-mode-scope 'window))
+            (remove-hook 'pre-command-hook #'evil-visual-pre-command t)
+            (remove-hook 'post-command-hook #'evil-visual-post-command t)
+            (unwind-protect
+                (progn
+                  ,@body
+                  (recursive-edit))
+              (if (evil-visual-state-p)
+                  (progn
+                    (add-hook 'pre-command-hook #'evil-visual-pre-command nil t)
+                    (add-hook 'post-command-hook #'evil-visual-post-command
+                              nil t)
+                    (set-mark old-mark))
+                (push-mark old-mark)))))
+
+       (evil-define-motion evil-ace-jump-char-mode (count)
+         :type exclusive
+         (evil-enclose-ace-jump
+          (ace-jump-mode 5)))
+
+       (evil-define-motion evil-ace-jump-line-mode (count)
+         :type line
+         (evil-enclose-ace-jump
+          (ace-jump-mode 9)))
+
+       (evil-define-motion evil-ace-jump-word-mode (count)
+         :type exclusive
+         (evil-enclose-ace-jump
+          (ace-jump-mode 1)))
+
+       (add-hook 'ace-jump-mode-end-hook 'exit-recursive-edit)
+
+       ;; some proposals for binding:
+
+       (define-key evil-motion-state-map (kbd "C-SPC") #'evil-ace-jump-line-mode)
+       (define-key evil-motion-state-map (kbd "SPC") #'evil-ace-jump-word-mode)
+
+       ;; different jumps for different visual modes
+       (defadvice evil-visual-line (before spc-for-line-jump activate)
+         (define-key evil-motion-state-map (kbd "C-SPC")
+           #'evil-ace-jump-line-mode))
+
+       (defadvice evil-visual-char (before spc-for-char-jump activate)
+         (define-key evil-motion-state-map (kbd "C-SPC")
+           #'evil-ace-jump-char-mode))
+
+       (defadvice evil-visual-block (before spc-for-char-jump activate)
+         (define-key evil-motion-state-map (kbd "C-SPC")
+           #'evil-ace-jump-char-mode))))
+
+
   (add-hook 'Info-mode-hook
             (lambda () (loop for (key . func) in
-                             '(("H" . Info-history-back)
-                               ("L" . Info-history-forward))
-                             do (define-key Info-mode-map key func)))))
+                        '(("H" . Info-history-back)
+                          ("L" . Info-history-forward))
+                        do (define-key Info-mode-map key func)))))
 
 (defun my:local-comment-auto-fill ()
   (set (make-local-variable 'comment-auto-fill-only-comments) t)
