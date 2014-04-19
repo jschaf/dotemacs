@@ -127,6 +127,7 @@
             ;;(dired-omit-mode 1)
             ))
 
+(global-set-key (kbd "RET") 'newline-and-indent)
 
 ;; All programming modes
 (my:add-hooks 'prog-mode-hook
