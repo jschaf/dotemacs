@@ -88,6 +88,9 @@
                :info nil
                :after (my:evil-setup))
 
+        (:name evil-surround
+               :after (global-surround-mode 1))
+
         (:name fill-column-indicator
                :after
                (progn
