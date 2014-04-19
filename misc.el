@@ -180,6 +180,9 @@
            python-shell-completion-string-code
            "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")))
 
+(eval-after-load 'erc
+  '(progn
+     (setq erc-hide-list '("JOIN" "PART" "QUIT"))))
 
 ;; Info customizations
 (setenv "INFOPATH" (concat (expand-file-name "~/.emacs.d/info:")
