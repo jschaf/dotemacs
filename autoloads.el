@@ -205,9 +205,6 @@
                :after (progn (keydef "C-M-j" bs-cycle-next)
                              (keydef "C-M-k" bs-cycle-previous)
 
-                             ;; save a character
-                             (keydef "<" newline-and-indent)
-
                              ;; Help
                              (keydef (help "k") (scroll-down 1))
                              (keydef (help "L") help-go-back)
