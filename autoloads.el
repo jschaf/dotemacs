@@ -88,6 +88,12 @@
                :info nil
                :after (my:evil-setup))
 
+        (:name evil-numbers
+               :after
+               (progn
+                 (define-key evil-normal-state-map (kbd "M-<up>") 'evil-numbers/inc-at-pt)
+                 (define-key evil-normal-state-map (kbd "M-<down>") 'evil-numbers/dec-at-pt)))
+
         (:name evil-surround
                :after (global-surround-mode 1))
 
