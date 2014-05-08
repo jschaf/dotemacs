@@ -55,6 +55,15 @@
 
 (setq-default bookmark-default-file "~/.emacs.d/private/bookmarks")
 
+;; Set the path
+;; (when (string-equal system-type "windows-nt")
+;;   (let ((mypaths '("C:/msys64/bin")))
+;;     (setenv "PATH" (concat (mapconcat 'identity mypaths ";")
+;;                            ";"
+;;                            (getenv "PATH")))
+;;     (setq exec-path (append mypaths (list "." exec-directory)))))
+
+
 ;; Useful for regexps.
 (put 'narrow-to-region 'disabled nil)
 
