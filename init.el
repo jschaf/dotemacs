@@ -40,7 +40,7 @@
 (require 'server)
 (or (server-running-p)
     (server-start))
-;;(setq tls-program '("openssl.exe s_client -connect %h:%p -no_ssl2 -ign_eof"))
+
 ;; Local Variables:
 ;; lexical-binding: t
 ;; End:
