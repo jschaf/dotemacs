@@ -153,6 +153,8 @@
                 subword-mode
                 turn-on-eldoc-mode))
 
+;; Use C-x C-e to pretty print expressions
+(global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp)
 
 (my:add-hooks 'org-mode-hook
               '(auto-fill-mode))
