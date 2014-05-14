@@ -289,12 +289,7 @@
                         (require 'smartparens-config)
                         (smartparens-global-mode 1)
                         (show-paren-mode 1)))
-        (:name sublimity
-               :type github
-               :pkgname "zk-phi/sublimity"
-               :after (progn
-                        (require 'sublimity-scroll)
-                        (sublimity-mode 1)))
+
         ;; (:name yasnippet
         ;;        :after
         ;;        (run-with-idle-timer 1 nil
