@@ -236,6 +236,11 @@
 (setq eval-expression-print-level nil
       eval-expression-print-length nil)
 
+(when (eq system-type 'darwin)
+  ;; Don't use option to input special chars, use it as alt like it
+  ;; was meant to be.
+  (setq mac-option-modifier 'meta))
+
 ;; Local Variables:
 ;; lexical-binding: t
 ;; End:
