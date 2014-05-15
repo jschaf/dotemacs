@@ -144,6 +144,11 @@
     my:delete-trailing-whitespace-before-save
     my:local-comment-auto-fill))
 
+(my:add-hooks 'LaTeX-mode-hook
+  '(my:add-watchwords
+    my:delete-trailing-whitespace-before-save
+    my:local-comment-auto-fill))
+
 ;; Emacs Lisp
 (my:add-hooks 'emacs-lisp-mode-hook
               '(;; flycheck-mode
