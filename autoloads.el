@@ -29,6 +29,11 @@
         ;; Anzu mode - show the number of matches when searching
         (:name anzu
                :after (global-anzu-mode 1))
+        (:name auctex
+               :after (progn
+                        (setq TeX-auto-save t)
+                        (setq TeX-parse-self t)
+                        (setq-default TeX-master nil)))
 
         (:name auto-complete
                :submodule nil
