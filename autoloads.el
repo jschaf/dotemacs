@@ -25,7 +25,12 @@
 
 (setq el-get-sources
       '(
-
+        (:name ace-jump-mode
+               :after
+               (eval-after-load 'evil
+                 '(progn
+                 (define-key evil-normal-state-map (kbd "SPC")
+                   'ace-jump-mode))))
         ;; Anzu mode - show the number of matches when searching
         (:name anzu
                :after (global-anzu-mode 1))
@@ -309,7 +314,6 @@
       (append
        '(
          solarized-theme
-         ace-jump-mode
          buffer-move
          dash
          el-get
