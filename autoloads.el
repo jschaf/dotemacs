@@ -177,6 +177,15 @@
                            ;; repository" message
                            (setq git-gutter:verbosity 0)))))
 
+        (:name idle-highlight-mode
+               :after
+               (progn
+                 (idle-highlight-mode)
+                 (set-face-attribute 'idle-highlight nil
+                                     :weight 'extra-bold
+                                     :underline t
+                                     :inherit nil)))
+
         (:name ido-ubiquitous
                :description "Use ido (nearly) everywhere"
                :type github
