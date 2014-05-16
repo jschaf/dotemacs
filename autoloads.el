@@ -98,6 +98,44 @@
                :info nil
                :after (my:evil-setup))
 
+        (:name evil-leader
+               :after
+               (progn
+                 (global-evil-leader-mode)
+                 (evil-leader/set-leader ",")
+                 (evil-leader/set-key
+                  "ci" 'ido-goto-symbol
+                  "cp" 'check-parens
+                  "cs" '(lambda () (interactive) (switch-to-buffer "*scratch*"))
+                  "de" 'toggle-debug-on-error
+                  "dc" 'describe-char
+                  "dtw" 'delete-trailing-whitespace
+                  "eb" 'eval-buffer
+                  "ed" 'eval-defun
+                  "ee" 'edebug-eval-top-level-form
+                  "ei" 'el-get-install
+                  "ff" 'find-function
+                  "fp" 'my:find-function-at-point-this-window
+                  "fP" 'find-function-at-point
+                  "gc" 'goto-char
+                  "gj" 'next-error
+                  "gk" 'previous-error
+                  "gh" '(lambda () (interactive) (find-file "~/"))
+                  "ht" 'describe-text-properties
+                  "is" 'my:indent-defun-around-point
+                  "js" 'just-one-space
+                  "k" '(lambda () (interactive) (kill-buffer nil))
+                  "ms" 'mark-sexp
+                  "o" 'delete-blank-lines
+                  "r"  'jump-to-register
+                  "sp" 'eval-print-last-sexp
+                  "ts" 'toggle-color-theme
+                  "xd" 'ido-dired
+                  "xg" 'magit-status
+                  "xh" 'mark-whole-buffer
+                  "xrs" 'copy-to-register
+                  "xr " 'point-to-register)))
+
         (:name evil-numbers
                :after
                (progn
