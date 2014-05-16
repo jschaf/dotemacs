@@ -371,6 +371,20 @@ Apply ARGS normally."
    nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\|HACK\\|REFACTOR\\|NOCOMMIT\\)"
           1 font-lock-warning-face t))))
 
+(defun my-esc ()
+  "Functionality for escaping generally."
+  (interactive)
+  (cond
+   ;; If we're in one of the Evil states return to the normal-state
+   ((or (evil-insert-state-p) (evil-normal-state-p) (evil-replace-state-p)
+        (evil-visual-state-p))
+    (evil-normal-state))
+
+   ((window-minibuffer-p)
+    (abort-recursive-edit))
+
+   (t (keyboard-quit))))
+
 (defun my:evil-define-keys (states keymaps key def &rest bindings)
   "Run `evil-define-key' over all STATES and KEYMAPS."
   (let* ( ;; Keep bindings unmodified to use for all iterations

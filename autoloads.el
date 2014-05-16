@@ -210,7 +210,7 @@
                          ("nb" . bookmark-jump)
                          ("nm" . bookmark-set)
                          ("nl" . bookmark-bmenu-list)
-                         ("jk" . evil-normal-state)
+                         ("jk" . my-esc)
                          ("/c" . goto-last-change))
                        do (key-chord-define-global key func))))
 
