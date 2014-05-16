@@ -366,7 +366,6 @@
          el-get
          flycheck
 ;;         gist
-         ;;git-gutter
          git-modes
 ;;         jedi
 ;;         jinja2-mode
