@@ -183,7 +183,9 @@
                  (idle-highlight-mode)
                  (set-face-attribute 'idle-highlight nil
                                      :weight 'extra-bold
-                                     :underline t
+                                     :underline (face-attribute
+                                                 'font-lock-variable-name-face
+                                                 :foreground)
                                      :inherit nil)))
 
         (:name ido-ubiquitous
