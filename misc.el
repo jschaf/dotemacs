@@ -244,7 +244,8 @@
 (when (eq system-type 'darwin)
   ;; Don't use option to input special chars, use it as alt like it
   ;; was meant to be.
-  (setq mac-option-modifier 'meta))
+  (setq mac-option-modifier 'meta
+        mac-command-modifier 'control))
 
 ;; Local Variables:
 ;; lexical-binding: t
