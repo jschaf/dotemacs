@@ -241,11 +241,16 @@
 (setq eval-expression-print-level nil
       eval-expression-print-length nil)
 
+;; TODO: make comment-out work for regions
+;; TODO: make jk exit isearch and evil movement commands (e.g. after
+;; pressing d)
+;; TODO: don't highlight parens in comments
+;; TODO: use normal quotes in comments in auctex
 (when (eq system-type 'darwin)
   ;; Don't use option to input special chars, use it as alt like it
   ;; was meant to be.
-  (setq mac-option-modifier 'meta
-        mac-command-modifier 'control))
+  (setq mac-option-modifier 'control
+        mac-command-modifier 'meta))
 
 ;; Local Variables:
 ;; lexical-binding: t
