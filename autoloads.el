@@ -259,7 +259,7 @@
                          ("nb" . bookmark-jump)
                          ("nm" . bookmark-set)
                          ("nl" . bookmark-bmenu-list)
-                         ("jk" . my-esc)
+                         ("jk" . my:esc)
                          ("/c" . goto-last-change))
                        do (key-chord-define-global key func))))
 
@@ -379,6 +379,7 @@
          s
          smex
          smartparens
+         smartrep
          ;;yasnippet
          zencoding-mode)
        (mapcar 'el-get-source-name el-get-sources)))

@@ -265,7 +265,7 @@ Apply ARGS normally."
    nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\|HACK\\|REFACTOR\\|NOCOMMIT\\)"
           1 font-lock-warning-face t))))
 
-(defun my-esc ()
+(defun my:esc ()
   "Functionality for escaping generally."
   (interactive)
   (cond
@@ -278,6 +278,26 @@ Apply ARGS normally."
     (abort-recursive-edit))
 
    (t (keyboard-quit))))
+
+;; Exit isearch by pressing jk, see
+;; http://stackoverflow.com/questions/20926215
+(defun my:isearch-exit-chord-worker (&optional arg)
+  (interactive "p")
+  (execute-kbd-macro (kbd "<backspace> <return>")))
+
+(defun my:isearch-exit-chord (arg)
+  (interactive "p")
+  (isearch-printing-char)
+  (unless (fboundp 'smartrep-read-event-loop)
+    (require 'smartrep))
+  (run-at-time 0.3 nil 'keyboard-quit)
+  (condition-case e
+    (smartrep-read-event-loop
+      '(("j" . my:isearch-exit-chord-worker)
+         ("k" . my:isearch-exit-chord-worker)))
+    (quit nil)))
+(define-key isearch-mode-map "j" 'my:isearch-exit-chord)
+(define-key isearch-mode-map "k" 'my:isearch-exit-chord)
 
 (defun my:evil-define-keys (states keymaps key def &rest bindings)
   "Run `evil-define-key' over all STATES and KEYMAPS."
