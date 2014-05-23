@@ -277,6 +277,9 @@ Apply ARGS normally."
    ((window-minibuffer-p)
     (abort-recursive-edit))
 
+   ((string-prefix-p "*magit-key" (buffer-name))
+    (magit-key-mode-command nil))
+
    (t (keyboard-quit))))
 
 ;; Exit isearch by pressing jk, see
