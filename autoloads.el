@@ -290,7 +290,6 @@
                                  (local-set-key "j" #'evil-next-line)
                                  (local-set-key "k" #'evil-previous-line))))))
 
-
         (:name page-break-lines
                :after (progn
                         (add-hook 'emacs-lisp-mode-hook
@@ -372,7 +371,7 @@
 ;;         jedi
 ;;         jinja2-mode
          magit
-         ;;markdown-mode
+         markdown-mode
          projectile
 ;;         pymacs
 ;;         rust-mode
