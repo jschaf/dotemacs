@@ -154,11 +154,27 @@
                    (require 'fill-column-indicator)
                    (setq fci-rule-column 79
                          fci-rule-width 1
-                         fci-always-use-textual-rule t
+                         ;; fci-always-use-textual-rule t
                          fci-rule-color "#E8E2D0"
-                         fci-rule-character ?│)
+                         ;; fci-rule-character ?│
+                         )
+
                    (fci-mode 1))
-                 (add-hook 'prog-mode-hook 'my:show-column-80)))
+                 (add-hook 'prog-mode-hook 'my:show-column-80)
+
+                 ;; Disable `fci-mode' when we have less than 80
+                 ;; chars.  This prevents those ugly line continuation
+                 ;; markers down the entire buffer.
+                 (defun my:auto-fci-mode (&optional unused)
+                   (when (derived-mode-p 'prog-mode)
+                     (if (> (window-width) fci-rule-column)
+                         (fci-mode 1)
+                       (fci-mode 0))))
+
+                 (add-hook 'after-change-major-mode-hook
+                           'my:auto-fci-mode)
+                 (add-hook 'window-configuration-change-hook
+                           'my:auto-fci-mode)))
 
         (:name flx
                :after (flx-ido-mode 1))
