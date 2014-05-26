@@ -385,6 +385,7 @@
          flycheck
 ;;         gist
          git-modes
+         goto-chg
 ;;         jedi
 ;;         jinja2-mode
          magit
