@@ -168,13 +168,13 @@ figuring out how to reload the package."
   (setq evil-move-cursor-back nil)
 
   (evil-define-motion evil-next-line-5 (count)
-    "Move the cursor COUNT lines down."
+    "Move the cursor (COUNT * 5) lines down."
     :type line
     (let (line-move-visual)
       (evil-line-move (* 5 (or count 1)))))
 
   (evil-define-motion evil-previous-line-5 (count)
-    "Move the cursor COUNT lines up."
+    "Move the cursor (COUNT * 5) lines up."
     :type line
     (let (line-move-visual)
       (evil-line-move (* -5 (or count 1)))))
