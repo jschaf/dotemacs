@@ -179,6 +179,20 @@ figuring out how to reload the package."
     (let (line-move-visual)
       (evil-line-move (* -5 (or count 1)))))
 
+  ;; Make movement keys work on visual lines instead of acutal lines.
+  ;; This imitates Emacs behavior rather than Vim behavior.
+  (define-key evil-normal-state-map (kbd "<remap> <evil-next-line>")
+    'evil-next-visual-line)
+  (define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>")
+    'evil-previous-visual-line)
+  (define-key evil-motion-state-map (kbd "<remap> <evil-next-line>")
+    'evil-next-visual-line)
+  (define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>")
+    'evil-previous-visual-line)
+
+  ;; Make horizontal movement cross lines
+  (setq-default evil-cross-lines t)
+
   ;; Commands for both the normal, motion and visual state
   (loop for (key . func) in
         `(("zk" . beginning-of-defun)
