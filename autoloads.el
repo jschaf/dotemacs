@@ -255,6 +255,7 @@
                          ("jt" . dabbrev-expand)
                          ("xb" . ido-switch-buffer)
                          ("/f" . ido-find-file)
+                         ("/d" . (lambda () (interactive) (dired default-directory)))
                          ("/s" . my:save-buffer)
                          ("nb" . bookmark-jump)
                          ("nm" . bookmark-set)
