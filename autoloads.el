@@ -345,6 +345,7 @@
 
         (:name markdown-mode)
 
+        (:name page-break-lines
                :after (progn
                         (add-hook 'emacs-lisp-mode-hook
                                   'turn-on-page-break-lines-mode)
@@ -366,7 +367,10 @@
                                 'rainbow-delimiters-mode))
 
         (:name rst-mode
-               :url "http://svn.code.sf.net/p/docutils/code/trunk/docutils/tools/editors/emacs/rst.el")
+               :url "http://svn.code.sf.net/p/docutils/code/trunk/docutils/tools/editors/emacs/rst.el"
+               :after (progn
+                        (add-hook 'rst-mode-hook 'zotelo-minor-mode)
+                        (add-hook 'rst-mode-hook 'reftex-mode)))
 
         (:name rust-mode
 
@@ -430,13 +434,13 @@
          projectile
 ;;         pymacs
 ;;         rust-mode
+         reftex
          s
          smex
          smartparens
          smartrep
          ;;yasnippet
          zencoding-mode
-         reftex
          zotelo)
        (mapcar 'el-get-source-name el-get-sources)))
 
