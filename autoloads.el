@@ -433,7 +433,8 @@
          smartparens
          smartrep
          ;;yasnippet
-         zencoding-mode)
+         zencoding-mode
+         zotelo)
        (mapcar 'el-get-source-name el-get-sources)))
 
 ;; We can get whole repositories later if we want to hack on them.
