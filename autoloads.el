@@ -342,7 +342,8 @@
                                  (local-set-key "j" #'evil-next-line)
                                  (local-set-key "k" #'evil-previous-line))))))
 
-        (:name page-break-lines
+        (:name markdown-mode)
+
                :after (progn
                         (add-hook 'emacs-lisp-mode-hook
                                   'turn-on-page-break-lines-mode)
@@ -424,7 +425,7 @@
 ;;         jedi
 ;;         jinja2-mode
          magit
-         markdown-mode
+         moz-repl
          projectile
 ;;         pymacs
 ;;         rust-mode
@@ -434,6 +435,7 @@
          smartrep
          ;;yasnippet
          zencoding-mode
+         reftex
          zotelo)
        (mapcar 'el-get-source-name el-get-sources)))
 
