@@ -144,6 +144,21 @@
     my:delete-trailing-whitespace-before-save
     my:local-comment-auto-fill))
 
+(my:add-hooks 'rst-mode-hook
+  '(my:add-watchwords
+    my:delete-trailing-whitespace-before-save
+    auto-fill-mode
+    zotelo-minor-mode
+    reftex-mode))
+
+(my:add-hooks 'markdown-mode-hook
+  '(my:add-watchwords
+    my:delete-trailing-whitespace-before-save
+    auto-fill-mode
+    zotelo-minor-mode
+    reftex-mode))
+
+
 (my:add-hooks 'LaTeX-mode-hook
   '(my:add-watchwords
     my:delete-trailing-whitespace-before-save
