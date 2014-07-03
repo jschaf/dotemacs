@@ -194,16 +194,50 @@
                            ;; repository" message
                            (setq git-gutter:verbosity 0)))))
 
-        (:name idle-highlight-mode
-               :after
-               (progn
-                 (idle-highlight-mode)
-                 (set-face-attribute 'idle-highlight nil
-                                     :weight 'extra-bold
-                                     :underline (face-attribute
-                                                 'font-lock-variable-name-face
-                                                 :foreground)
-                                     :inherit nil)))
+        (:name helm
+               :after (progn
+                        (helm-mode 1)
+                        (setq
+                         ;; use curl for async, instead of emacs url synchronus
+                         helm-google-suggest-use-curl-p t
+                         helm-scroll-amount 4 ; scroll 4 lines other window using M-<next>/M-<prior>
+                         helm-quick-update t ; do not display invisible candidates
+                         helm-idle-delay 0.01 ; be idle for this many seconds, before updating in delayed sources.
+                         helm-input-idle-delay 0.01 ; be idle for this many seconds, before updating candidate buffer
+                         helm-ff-search-library-in-sexp t ; search for library in `require' and `declare-function' sexp.
+
+                         ;; you can customize helm-do-grep to execute ack-grep
+                         ;; helm-grep-default-command "ack-grep -Hn --smart-case --no-group --no-color %e %p %f"
+                         ;; helm-grep-default-recurse-command "ack-grep -H --smart-case --no-group --no-color %e %p %f"
+                         helm-split-window-default-side 'other ;; open helm buffer in another window
+                         helm-split-window-in-side-p t ;; open helm buffer inside current window, not occupy whole other window
+                         helm-buffers-favorite-modes (append helm-buffers-favorite-modes
+                                                             '(picture-mode artist-mode))
+                         helm-candidate-number-limit 200 ; limit the number of displayed canidates
+                         helm-M-x-requires-pattern 0 ; show all candidates when set to 0
+                         helm-ff-file-name-history-use-recentf t
+                         helm-move-to-line-cycle-in-source t ; move to end or beginning of source
+                        ; when reaching top or bottom of source.
+                         ido-use-virtual-buffers t ; Needed in helm-buffers-list
+                         helm-buffers-fuzzy-matching t ; fuzzy matching buffer names when non--nil
+                        ; useful in helm-mini that lists buffers
+                         )
+
+                        ;; rebind tab to do persistent action
+                        (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+                        ;; make TAB works in terminal
+                        (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+                        ;; list actions using C-z
+                        (define-key helm-map (kbd "C-z") 'helm-select-action)
+
+                        ;; mimic Ido
+                        (define-key helm-map (kbd "C-s") 'helm-next-line)
+                        (define-key helm-find-files-map (kbd "C-s") 'helm-next-line)
+                        (define-key helm-find-files-map (kbd "C-r") 'helm-previous-line)))
+
+        (:name highlight-symbol
+               :after (progn
+                        (add-hook 'prog-mode-hook 'highlight-symbol-mode)))
 
         (:name ido-ubiquitous
                :description "Use ido (nearly) everywhere"
