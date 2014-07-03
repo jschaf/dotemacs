@@ -29,7 +29,7 @@
 
 ;; Ignore all safe local variables.  The endless prompting is
 ;; annoying.
-(setq-default enable-local-variables :safe)
+(setq-default enable-local-variables t)
 
 ;; Kill and yank use the clipboard.
 (setq x-select-enable-clipboard t)
