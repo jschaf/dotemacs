@@ -141,6 +141,26 @@
   (set (make-local-variable 'whitespace-line-column) (max 80 fill-column))
   (whitespace-mode 1))
 
+(defun my:new-blah-buffer ()
+  "Open up a guaranteed new blah (scratch) buffer."
+  (interactive)
+  (switch-to-buffer (loop for num from 0
+                          for name = (format "blah-%03i" num)
+                          while (get-buffer name)
+                          finally return name)))
+
+(defun my:switch-to-blah-buffer ()
+  "Switch to a blah buffer, or create a new one."
+  (interactive)
+  (loop for buffer in (buffer-list)
+      if (string-match "blah-.+" (buffer-name buffer))
+         return (switch-to-buffer buffer)
+      finally do (my:new-blah-buffer))
+
+
+  )
+
+
 (defun my:evil-setup ()
   "The initial customization for evil mode.
 
