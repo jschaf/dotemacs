@@ -228,10 +228,13 @@
 
                         ;; rebind tab to do persistent action
                         (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+                        (define-key helm-find-files-map (kbd "<tab>") 'helm-execute-persistent-action)
                         ;; make TAB works in terminal
                         (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+                        (define-key helm-find-files-map (kbd "C-i") 'helm-execute-persistent-action)
                         ;; list actions using C-z
                         (define-key helm-map (kbd "C-z") 'helm-select-action)
+                        (define-key helm-find-files-map (kbd "C-z") 'helm-select-action)
 
                         ;; mimic Ido
                         (define-key helm-map (kbd "C-s") 'helm-next-line)
