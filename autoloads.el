@@ -197,6 +197,9 @@
         (:name helm
                :after (progn
                         (helm-mode 1)
+
+                        (loop for ext in '("\\.swf$" "\\.elc$" "\\.pyc$")
+                              do (add-to-list 'helm-boring-file-regexp-list ext))
                         (setq
                          ;; use curl for async, instead of emacs url synchronus
                          helm-google-suggest-use-curl-p t
