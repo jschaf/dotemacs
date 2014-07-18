@@ -245,6 +245,8 @@
                :after (progn
                         (add-hook 'prog-mode-hook 'highlight-symbol-mode)))
 
+        (:name haskell-mode)
+
         (:name ido-ubiquitous
                :description "Use ido (nearly) everywhere"
                :type github
