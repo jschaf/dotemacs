@@ -338,6 +338,7 @@
                              (keydef (help "<tab>") forward-button)
                              (keydef (help "<shift>-<tab>") backward-button)))
 
+        (:name lua-mode)
         (:name magit
                :after
                (eval-after-load 'magit
