@@ -167,17 +167,17 @@ figuring out how to reload the package."
   (setq evil-want-visual-char-semi-exclusive t)
   (setq evil-move-cursor-back nil)
 
-  (evil-define-motion evil-next-line-5 (count)
-    "Move the cursor (COUNT * 5) lines down."
-    :type line
-    (let (line-move-visual)
-      (evil-line-move (* 5 (or count 1)))))
+  (defmacro my:make-evil-line-move-motion (name multiplier)
+    `(evil-define-motion ,name (count)
+       ,(format "Move the cursor (COUNT * %s) lines down." multiplier)
+       :type line
+       (let (line-move-visual)
+         (evil-line-move (* ,multiplier (or count 1))))))
 
-  (evil-define-motion evil-previous-line-5 (count)
-    "Move the cursor (COUNT * 5) lines up."
-    :type line
-    (let (line-move-visual)
-      (evil-line-move (* -5 (or count 1)))))
+  (my:make-evil-line-move-motion my:evil-next-line-5 5)
+  (my:make-evil-line-move-motion my:evil-previous-line-5 -5)
+  (my:make-evil-line-move-motion my:evil-next-line-3 3)
+  (my:make-evil-line-move-motion my:evil-previous-line-3 -3)
 
   ;; Make movement keys work on visual lines instead of acutal lines.
   ;; This imitates Emacs behavior rather than Vim behavior.
@@ -200,8 +200,10 @@ figuring out how to reload the package."
           ("zl" . forward-sexp)
           ("zh" . backward-sexp)
           ("zu" . paredit-backward-up)
-          ("J" . evil-next-line-5)
-          ("K" . evil-previous-line-5)
+          ("J" . my:evil-next-line-5)
+          ("K" . my:evil-previous-line-5)
+          ("\M-j" . my:evil-next-line-3)
+          ("\M-k" . my:evil-previous-line-3)
           ("gj" . evil-join)
           ("H" . my:back-to-indentation-or-beginning)
           ("L" . evil-end-of-line)
