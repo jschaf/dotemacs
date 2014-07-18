@@ -141,6 +141,15 @@
   (set (make-local-variable 'whitespace-line-column) (max 80 fill-column))
   (whitespace-mode 1))
 
+(defun my:new-scratch-buffer ()
+  "open up a guaranteed new scratch buffer"
+  (interactive)
+  (switch-to-buffer (loop for num from 0
+                          for name = (format "blah-%03i" num)
+                          while (get-buffer name)
+                          finally return name)))
+
+
 (defun my:evil-setup ()
   "The initial customization for evil mode.
 

@@ -107,6 +107,7 @@
                    "ci" 'ido-goto-symbol
                    "cp" 'check-parens
                    "cs" '(lambda () (interactive) (switch-to-buffer "*scratch*"))
+                   "cs" 'my:new-scratch-buffer
                    "de" 'toggle-debug-on-error
                    "dc" 'describe-char
                    "dtw" 'delete-trailing-whitespace
