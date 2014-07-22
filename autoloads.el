@@ -420,7 +420,8 @@
                        (eshell-send-input))
                      (switch-to-buffer-other-window "*eshell*")))
 
-                 (add-to-list 'compilation-finish-functions 'my:run-in-eshell)))
+                 ;; (add-to-list 'compilation-finish-functions 'my:run-in-eshell)
+                 ))
 
         (:name smartparens
                :after (progn
