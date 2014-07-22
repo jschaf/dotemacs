@@ -160,11 +160,7 @@
   (loop for buffer in (buffer-list)
       if (string-match "blah-.+" (buffer-name buffer))
          return (switch-to-buffer buffer)
-      finally do (my:new-blah-buffer))
-
-
-  )
-
+      finally do (my:new-blah-buffer)))
 
 (defun my:evil-setup ()
   "The initial customization for evil mode.
