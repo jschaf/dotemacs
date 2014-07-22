@@ -34,11 +34,21 @@
         ;; Anzu mode - show the number of matches when searching
         (:name anzu
                :after (global-anzu-mode 1))
+
         (:name auctex
                :after (progn
                         (setq TeX-auto-save t)
                         (setq TeX-parse-self t)
-                        (setq-default TeX-master nil)))
+                        (eval-after-load 'latex
+                          '(progn
+                             (require 'smartparens-latex)
+                             ;; Remove the :trigger for a regular
+                             ;; double quote to insert LaTeX double
+                             ;; quotes.  Now smartparens will default
+                             ;; to normal double quotes.
+                             (sp-local-pair 'latex-mode "``" "''"
+                                            :trigger "\""
+                                            :actions :rem)))))
 
         (:name auto-complete
                :submodule nil
