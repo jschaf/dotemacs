@@ -146,7 +146,7 @@
                    "xd" 'ido-dired
                    "xg" 'magit-status
                    "xh" 'mark-whole-buffer
-                   "xrs" 'copy-to-register
+                   "xc" 'copy-to-register
                    "xr " 'point-to-register)))
 
         (:name evil-numbers
