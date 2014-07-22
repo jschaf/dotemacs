@@ -128,6 +128,11 @@
   "Add `my:maybe-byte-compile' to the local `after-save-hook'."
   (add-hook (make-local-variable 'after-save-hook) 'my:maybe-byte-compile))
 
+(defun my:compile-on-save ()
+  "Add `compile' to the local `after-save-hook'."
+  (interactive)
+  (add-hook (make-local-variable 'after-save-hook) 'recompile))
+
 (defun my:delete-trailing-whitespace-before-save ()
   "Add `delete-trailing-whitespace' to the local `after-save-hook'."
   (add-hook (make-local-variable 'before-save-hook)
