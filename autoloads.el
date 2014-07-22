@@ -255,6 +255,7 @@
 
         (:name highlight-symbol
                :after (progn
+                        (setq highlight-symbol-idle-delay 0.8)
                         (add-hook 'prog-mode-hook 'highlight-symbol-mode)))
 
         (:name haskell-mode)
