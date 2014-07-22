@@ -231,12 +231,13 @@
                          helm-candidate-number-limit 200 ; limit the number of displayed canidates
                          helm-M-x-requires-pattern 0 ; show all candidates when set to 0
                          helm-ff-file-name-history-use-recentf t
-                         helm-move-to-line-cycle-in-source t ; move to end or beginning of source
-                        ; when reaching top or bottom of source.
+                         ;; move to end or beginning of source when
+                         ;; reaching top or bottom of source.
+                         helm-move-to-line-cycle-in-source t
                          ido-use-virtual-buffers t ; Needed in helm-buffers-list
-                         helm-buffers-fuzzy-matching t ; fuzzy matching buffer names when non--nil
-                        ; useful in helm-mini that lists buffers
-                         )
+                         ;; fuzzy matching buffer names when non--nil
+                         ;; useful in helm-mini that lists buffers
+                         helm-buffers-fuzzy-matching t)
 
                         ;; rebind tab to do persistent action
                         (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
