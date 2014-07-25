@@ -156,7 +156,7 @@
                  (define-key evil-normal-state-map (kbd "M-<down>") 'evil-numbers/dec-at-pt)))
 
         (:name evil-surround
-               :after (global-surround-mode 1))
+               :after (global-evil-surround-mode 1))
 
         (:name fill-column-indicator
                :after
