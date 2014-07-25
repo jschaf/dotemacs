@@ -38,8 +38,16 @@
 (load-theme 'solarized-light)
 
 (require 'server)
-(or (server-running-p)
-    (server-start))
+(defun my:maybe-start-server ()
+  (unless (server-running-p)
+    (server-start)))
+
+(setq my:server-timer (run-with-idle-timer 0 10 'my:maybe-start-server))
+
+;; This would go in misc.el, but Emacs purposefully makes it difficult
+;; to disable this message.  `inhibit-startup-echo-area-message' must
+;; be set to $USERNAME and must be in the actual init-file.
+(setq inhibit-startup-echo-area-message "joe")
 
 ;; Local Variables:
 ;; lexical-binding: t
