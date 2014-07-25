@@ -10,7 +10,7 @@
 ;;; Code:
 
 ;; Unnecessary.
-(setq inhibit-startup-screen t
+(setq inhibit-startup-message t
       initial-scratch-message "")
 
 ;; Recent file mode.
