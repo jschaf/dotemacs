@@ -295,6 +295,9 @@
                       (save-excursion
                         (insert " ")))
 
+                    (add-to-list 'sp-navigate-consider-stringlike-sexp
+                                 'jinja2-mode)
+
                     ;; Remove curly brace binding because it prevents
                     ;; a binding for Jinja constructs.
                     (sp-local-pair 'jinja2-mode "{" "}" :actions nil)
