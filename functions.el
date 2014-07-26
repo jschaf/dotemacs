@@ -213,19 +213,13 @@ figuring out how to reload the package."
 
   ;; Commands for both the normal, motion and visual state
   (loop for (key . func) in
-        `(("zk" . beginning-of-defun)
-          ("zj" . end-of-defun)
-          ("zl" . forward-sexp)
-          ("zh" . backward-sexp)
-          ("zu" . paredit-backward-up)
-          ("J" . my:evil-next-line-5)
+        `(("J" . my:evil-next-line-5)
           ("K" . my:evil-previous-line-5)
           ("\M-j" . my:evil-next-line-3)
           ("\M-k" . my:evil-previous-line-3)
           ("gj" . evil-join)
           ("H" . my:back-to-indentation-or-beginning)
           ("L" . evil-end-of-line)
-          ("zdy" . my:yank-sexp)
           ("\C-j" . scroll-up-command)
           ("\C-k" . scroll-down-command))
         do
@@ -243,25 +237,6 @@ figuring out how to reload the package."
           ("z;" . comment-or-uncomment-line))
         do
         (define-key evil-normal-state-map key func))
-
-  ;; Paredit Mode
-  (add-hook 'paredit-mode-hook
-            (lambda () (loop for (key . func) in
-                        '(("zsh" . paredit-backward)
-                          ("zsl" . paredit-forward)
-                          ("zsj" . paredit-forward-down)
-                          ("zsk" . paredit-backward-up)
-                          ("zdl" . paredit-forward-barf-sexp)
-                          ("zdh" . paredit-backward-barf-sexp)
-                          ("zfh" . paredit-backward-slurp-sexp)
-                          ("zfl" . paredit-forward-slurp-sexp)
-                          ("zfc" . paredit-convolute-sexp)
-                          ("z9" . paredit-wrap-round)
-                          ("zdk" . kill-sexp)
-                          ("zss" . paredit-splice-sexp)
-                          ("zsd" . paredit-join-sexps)
-                          ("z'" . paredit-meta-doublequote))
-                        do (define-key evil-normal-state-map key func))))
 
   (add-hook 'Info-mode-hook
             (lambda () (loop for (key . func) in

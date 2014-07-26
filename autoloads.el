@@ -377,9 +377,6 @@
                         (add-hook 'compilation-mode-hook
                                   'page-break-lines-mode)))
 
-        (:name paredit
-               :after (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode))
-
         (:name popup
                :submodule nil)
 
