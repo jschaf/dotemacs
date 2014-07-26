@@ -158,6 +158,17 @@
 
 (global-set-key (kbd "RET") 'newline-and-indent)
 
+;; .dir-local.el tweaks
+(defvar my:use-jinja-for-html-p nil
+  "Use `jinja2-mode' if non-nil, otherwise `html-mode'.
+Primarily for use in .dir-locals.el")
+
+(defun my:maybe-choose-jinja2-mode ()
+  (when my:use-jinja-for-html-p
+    (jinja2-mode)))
+
+(add-hook 'html-mode-hook 'my:maybe-choose-jinja2-mode)
+
 ;; All programming modes
 (my:add-hooks 'prog-mode-hook
   '(my:add-watchwords
