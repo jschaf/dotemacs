@@ -9,6 +9,11 @@
        :type inclusive
        :jump t
        (,name count))))
+(defun my:beginning-of-previous-sexp (&optional arg)
+  (interactive "P")
+  (setq arg (or arg 1))
+  (sp-previous-sexp arg)
+  (sp-backward-sexp))
 
 (defun my:smartparens-config ()
   (interactive)
@@ -17,13 +22,13 @@
                         ("zk" . sp-backward-up-sexp)
                         ("zl" . sp-forward-sexp)
 
-                        ("zp" . sp-previous-sexp)
+                        ("zp" . my:beginning-of-previous-sexp)
                         ("zJ" . sp-end-of-sexp)
                         ("zK" . sp-beginning-of-sexp)
                         ("zn" . sp-next-sexp)
 
-                        ("zd" . sp-backward-down-sexp)
-                        ("zu" . sp-up-sexp)))
+                        ("z\C-k" . sp-backward-down-sexp)
+                        ("z\C-j" . sp-up-sexp)))
 
 
         (sexp-modifications '(("Zt" . sp-transpose-sexp)
