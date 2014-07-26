@@ -31,6 +31,7 @@
                  '(progn
                     (define-key evil-normal-state-map (kbd "SPC")
                       'ace-jump-mode))))
+        (:name ag)
         ;; Anzu mode - show the number of matches when searching
         (:name anzu
                :after (global-anzu-mode 1))
