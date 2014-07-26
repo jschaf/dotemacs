@@ -42,7 +42,6 @@
                         (setq TeX-parse-self t)
                         (eval-after-load 'latex
                           '(progn
-                             (require 'smartparens-latex)
                              ;; Remove the :trigger for a regular
                              ;; double quote to insert LaTeX double
                              ;; quotes.  Now smartparens will default
