@@ -175,13 +175,12 @@ figuring out how to reload the package."
 
   (setq evil-highlight-closing-paren-at-point-states nil)
 
-  (set-cursor-color "#0971B2")
-  (defun my:color-evil-cursor (hook color)
-    (add-hook hook `(lambda () (set-cursor-color ,color))))
-
-  (my:color-evil-cursor 'evil-normal-state-entry-hook "#0971B2")
-  (my:color-evil-cursor 'evil-insert-state-entry-hook "#AD5E5E")
-  (my:color-evil-cursor 'evil-emacs-state-entry-hook "#00FF48")
+  (setq evil-emacs-state-cursor '("#00FF48" box))
+  (setq evil-normal-state-cursor '("#0971B2" box))
+  ;; (setq evil-visual-state-cursor '("orange" box))
+  (setq evil-insert-state-cursor '("#AD5E5E" bar))
+  (setq evil-replace-state-cursor '("#AD5E5E" hollow))
+  (setq evil-operator-state-cursor '(hollow))
 
   (setq evil-want-visual-char-semi-exclusive t)
   (setq evil-move-cursor-back nil)
