@@ -117,6 +117,26 @@
 ;; Never allow tabs
 (setq-default indent-tabs-mode nil)
 
+;; don't prompt for a compilation command, use make
+(setq compilation-read-command nil)
+
+(setq compilation-scroll-output 'first-error)
+
+(defun my:bury-compile-buffer-if-successful (buffer string)
+  "Bury a compilation buffer if succeeded without warnings "
+  (if (and
+       (string-match "compilation" (buffer-name buffer))
+       (string-match "finished" string)
+       (not
+        (with-current-buffer buffer
+          (goto-char 0)
+          (search-forward "warning" nil t))))
+      (run-with-timer 1 nil
+                      (lambda (buf)
+                        (bury-buffer buf)
+                        (switch-to-prev-buffer (get-buffer-window buf) 'kill))
+                      buffer)))
+(add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
 
 ;;; Usability tweaks
 
