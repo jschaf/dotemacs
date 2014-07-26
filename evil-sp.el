@@ -64,3 +64,5 @@
           do
           ;; Create key-bindings
           (define-key evil-normal-state-map key func))))
+
+(my:smartparens-config)

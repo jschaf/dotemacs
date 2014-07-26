@@ -34,6 +34,7 @@
 (load custom-file)
 (load "autoloads")
 (load "functions")
+(load "evil-sp")
 
 (load-theme 'solarized-light)
 
