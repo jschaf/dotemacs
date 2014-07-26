@@ -292,11 +292,29 @@ Primarily for use in .dir-locals.el")
 ;; pressing d)
 ;; TODO: don't highlight parens in comments
 ;; TODO: use normal quotes in comments in auctex
+
+(defvar my:mac-modifier-state 'built-in
+  "Toggle between BUILT-IN and USB")
+
+(defun my:toggle-mac-modifiers ()
+  (interactive)
+  (cl-case my:mac-modifier-state
+    ('usb
+     (setq my:mac-modifier-state 'built-in
+           mac-option-modifier 'control
+           mac-command-modifier 'meta)
+     (message "Mac modifier keys set for Mac keyboard."))
+
+    ('built-in
+     (setq my:mac-modifier-state 'usb
+           mac-option-modifier 'meta
+           mac-command-modifier 'super)
+     (message "Mac modifier keys set for USB keyboard."))))
+
 (when (eq system-type 'darwin)
   ;; Don't use option to input special chars, use it as alt like it
   ;; was meant to be.
-  (setq mac-option-modifier 'control
-        mac-command-modifier 'meta))
+  (my:toggle-mac-modifiers))
 
 ;; Local Variables:
 ;; lexical-binding: t
