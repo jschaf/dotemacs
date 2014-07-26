@@ -431,14 +431,26 @@
                         (smartparens-global-mode 1)
                         (show-paren-mode 1)))
 
-        ;; (:name yasnippet
-        ;;        :after
-        ;;        (run-with-idle-timer 1 nil
-        ;;                             (lambda ()
-        ;;                               (require 'yasnippet)
-        ;;                               (setq yas-verbosity 0)
-        ;;                               (yas-global-mode 1))))
-        ))
+        (:name yasnippet
+               :after
+               (progn
+                 (defun my:load-yasnippet ()
+                   (require 'yasnippet)
+                   (setq yas-verbosity 0)
+                   (yas-global-mode 1)
+                   ;; Trying use to tab for everything is confusing
+                   ;; and fragile
+                   (define-key yas-minor-mode-map  [(tab)] nil)
+                   (define-key yas-minor-mode-map (kbd "TAB") nil)
+                   (define-key yas-minor-mode-map (kbd "\C-o") 'yas-expand)
+                   (define-key evil-insert-state-map (kbd "\C-o") nil)
+
+                   (define-key yas-keymap [(tab)] nil)
+                   (define-key yas-keymap (kbd "TAB") nil)
+                   (define-key yas-keymap (kbd "\C-o") 'yas-next-field-or-maybe-expand))
+                 ;; Run after emacs is done loading because yasnippet
+                 ;; adds about 1 second to load time.
+                 (run-with-idle-timer 1 nil 'my:load-yasnippet)))))
 
 (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 (defvar el-get-packages
