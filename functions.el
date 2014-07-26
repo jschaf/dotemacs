@@ -306,8 +306,8 @@ Apply ARGS normally."
   (cond
    ;; If we're in one of the Evil states return to the normal-state
    ((or (evil-insert-state-p) (evil-normal-state-p) (evil-replace-state-p)
-        (evil-visual-state-p))
-    (evil-normal-state))
+        (evil-operator-state-p) (evil-visual-state-p))
+    (evil-force-normal-state))
 
    ((window-minibuffer-p)
     (abort-recursive-edit))
