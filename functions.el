@@ -321,6 +321,7 @@ Apply ARGS normally."
 ;; http://stackoverflow.com/questions/20926215
 (defun my:isearch-exit-chord-worker (&optional arg)
   (interactive "p")
+  ;; delete the j or k and accept the search
   (execute-kbd-macro (kbd "<backspace> <return>")))
 
 (defun my:isearch-exit-chord (arg)
@@ -328,14 +329,39 @@ Apply ARGS normally."
   (isearch-printing-char)
   (unless (fboundp 'smartrep-read-event-loop)
     (require 'smartrep))
-  (run-at-time 0.3 nil 'keyboard-quit)
+  ;; Manually signal quit because using `keyboard-quit' displays
+  ;; "quit" in the echo-area, hiding the search text if you press 'j'
+  ;; and another character besides 'k' in rapid succession.
+  (run-at-time 0.3 nil '(lambda () (signal 'quit)))
   (condition-case e
     (smartrep-read-event-loop
       '(("j" . my:isearch-exit-chord-worker)
-         ("k" . my:isearch-exit-chord-worker)))
+        ("k" . my:isearch-exit-chord-worker)))
     (quit nil)))
 (define-key isearch-mode-map "j" 'my:isearch-exit-chord)
 (define-key isearch-mode-map "k" 'my:isearch-exit-chord)
+
+;; (define-key evil-operator-state-map (kbd "C-c") 'keyboard-quit)
+
+;; (key-chord-define evil-operator-state-map "jk" 'evil-force-normal-state)
+
+;; (key-chord-define evil-motion-state-map "jk"
+;;                   'evil-force-normal-state)
+;; (defun my:evil-motion-exit-chord-worker (&optional arg)
+;;   (interactive "p")
+;;   (keyboard-quit))
+
+;; (defun my:evil-motion-exit-chord (arg)
+;;   (interactive "p")
+;;   (run-at-time 0.1 nil '(lambda () (signal 'quit)))
+;;   (condition-case e
+;;     (smartrep-read-event-loop
+;;       '(("j" . my:evil-motion-exit-chord-worker)
+;;         ("k" . my:evil-motion-exit-chord-worker)))
+;;     (quit nil)))
+
+;; (define-key evil-motion-state-map "j" 'my:evil-motion-exit-chord)
+;; (define-key evil-motion-state-map "k" 'my:evil-motion-exit-chord)
 
 (defun my:evil-define-keys (states keymaps key def &rest bindings)
   "Run `evil-define-key' over all STATES and KEYMAPS."
