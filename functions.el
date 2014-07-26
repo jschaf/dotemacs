@@ -174,16 +174,14 @@ figuring out how to reload the package."
   (add-to-list 'evil-insert-state-modes 'git-commit-mode)
 
   (setq evil-highlight-closing-paren-at-point-states nil)
-  ;; Use different colors for fonts to easily determine what mode we're in.
-  (setq evil-default-cursor "#0971B2")
-  ;; (setq evil-default-cursor "#5EA0AD")
-  (setq evil-normal-state-cursor evil-default-cursor)
-  (setq evil-insert-state-cursor "#AD5E5E")
-  (setq evil-visual-state-cursor evil-default-cursor)
-  (setq evil-replace-state-cursor evil-default-cursor)
-  (setq evil-operator-state-cursor nil)
-  (setq evil-motion-state-cursor evil-default-cursor)
-  (setq evil-emacs-state-cursor "#00FF48")
+
+  (set-cursor-color "#0971B2")
+  (defun my:color-evil-cursor (hook color)
+    (add-hook hook `(lambda () (set-cursor-color ,color))))
+
+  (my:color-evil-cursor 'evil-normal-state-entry-hook "#0971B2")
+  (my:color-evil-cursor 'evil-insert-state-entry-hook "#AD5E5E")
+  (my:color-evil-cursor 'evil-emacs-state-entry-hook "#00FF48")
 
   (setq evil-want-visual-char-semi-exclusive t)
   (setq evil-move-cursor-back nil)
