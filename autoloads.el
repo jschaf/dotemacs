@@ -438,7 +438,8 @@
                    (setq yas-verbosity 0)
                    (yas-global-mode 1)
                    ;; Trying use to tab for everything is confusing
-                   ;; and fragile
+                   ;; and fragile.  So, let `auto-complete-mode' have
+                   ;; tab, and use \C-o for yasnippet.
                    (define-key yas-minor-mode-map  [(tab)] nil)
                    (define-key yas-minor-mode-map (kbd "TAB") nil)
                    (define-key yas-minor-mode-map (kbd "\C-o") 'yas-expand)
