@@ -446,7 +446,8 @@
 
                    (define-key yas-keymap [(tab)] nil)
                    (define-key yas-keymap (kbd "TAB") nil)
-                   (define-key yas-keymap (kbd "\C-o") 'yas-next-field-or-maybe-expand))
+                   (define-key yas-keymap (kbd "\C-o") 'yas-next-field-or-maybe-expand)
+                   (message "yasnippet global mode on"))
                  ;; Run after emacs is done loading because yasnippet
                  ;; adds about 1 second to load time.
                  (run-with-idle-timer 1 nil 'my:load-yasnippet)))))
