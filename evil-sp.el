@@ -31,7 +31,7 @@
                         ("z\C-j" . sp-up-sexp)))
 
 
-        (sexp-modifications '(("Zt" . sp-transpose-sexp)
+        (sexp-modifications '(("zst" . sp-transpose-sexp)
 
                               ("zsu" . sp-unwrap-sexp)
                               ("zsb" . sp-backward-unwrap-sexp)
