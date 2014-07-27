@@ -279,11 +279,7 @@ Apply ARGS normally."
    nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\|HACK\\|REFACTOR\\|NOCOMMIT\\)"
           1 font-lock-warning-face t))))
 
-(defun my:esc ()
-  "Functionality for escaping generally."
-  (interactive)
-
-  (eval-after-load 'evil
+(eval-after-load 'evil
     '(progn
        (define-key evil-operator-state-map "j" 'my:evil-operator-state-j)
        (evil-define-command my:evil-operator-state-j ()
@@ -301,6 +297,10 @@ Apply ARGS normally."
                  (when (not (null evt))
                    ;; process any other key pressed within 0.5 seconds
                    (push evt unread-command-events)))))))))
+
+(defun my:esc ()
+  "Functionality for escaping generally."
+  (interactive)
 
   (cond
    ;; If we're in one of the Evil states return to the normal-state
