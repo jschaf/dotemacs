@@ -464,19 +464,15 @@
 ;;         gist
          git-modes
          goto-chg
-;;         jedi
-;;         jinja2-mode
          magit
          moz-repl
          projectile
 ;;         pymacs
-;;         rust-mode
          reftex
          s
          smex
          smartparens
          smartrep
-         ;;yasnippet
          zencoding-mode
          zotelo)
        (mapcar 'el-get-source-name el-get-sources)))
