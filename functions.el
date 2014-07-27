@@ -282,6 +282,26 @@ Apply ARGS normally."
 (defun my:esc ()
   "Functionality for escaping generally."
   (interactive)
+
+  (eval-after-load 'evil
+    '(progn
+       (define-key evil-operator-state-map "j" 'my:evil-operator-state-j)
+       (evil-define-command my:evil-operator-state-j ()
+         (save-excursion
+           (let ((evt (read-event "Press k to exit operator state" nil 0.08)))
+             (if (and (integerp evt) (char-equal evt ?k))
+                 (keyboard-quit)
+               ;; assume <down> is bound to the same as j:
+               ;; get the keys used to invoke the operator
+               (let* ((operator-string (substring (this-command-keys) 0 -1))
+                      ;; add " <down>" to the end instead of "j"
+                      (new-macro (kbd (concat operator-string " <down>"))))
+                 (evil-force-normal-state)
+                 (execute-kbd-macro new-macro)
+                 (when (not (null evt))
+                   ;; process any other key pressed within 0.5 seconds
+                   (push evt unread-command-events)))))))))
+
   (cond
    ;; If we're in one of the Evil states return to the normal-state
    ((or (evil-insert-state-p) (evil-normal-state-p) (evil-replace-state-p)
@@ -320,22 +340,6 @@ Apply ARGS normally."
 (define-key isearch-mode-map "j" 'my:isearch-exit-chord)
 (define-key isearch-mode-map "k" 'my:isearch-exit-chord)
 
-(define-key evil-operator-state-map "j" 'my:evil-operator-state-j)
-
-(evil-define-command my:evil-operator-state-j ()   (save-excursion
-    (let ((evt (read-event "Press k to exit operator state" nil 0.08)))
-      (if (and (integerp evt) (char-equal evt ?k))
-          (keyboard-quit)
-        ;; assume <down> is bound to the same as j:
-        ;; get the keys used to invoke the operator
-        (let* ((operator-string (substring (this-command-keys) 0 -1))
-               ;; add " <down>" to the end instead of "j"
-               (new-macro (kbd (concat operator-string " <down>"))))
-          (evil-force-normal-state)
-          (execute-kbd-macro new-macro)
-          (when (not (null evt))
-            ;; process any other key pressed within 0.5 seconds
-            (push evt unread-command-events)))))))
 
 ;; (define-key evil-operator-state-map (kbd "C-c") 'keyboard-quit)
 
