@@ -122,21 +122,50 @@
 
 (setq compilation-scroll-output 'first-error)
 
-(defun my:bury-compile-buffer-if-successful (buffer string)
-  "Bury a compilation buffer if succeeded without warnings "
-  (if (and
-       (string-match "compilation" (buffer-name buffer))
-       (string-match "finished" string)
-       (not
-        (with-current-buffer buffer
-          (goto-char 0)
-          (search-forward "warning" nil t))))
-      (run-with-timer 1 nil
-                      (lambda (buf)
-                        (bury-buffer buf)
-                        (switch-to-prev-buffer (get-buffer-window buf) 'kill))
-                      buffer)))
-(add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
+;; Hide the compilation buffer unless there are warnings
+;; (defun my:maybe-show-compilation (buffer outstr)
+;;   (unless (string-match "finished" outstr)
+;;     (switch-to-buffer-other-window buffer))
+;;   t)
+
+;; (add-hook 'compilation-finish-functions 'my:maybe-show-compilation)
+
+;; (defadvice compilation-start
+;;   (around inhibit-display
+;;       (command &optional mode name-function highlight-regexp))
+;;   (if (not (string-match "^\\(find\\|grep\\)" command))
+;;       (flet ((display-buffer)
+;;          (set-window-point)
+;;          (goto-char))
+;;     (fset 'display-buffer 'ignore)
+;;     (fset 'goto-char 'ignore)
+;;     (fset 'set-window-point 'ignore)
+;;     (save-window-excursion
+;;       ad-do-it))
+;;     ad-do-it))
+
+;; (ad-activate 'compilation-start)
+;; (ad-deactivate 'compilation-start)
+
+;; (defvar my:ignore-successful-compilations nil
+;;   "If non-nil, bury compilation buffers with no errors or
+;;   warnings.")
+
+;; (defun my:bury-compile-buffer-if-successful (buffer string)
+;;   "Bury a compilation buffer if succeeded without warnings "
+;;   (if (and
+;;        (string-match "compilation" (buffer-name buffer))
+;;        (string-match "finished" string)
+;;        (not
+;;         (with-current-buffer buffer
+;;           (goto-char 0)
+;;           (search-forward "warning" nil t))))
+;;       (run-with-timer 1 nil
+;;                       (lambda (buf)
+;;                         (bury-buffer buf)
+;;                         (switch-to-prev-buffer (get-buffer-window buf) 'kill))
+;;                       buffer)))
+;; (add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
 
 ;;; Usability tweaks
 
