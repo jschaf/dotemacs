@@ -378,6 +378,19 @@ Apply ARGS normally."
           (evil-define-key state keymap k d)
           (message "defined state %s in %s of %s:%s" state keymap k d))))))
 
+(defun my:add-citations-to-sentence-end ()
+  "Add support for pandoc citations to `sentence-end'.
+e.g. 'This is a sentence. [@euler, 2]' The main point is now
+`fill-paragraph' will respect the two spaces after the closing
+citation and not collapse it to one space."
+  (interactive)
+  (setq-local sentence-end-base
+            (concat
+             ;; don't use the local value because we'll keep adding
+             ;; the citation regexp over and over again.
+             (default-value 'sentence-end-base)
+             ;; citation regexp
+             "\\( \\[@.*?\\]\\)*")))
 
 (defun my:toggle-identifier-naming-style ()
   "Toggles the symbol at point between C-style naming,

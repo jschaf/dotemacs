@@ -226,6 +226,7 @@ Primarily for use in .dir-locals.el")
 (my:add-hooks 'markdown-mode-hook
   '(my:add-watchwords
     my:delete-trailing-whitespace-before-save
+    my:add-citations-to-sentence-end
     auto-fill-mode
     zotelo-minor-mode
     reftex-mode))
