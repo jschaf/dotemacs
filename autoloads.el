@@ -426,7 +426,7 @@
                         (require 'smartparens)
                         (require 'smartparens-config)
                         (smartparens-global-mode 1)
-                        (show-paren-mode 1)))
+                        ))
 
         (:name yasnippet
                :after

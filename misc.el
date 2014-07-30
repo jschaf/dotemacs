@@ -79,6 +79,9 @@
 (setq save-place t
       save-place-file "~/.emacs.d/private/save-place")
 
+
+(show-paren-mode 1)
+(setq-default show-paren-style 'mixed)
 ;; Ido
 (require 'ido)
 (ido-mode t)
