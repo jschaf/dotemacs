@@ -13,10 +13,11 @@
 (setq inhibit-startup-message t
       initial-scratch-message "")
 
-;; Recent file mode.
+;; Recent file mode.  you must set `recentf-save-file' before
+;; requiring `recentf'
+(setq-default recentf-save-file "~/.emacs.d/private/.recentf")
 (require 'recentf)
 (recentf-mode 1)
-(setq-default recentf-save-file "~/.emacs.d/private/.recentf")
 
 ;; Saveplace - go to the last point when opening a previously closed
 ;; file.
