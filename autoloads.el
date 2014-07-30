@@ -256,8 +256,20 @@
 
         (:name highlight-symbol
                :after (progn
-                        (setq highlight-symbol-idle-delay 0.8)
+                        (setq highlight-symbol-idle-delay 0.7)
                         (add-hook 'prog-mode-hook 'highlight-symbol-mode)))
+
+        (:name hl-sentence
+               :website "https://github.com/milkypostman/hl-sentence"
+               :description "Highlight sentences in Emacs with a custom face. Very nice."
+               :type "github"
+               :branch "master"
+               :pkgname "milkypostman/hl-sentence"
+               :after (progn
+                        (add-hook 'markdown-mode-hook 'hl-sentence-mode)
+                        (after 'hl-sentence
+                          (set-face-attribute 'hl-sentence-face nil
+                                             :foreground "#444"))))
 
         (:name haskell-mode)
 
