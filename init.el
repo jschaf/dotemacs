@@ -28,6 +28,12 @@
 ;; Start in a reasonable directory.
 (setq default-directory "~/")
 
+(defmacro after (mode &rest body)
+  "`eval-after-load' MODE evaluate BODY."
+  (declare (indent defun))
+  `(eval-after-load ,mode
+     '(progn ,@body)))
+
 ;;; Code Load
 (load "misc")
 (setq custom-file "~/.emacs.d/private/emacs-custom.el")

@@ -27,10 +27,9 @@
       '(
         (:name ace-jump-mode
                :after
-               (eval-after-load 'evil
-                 '(progn
-                    (define-key evil-normal-state-map (kbd "SPC")
-                      'ace-jump-mode))))
+               (after 'evil
+                 (define-key evil-normal-state-map (kbd "SPC")
+                   'ace-jump-mode)))
         (:name ag)
         ;; Anzu mode - show the number of matches when searching
         (:name anzu
@@ -40,35 +39,33 @@
                :after (progn
                         (setq TeX-auto-save t)
                         (setq TeX-parse-self t)
-                        (eval-after-load 'latex
-                          '(progn
-                             ;; Remove the :trigger for a regular
-                             ;; double quote to insert LaTeX double
-                             ;; quotes.  Now smartparens will default
-                             ;; to normal double quotes.
-                             (sp-local-pair 'latex-mode "``" "''"
-                                            :trigger "\""
-                                            :actions :rem)))))
+                        (after 'latex
+                          ;; Remove the :trigger for a regular
+                          ;; double quote to insert LaTeX double
+                          ;; quotes.  Now smartparens will default
+                          ;; to normal double quotes.
+                          (sp-local-pair 'latex-mode "``" "''"
+                                         :trigger "\""
+                                         :actions :rem))))
 
         (:name auto-complete
                :submodule nil
 
                :after (progn (require 'auto-complete-config)
                              (global-auto-complete-mode 1)
-                             (eval-after-load 'auto-complete-config
-                               '(progn
-                                  (defun set-auto-complete-as-completion-at-point-function ()
-                                    (add-to-list 'completion-at-point-functions 'auto-complete-mode-maybe))
-                                  (add-hook 'auto-complete-mode-hook
-                                            'set-auto-complete-as-completion-at-point-function)
-                                  (setq-default ac-comphist-file "~/.emacs.d/private/ac-comphist.dat")
-                                  (setq-default ac-sources
-                                                '(ac-source-yasnippet
-                                                  ac-source-imenu
-                                                  ac-source-dictionary
-                                                  ac-source-words-in-buffer
-                                                  ac-source-words-in-same-mode-buffers
-                                                  ac-source-words-in-all-buffer))))))
+                             (after 'auto-complete-config
+                               (defun set-auto-complete-as-completion-at-point-function ()
+                                 (add-to-list 'completion-at-point-functions 'auto-complete-mode-maybe))
+                               (add-hook 'auto-complete-mode-hook
+                                         'set-auto-complete-as-completion-at-point-function)
+                               (setq-default ac-comphist-file "~/.emacs.d/private/ac-comphist.dat")
+                               (setq-default ac-sources
+                                             '(ac-source-yasnippet
+                                               ac-source-imenu
+                                               ac-source-dictionary
+                                               ac-source-words-in-buffer
+                                               ac-source-words-in-same-mode-buffers
+                                               ac-source-words-in-all-buffer)))))
 
         (:name esup
                :website "https://github.com/jschaf/esup"
@@ -81,17 +78,16 @@
                :after
                (progn
                  (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode)
-                 (eval-after-load 'evil
-                   '(progn
-                      (cl-loop for (key . func) in
-                               '(("g." . elisp-slime-nav-find-elisp-thing-at-point)
-                                 ("g," . pop-tag-mark)
-                                 ("gh" . elisp-slime-nav-describe-elisp-thing-at-point))
-                               do
-                               (evil-define-key 'normal emacs-lisp-mode-map key func)
-                               (evil-define-key 'normal lisp-interaction-mode-map key func)
-                               (evil-define-key 'motion emacs-lisp-mode-map key func)
-                               (evil-define-key 'motion lisp-interaction-mode-map key func))))))
+                 (after 'evil
+                   (cl-loop for (key . func) in
+                            '(("g." . elisp-slime-nav-find-elisp-thing-at-point)
+                              ("g," . pop-tag-mark)
+                              ("gh" . elisp-slime-nav-describe-elisp-thing-at-point))
+                            do
+                            (evil-define-key 'normal emacs-lisp-mode-map key func)
+                            (evil-define-key 'normal lisp-interaction-mode-map key func)
+                            (evil-define-key 'motion emacs-lisp-mode-map key func)
+                            (evil-define-key 'motion lisp-interaction-mode-map key func)))))
 
         (:name emmet-mode
                :after (progn
@@ -147,7 +143,12 @@
                    "xg" 'magit-status
                    "xh" 'mark-whole-buffer
                    "xc" 'copy-to-register
-                   "xr " 'point-to-register)))
+                   "xr " 'point-to-register)
+                 (after 'lorem-ipsum
+                   (evil-leader/set-key
+                     "lis" 'Lorem-ipsum-insert-sentences
+                     "lip" 'Lorem-ipsum-insert-paragraphs
+                     "lil" 'Lorem-ipsum-insert-list))))
 
         (:name evil-numbers
                :after
@@ -200,11 +201,10 @@
         (:name git-gutter
                :after
                (progn (add-hook 'prog-mode-hook 'git-gutter-mode)
-                      (eval-after-load 'git-gutter
-                        '(progn
-                           ;; Turn off annoying "here is not git
-                           ;; repository" message
-                           (setq git-gutter:verbosity 0)))))
+                      (after 'git-gutter
+                        ;; Turn off annoying "here is not git
+                        ;; repository" message
+                        (setq git-gutter:verbosity 0))))
 
         (:name helm
                :after (progn
@@ -273,40 +273,38 @@
         (:name jedi
                :after
                (progn
-                 (eval-after-load 'jedi
-                   '(progn
-                      (add-hook 'python-mode-hook
-                                'jedi:setup)
-                      (setq jedi:complete-on-dot t)
-                      (loop for (key . func) in
-                            '(("g." . jedi:goto-definition)
-                              ("g," . jedi:goto-definition-pop-marker)
-                              ("gh" . jedi:show-doc))
-                            do
-                            (evil-define-key 'normal python-mode-map key func)
-                            (evil-define-key 'motion python-mode-map key func))))))
+                 (after 'jedi
+                   (add-hook 'python-mode-hook
+                             'jedi:setup)
+                   (setq jedi:complete-on-dot t)
+                   (loop for (key . func) in
+                         '(("g." . jedi:goto-definition)
+                           ("g," . jedi:goto-definition-pop-marker)
+                           ("gh" . jedi:show-doc))
+                         do
+                         (evil-define-key 'normal python-mode-map key func)
+                         (evil-define-key 'motion python-mode-map key func)))))
 
         (:name jinja2-mode
                :after
-               (eval-after-load 'jinja2-mode
-                 '(progn
-                    (defun my-jinja2-block (id action context)
-                      (insert " ")
-                      (save-excursion
-                        (insert " ")))
+               (after 'jinja2-mode
+                 (defun my-jinja2-block (id action context)
+                   (insert " ")
+                   (save-excursion
+                     (insert " ")))
 
-                    (add-to-list 'sp-navigate-consider-stringlike-sexp
-                                 'jinja2-mode)
+                 (add-to-list 'sp-navigate-consider-stringlike-sexp
+                              'jinja2-mode)
 
-                    ;; Remove curly brace binding because it prevents
-                    ;; a binding for Jinja constructs.
-                    (sp-local-pair 'jinja2-mode "{" "}" :actions nil)
-                    (sp-local-pair 'jinja2-mode "{%" "%}"
-                                   :post-handlers '(:add my-jinja2-block)
-                                   :trigger "jjb")
-                    (sp-local-pair 'jinja2-mode "{{" "}}"
-                                   :post-handlers '(:add my-jinja2-block)
-                                   :trigger "jji"))))
+                 ;; Remove curly brace binding because it prevents
+                 ;; a binding for Jinja constructs.
+                 (sp-local-pair 'jinja2-mode "{" "}" :actions nil)
+                 (sp-local-pair 'jinja2-mode "{%" "%}"
+                                :post-handlers '(:add my-jinja2-block)
+                                :trigger "jjb")
+                 (sp-local-pair 'jinja2-mode "{{" "}}"
+                                :post-handlers '(:add my-jinja2-block)
+                                :trigger "jji")))
 
         (:name key-chord
                :after
@@ -355,19 +353,19 @@
                              (keydef (help "<tab>") forward-button)
                              (keydef (help "<shift>-<tab>") backward-button)))
 
+        (:name lorem-ipsum)
         (:name lua-mode)
         (:name magit
                :after
-               (eval-after-load 'magit
-                 '(progn
-                    (defadvice magit-key-mode-popup-committing (after toggle-verbose-commits)
-                      "Enable the verbose option for commiting."
-                      (magit-key-mode-toggle-option 'committing "--verbose"))
-                    (ad-activate 'magit-key-mode-popup-committing)
-                    (add-hook 'magit-mode-hook
-                              '(lambda ()
-                                 (local-set-key "j" #'evil-next-line)
-                                 (local-set-key "k" #'evil-previous-line))))))
+               (after 'magit
+                 (defadvice magit-key-mode-popup-committing (after toggle-verbose-commits)
+                   "Enable the verbose option for commiting."
+                   (magit-key-mode-toggle-option 'committing "--verbose"))
+                 (ad-activate 'magit-key-mode-popup-committing)
+                 (add-hook 'magit-mode-hook
+                           '(lambda ()
+                              (local-set-key "j" #'evil-next-line)
+                              (local-set-key "k" #'evil-previous-line)))))
 
         (:name markdown-mode)
 

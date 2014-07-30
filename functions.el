@@ -279,24 +279,23 @@ Apply ARGS normally."
    nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\|HACK\\|REFACTOR\\|NOCOMMIT\\)"
           1 font-lock-warning-face t))))
 
-(eval-after-load 'evil
-    '(progn
-       (define-key evil-operator-state-map "j" 'my:evil-operator-state-j)
-       (evil-define-command my:evil-operator-state-j ()
-         (save-excursion
-           (let ((evt (read-event "Press k to exit operator state" nil 0.08)))
-             (if (and (integerp evt) (char-equal evt ?k))
-                 (keyboard-quit)
-               ;; assume <down> is bound to the same as j:
-               ;; get the keys used to invoke the operator
-               (let* ((operator-string (substring (this-command-keys) 0 -1))
-                      ;; add " <down>" to the end instead of "j"
-                      (new-macro (kbd (concat operator-string " <down>"))))
-                 (evil-force-normal-state)
-                 (execute-kbd-macro new-macro)
-                 (when (not (null evt))
-                   ;; process any other key pressed within 0.5 seconds
-                   (push evt unread-command-events)))))))))
+(after 'evil
+  (define-key evil-operator-state-map "j" 'my:evil-operator-state-j)
+  (evil-define-command my:evil-operator-state-j ()
+    (save-excursion
+      (let ((evt (read-event "Press k to exit operator state" nil 0.08)))
+        (if (and (integerp evt) (char-equal evt ?k))
+            (keyboard-quit)
+          ;; assume <down> is bound to the same as j:
+          ;; get the keys used to invoke the operator
+          (let* ((operator-string (substring (this-command-keys) 0 -1))
+                 ;; add " <down>" to the end instead of "j"
+                 (new-macro (kbd (concat operator-string " <down>"))))
+            (evil-force-normal-state)
+            (execute-kbd-macro new-macro)
+            (when (not (null evt))
+              ;; process any other key pressed within 0.5 seconds
+              (push evt unread-command-events))))))))
 
 (defun my:esc ()
   "Functionality for escaping generally."
