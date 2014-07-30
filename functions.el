@@ -388,7 +388,10 @@ citation and not collapse it to one space."
              ;; don't use the local value because we'll keep adding
              ;; the citation regexp over and over again.
              (default-value 'sentence-end-base)
-             ;; citation regexp
+             ;; citation regexp,
+             ;; [@euler, 1] good
+             ;; TODO
+             ;; [...] bad
              "\\( \\[@.*?\\]\\)*")))
 
 (defun my:toggle-identifier-naming-style ()
