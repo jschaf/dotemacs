@@ -25,6 +25,12 @@
 (setq-default save-place t)
 (setq save-place-file "~/.emacs.d/private/places")
 
+;; UTF-8 everywhere
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
 ;; Highlight when mark is active
 (setq transient-mark-mode t)
 
