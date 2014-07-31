@@ -126,6 +126,7 @@
                    "gj" 'next-error
                    "gk" 'previous-error
                    "gh" '(lambda () (interactive) (find-file "~/"))
+                   "hs" 'highlight-symbol-at-point
                    "ht" 'describe-text-properties
                    "is" 'my:indent-defun-around-point
                    "js" 'just-one-space
@@ -253,7 +254,11 @@
 
         (:name highlight-symbol
                :after (progn
-                        (setq highlight-symbol-idle-delay 0.7)
+                        (setq highlight-symbol-idle-delay 0.4
+                              highlight-symbol-colors
+                              '("khaki1" "PaleVioletRed" "springgreen1"
+                                "MediumPurple1" "SpringGreen1" "orange"
+                                "plum2" "skyblue1" "seagreen1"))
                         (add-hook 'prog-mode-hook 'highlight-symbol-mode)))
 
         (:name hl-sentence
