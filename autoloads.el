@@ -127,6 +127,8 @@
                    "gk" 'previous-error
                    "gh" '(lambda () (interactive) (find-file "~/"))
                    "hs" 'highlight-symbol-at-point
+                   "hn" 'highlight-symbol-next
+                   "hp" 'highlight-symbol-prev
                    "ht" 'describe-text-properties
                    "is" 'my:indent-defun-around-point
                    "js" 'just-one-space
