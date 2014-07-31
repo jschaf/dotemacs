@@ -178,6 +178,7 @@ figuring out how to reload the package."
   ;; We need to add text before we can edit it.
   (add-to-list 'evil-insert-state-modes 'git-commit-mode)
 
+  (setq-default evil-symbol-word-search t)
   (setq evil-highlight-closing-paren-at-point-states nil)
 
   (setq evil-emacs-state-cursor '("#00FF48" box))
