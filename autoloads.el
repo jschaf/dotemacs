@@ -8,9 +8,6 @@
 
 ;;; Code:
 
-;; Installing from Emacswiki is slow and insecure
-(defvar el-get-install-skip-emacswiki-recipes t)
-
 ;; Require el-get and bootstrap if it doesn't exist.
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless (require 'el-get nil 'noerror)
