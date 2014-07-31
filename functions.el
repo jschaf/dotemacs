@@ -213,6 +213,18 @@ figuring out how to reload the package."
   (define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>")
     'evil-previous-visual-line)
 
+  (defun my:evil-stop-insert-one-char ()
+    (unless (eq this-command #'my:evil-insert-one-char)
+      (remove-hook 'post-command-hook 'my:evil-stop-insert-one-char)
+      (evil-normal-state)))
+
+  (evil-define-command my:evil-insert-one-char ()
+    "Insert one character and return to normal mode."
+    (add-hook 'post-command-hook #'my:evil-stop-insert-one-char t)
+    (evil-insert 1))
+
+  (define-key evil-normal-state-map (kbd "C-SPC") 'my:evil-insert-one-char)
+
   ;; Make horizontal movement cross lines
   (setq-default evil-cross-lines t)
 
@@ -233,6 +245,19 @@ figuring out how to reload the package."
         (define-key evil-motion-state-map key func))
 
   (define-key evil-insert-state-map (kbd "C-<return>") 'evil-open-below)
+
+  (defun my:evil-stop-insert-one-char ()
+    (unless (eq this-command #'my:evil-insert-one-char)
+      (remove-hook 'post-command-hook 'my:evil-stop-insert-one-char)
+      (evil-normal-state)))
+
+   (evil-define-command my:evil-insert-one-char ()
+     "Insert one character in insert mode."
+     (add-hook 'post-command-hook #'my:evil-stop-insert-one-char t)
+     (evil-insert 1))
+
+
+(define-key evil-normal-state-map (kbd "C-SPC") 'my:evil-insert-one-char)
 
   ;; Commands for only the normal state map
   (loop for (key . func) in

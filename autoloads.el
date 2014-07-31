@@ -267,9 +267,8 @@
                :pkgname "milkypostman/hl-sentence"
                :after (progn
                         (add-hook 'markdown-mode-hook 'hl-sentence-mode)
-                        (after 'hl-sentence
-                          (set-face-attribute 'hl-sentence-face nil
-                                             :foreground "#444"))))
+                        (set-face-attribute 'hl-sentence-face nil
+                                            :foreground "#444")))
 
         (:name haskell-mode)
 
