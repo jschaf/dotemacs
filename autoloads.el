@@ -477,6 +477,7 @@
 ;;         gist
          git-modes
          goto-chg
+         help-fns+
          magit
          moz-repl
          projectile
