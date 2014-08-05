@@ -117,6 +117,15 @@
       (evil-end-of-line)
     (evil-last-non-blank)))
 
+(defun my:hungry-delete-backward (n &optional killflag)
+  "Delete non-vertical whitespace backwards on first key press.
+Delete all whitespace on a succesive key press."
+  (interactive "p\nP")
+  (if (eq last-command 'my:hungry-delete-backward)
+      (hungry-delete-backward n killflag)
+    (let ((hungry-delete-chars-to-skip " \t\f\v"))
+      (hungry-delete-backward n killflag))))
+
 (defun my:maybe-byte-compile ()
   "Byte compile current file if .elc file exists."
   (interactive)
@@ -261,12 +270,17 @@ figuring out how to reload the package."
   ;; Commands for only the normal state map
   (loop for (key . func) in
         `((,(kbd "<tab>")  . indent-for-tab-command)
-          ([backspace] . hungry-delete-backward)
           ("z," . comment-dwim)
           ("zn" . evil-toggle-fold)
           ("z;" . comment-or-uncomment-line))
         do
         (define-key evil-normal-state-map key func))
+
+  ;; Command for `evil-insert-mode-map'
+  (loop for (key . func) in
+        `(([backspace] . hungry-delete-backward))
+        do
+        (define-key evil-insert-state-map key func))
 
   (add-hook 'Info-mode-hook
             (lambda () (loop for (key . func) in
