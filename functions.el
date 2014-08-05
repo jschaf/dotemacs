@@ -257,8 +257,7 @@ figuring out how to reload the package."
      (add-hook 'post-command-hook #'my:evil-stop-insert-one-char t)
      (evil-insert 1))
 
-
-(define-key evil-normal-state-map (kbd "C-SPC") 'my:evil-insert-one-char)
+   (define-key evil-normal-state-map (kbd "C-SPC") 'my:evil-insert-one-char)
 
   ;; Commands for only the normal state map
   (loop for (key . func) in
