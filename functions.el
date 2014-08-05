@@ -450,6 +450,31 @@ e.g. `HelloWorldString'."
 
 (global-set-key "\C-w" 'kill-region-or-backward-kill-word)
 
+
+(defun my:insert-date (&optional date-format)
+  (interactive "P")
+  (if date-format
+      (insert (format-time-string date-format))
+    (insert (format-time-string "%-e %B %Y"))))
+
+(defmacro new-date-defun (name date-format)
+  `(defun ,name ()
+     ,(format "Insert the date formated like %s."
+              (format-time-string date-format
+                                  (date-to-time "1944-06-06 01:30:00 UTC")))
+     (interactive)
+     (my:insert-date ,date-format)))
+
+(new-date-defun my:insert-date-civilian "%B %-e, %Y")
+(new-date-defun my:insert-date-american "%D")
+(new-date-defun my:insert-date-iso "%Y-%m-%d")
+(new-date-defun my:insert-date-military-short "%d %^b %y")
+(new-date-defun my:insert-date-military-long "%d %B %y")
+
+(new-date-defun my:insert-date-time-civilian "%B %-e, %Y")
+(new-date-defun my:insert-date-time-american "%D")
+(new-date-defun my:insert-date-time-iso "%Y-%m-%dT%T%z")
+(new-date-defun my:insert-date-time-military "%d%H%M%^b%y")
 ;; Local Variables:
 ;; lexical-binding: t
 ;; End:
