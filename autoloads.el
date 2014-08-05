@@ -475,11 +475,11 @@
                    (define-key yas-keymap [(tab)] nil)
                    (define-key yas-keymap (kbd "TAB") nil)
                    (define-key yas-keymap (kbd "\C-o") 'yas-next-field-or-maybe-expand)
-                   (message "yasnippet global mode on")
+                   ;; Clear message buffer
                    (message nil))
                  ;; Run after emacs is done loading because yasnippet
                  ;; adds about 1 second to load time.
-                 (run-with-idle-timer 1 nil 'my:load-yasnippet)))))
+                 (run-with-idle-timer 0.01 nil 'my:load-yasnippet)))))
 
 (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 (defvar el-get-packages
