@@ -64,6 +64,7 @@
                                                ac-source-words-in-same-mode-buffers
                                                ac-source-words-in-all-buffer)))))
 
+        (:name ein)
         (:name esup
                :website "https://github.com/jschaf/esup"
                :description "Emacs Start Up Profiler"
