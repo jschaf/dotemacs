@@ -196,12 +196,12 @@ figuring out how to reload the package."
        ,(format "Move the cursor (COUNT * %s) lines down." multiplier)
        :type line
        (let (line-move-visual)
-         (evil-line-move (* ,multiplier (or count 1))))))
+         (evil-next-visual-line (* ,multiplier (or count 1))))))
 
-  (my:make-evil-line-move-motion my:evil-next-line-5 5)
-  (my:make-evil-line-move-motion my:evil-previous-line-5 -5)
-  (my:make-evil-line-move-motion my:evil-next-line-3 3)
-  (my:make-evil-line-move-motion my:evil-previous-line-3 -3)
+  (my:make-evil-line-move-motion my:evil-next-visual-line-5 5)
+  (my:make-evil-line-move-motion my:evil-previous-visual-line-5 -5)
+  (my:make-evil-line-move-motion my:evil-next-visual-line-3 3)
+  (my:make-evil-line-move-motion my:evil-previous-visual-line-3 -3)
 
   ;; Make movement keys work on visual lines instead of acutal lines.
   ;; This imitates Emacs behavior rather than Vim behavior.
@@ -231,10 +231,10 @@ figuring out how to reload the package."
 
   ;; Commands for both the normal, motion and visual state
   (loop for (key . func) in
-        `(("J" . my:evil-next-line-5)
-          ("K" . my:evil-previous-line-5)
-          ("\M-j" . my:evil-next-line-3)
-          ("\M-k" . my:evil-previous-line-3)
+        `(("J" . my:evil-next-visual-line-5)
+          ("K" . my:evil-previous-visual-line-5)
+          ("\M-j" . my:evil-next-visual-line-3)
+          ("\M-k" . my:evil-previous-visual-line-3)
           ("gj" . evil-join)
           ("H" . my:back-to-indentation-or-beginning)
           ("L" . evil-end-of-line)
