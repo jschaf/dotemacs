@@ -276,6 +276,9 @@
 
         (:name haskell-mode)
 
+        (:name hungry-delete
+               :after (global-hungry-delete-mode 1))
+
         (:name ido-ubiquitous
                :description "Use ido (nearly) everywhere"
                :type github

@@ -263,6 +263,7 @@ figuring out how to reload the package."
   ;; Commands for only the normal state map
   (loop for (key . func) in
         `((,(kbd "<tab>")  . indent-for-tab-command)
+          ([backspace] . hungry-delete-backward)
           ("z," . comment-dwim)
           ("zn" . evil-toggle-fold)
           ("z;" . comment-or-uncomment-line))
