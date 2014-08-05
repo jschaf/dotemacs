@@ -131,6 +131,16 @@
                    "hn" 'highlight-symbol-next
                    "hp" 'highlight-symbol-prev
                    "ht" 'describe-text-properties
+                   "idd" 'my:insert-date
+                   "idc" 'my:insert-date-civilian
+                   "ida" 'my:insert-date-american
+                   "idi" 'my:insert-date-iso
+                   "idms" 'my:insert-date-military-short
+                   "idml" 'my:insert-date-military-long
+                   "idtc" 'my:insert-date-time-civilian
+                   "idta" 'my:insert-date-time-american
+                   "idti" 'my:insert-date-time-iso
+                   "idtm" 'my:insert-date-time-military
                    "is" 'my:indent-defun-around-point
                    "js" 'just-one-space
                    "k" '(lambda () (interactive) (kill-buffer nil))
