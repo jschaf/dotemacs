@@ -103,7 +103,6 @@
     (info file-name)))
 (add-to-list 'auto-mode-alist '("\\.info\\'" . info-mode))
 
-
 (defun my:back-to-indentation-or-beginning ()
   "Go back to indentation, or beginning of line on second press."
   (interactive)
