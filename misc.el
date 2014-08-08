@@ -189,11 +189,9 @@
 (set-register ?c '(file . "~/.emacs.d/misc.el"))
 (set-register ?e '(file . "~/.emacs.d/el-get/esup/esup.el"))
 
-(add-hook 'dired-mode-hook
-          (lambda ()
-            (local-set-key "\C-\M-k" 'dired-kill-subdir)
-            ;;(dired-omit-mode 1)
-            ))
+(after 'dired
+  (setq dired-listing-switches "-alhk")
+  (local-set-key "\C-\M-k" 'dired-kill-subdir))
 
 (global-set-key (kbd "RET") 'newline-and-indent)
 
