@@ -190,7 +190,7 @@
 (set-register ?e '(file . "~/.emacs.d/el-get/esup/esup.el"))
 
 (after 'dired
-  (setq dired-listing-switches "-alhk")
+  (setq dired-listing-switches "-Alhk")
   (local-set-key "\C-\M-k" 'dired-kill-subdir))
 
 (global-set-key (kbd "RET") 'newline-and-indent)
