@@ -450,6 +450,10 @@
                  ;; (add-to-list 'compilation-finish-functions 'my:run-in-eshell)
                  ))
 
+        (:name scss-mode
+               :after (progn
+                        (setq scss-compile-at-save nil)))
+
         (:name smartparens
                :after (progn
                         (require 'smartparens)
