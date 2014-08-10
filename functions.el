@@ -270,6 +270,7 @@ figuring out how to reload the package."
   ;; Commands for only the normal state map
   (loop for (key . func) in
         `((,(kbd "<tab>")  . indent-for-tab-command)
+          ([backspace] . my:hungry-delete-backward)
           ("z," . comment-dwim)
           ("zn" . evil-toggle-fold)
           ("z;" . comment-or-uncomment-line))
@@ -278,7 +279,7 @@ figuring out how to reload the package."
 
   ;; Command for `evil-insert-mode-map'
   (loop for (key . func) in
-        `(([backspace] . hungry-delete-backward))
+        `(([backspace] . my:hungry-delete-backward))
         do
         (define-key evil-insert-state-map key func))
 
