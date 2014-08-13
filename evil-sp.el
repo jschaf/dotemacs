@@ -44,6 +44,7 @@
                               ("zgh" . sp-backward-barf-sexp)
                               ("zgH" . sp-add-to-next-sexp)
 
+                              ("zsc" . sp-swap-enclosing-sexp)
                               ("zss" . sp-splice-sexp)
                               ("zsdl" . sp-splice-sexp-killing-forward)
                               ("zsdh" . sp-splice-sexp-killing-backward)
