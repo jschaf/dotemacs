@@ -463,6 +463,8 @@
                         ))
 
         (:name yasnippet
+               :submodule nil
+               :build nil
                :after
                (progn
                  (defun my:load-yasnippet ()
@@ -480,11 +482,42 @@
                    (define-key yas-keymap [(tab)] nil)
                    (define-key yas-keymap (kbd "TAB") nil)
                    (define-key yas-keymap (kbd "\C-o") 'yas-next-field-or-maybe-expand)
+
+                   (defun my:yas-skip-and-clear-or-backspace-char (&optional field)
+                     "Clears unmodified field if at field start, skips to next tab.
+
+Otherwise deletes a character normally by calling
+`my:hungry-delete-backward'."
+                     (interactive)
+                     (let ((field (or field
+                                      (and yas--active-field-overlay
+                                           (overlay-buffer yas--active-field-overlay)
+                                           (overlay-get yas--active-field-overlay 'yas--field)))))
+                       (cond ((and field
+                                   (not (yas--field-modified-p field))
+                                   (eq (point) (marker-position (yas--field-start field))))
+                              (yas--skip-and-clear field)
+                              (yas-next-field 1))
+                             (t
+                              (call-interactively 'my:hungry-delete-backward)))))
+
+                   (define-key yas-keymap [(backspace)] 'my:yas-skip-and-clear-or-backspace-char)
+
                    ;; Clear message buffer
                    (message nil))
                  ;; Run after emacs is done loading because yasnippet
                  ;; adds about 1 second to load time.
-                 (run-with-idle-timer 0.01 nil 'my:load-yasnippet)))))
+                 (run-with-idle-timer 0.01 nil 'my:load-yasnippet)))
+
+        (:name yasnippet-snippets
+               :website "https://github.com/jschaf/yasnippet-snippets"
+               :description "A collection of yasnippet snippets for many languages."
+               :type "github"
+               :branch "master"
+               :pkgname "jschaf/yasnippet-snippets"
+               :depends (yasnippet)
+               :post-init (after 'yasnippet
+                            (add-to-list 'yas-snippet-dirs "~/.emacs.d/el-get/yasnippet-snippets")))))
 
 (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 (defvar el-get-packages
