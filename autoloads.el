@@ -138,6 +138,8 @@
                    "js" 'just-one-space
                    "k" '(lambda () (interactive) (kill-buffer nil))
                    "ms" 'mark-sexp
+                   "md" 'my:rst-demote-section
+                   "mp" 'my:rst-promote-section
                    "o" 'delete-blank-lines
                    "r"  'jump-to-register
                    "sp" 'eval-print-last-sexp
@@ -413,7 +415,13 @@
                :url "http://svn.code.sf.net/p/docutils/code/trunk/docutils/tools/editors/emacs/rst.el"
                :after (progn
                         (add-hook 'rst-mode-hook 'zotelo-minor-mode)
-                        (add-hook 'rst-mode-hook 'reftex-mode)))
+                        (add-hook 'rst-mode-hook 'reftex-mode)
+                        (defun my:rst-promote-section (&optional arg)
+                          (interactive "P")
+                          (rst-adjust-adornment-work nil nil))
+                        (defun my:rst-demote-section (&optional arg)
+                          (interactive "P")
+                          (rst-adjust-adornment-work nil 'reverse))))
 
         (:name rust-mode
 
