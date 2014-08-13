@@ -93,13 +93,6 @@
                         (add-hook 'css-mode-hook 'emmet-mode)))
 
         (:name evil
-               ;; remove info from make target
-	       :build (("make" "all"))
-               ;; I can't use the git protocol at work, which is the
-               ;; only protocol gitorious supports.
-	       :url "https://github.com/emacsmirror/evil.git"
-               ;; makeinfo fails on Windows
-               :info nil
                :after (my:evil-setup))
 
         (:name evil-leader
