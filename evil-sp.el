@@ -27,6 +27,9 @@
                         ("zK" . sp-beginning-of-sexp)
                         ("zn" . sp-next-sexp)
 
+                        ("zH" . sp-beginning-of-previous-sexp)
+                        ("zL" . sp-beginning-of-next-sexp)
+
                         ("z\C-k" . sp-backward-down-sexp)
                         ("z\C-j" . sp-up-sexp)))
 
@@ -36,25 +39,31 @@
                               ("zsu" . sp-unwrap-sexp)
                               ("zsb" . sp-backward-unwrap-sexp)
 
-                              ("zfl" . sp-forward-slurp-sexp)
                               ("zfh" . sp-backward-slurp-sexp)
+                              ("zfH" . sp-backward-barf-sexp)
 
-                              ("zgl" . sp-forward-barf-sexp)
+                              ("zfl" . sp-forward-slurp-sexp)
+                              ("zfL" . sp-forward-barf-sexp)
+
                               ("zgL" . sp-add-to-previous-sexp)
-                              ("zgh" . sp-backward-barf-sexp)
                               ("zgH" . sp-add-to-next-sexp)
 
-                              ("zsc" . sp-swap-enclosing-sexp)
+                              ("zsw" . sp-swap-enclosing-sexp)
                               ("zss" . sp-splice-sexp)
                               ("zsdl" . sp-splice-sexp-killing-forward)
                               ("zsdh" . sp-splice-sexp-killing-backward)
                               ("zsda" . sp-splice-sexp-killing-around)
 
-                              ("Zsc" . sp-convolute-sexp)
-                              ("Zsa" . sp-absorb-sexp)
-                              ("Zse" . sp-emit-sexp)
-                              ("zyY" . sp-join-sexp)
-                              ("zyy" . sp-split-sexp))))
+                              ("zsc" . sp-convolute-sexp)
+
+                              ("zsh" . sp-absorb-sexp)
+                              ("zsl" . sp-emit-sexp)
+
+                              ("zsH" . sp-extract-before-sexp)
+                              ("zsL" . sp-extract-after-sexp)
+
+                              ("zsy" . sp-split-sexp)
+                              ("zsY" . sp-join-sexp))))
 
     (loop for (key . func) in sexp-motions
           do
