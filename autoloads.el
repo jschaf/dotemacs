@@ -134,6 +134,7 @@
                    "idta" 'my:insert-date-time-american
                    "idti" 'my:insert-date-time-iso
                    "idtm" 'my:insert-date-time-military
+                   "ip" 'ispell
                    "is" 'my:indent-defun-around-point
                    "js" 'just-one-space
                    "k" '(lambda () (interactive) (kill-buffer nil))
