@@ -1,0 +1,4 @@
+* better highlight parens
+* better highlight paren when matching is not on screen
+* highlight next positions for line-up and line down
+* join all lines until empty, .e.g "))))\n)\n) -> )))"

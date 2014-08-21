@@ -187,6 +187,7 @@
 (set-register ?a '(file . "~/.emacs.d/autoloads.el"))
 (set-register ?f '(file . "~/.emacs.d/functions.el"))
 (set-register ?c '(file . "~/.emacs.d/misc.el"))
+(set-register ?p '(file . "~/.emacs.d/papercuts.org"))
 (set-register ?e '(file . "~/.emacs.d/el-get/esup/esup.el"))
 
 (after 'dired
