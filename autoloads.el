@@ -102,10 +102,10 @@
                  (evil-leader/set-leader ",")
                  (evil-leader/set-key
                    "ci" 'ido-goto-symbol
-                   "cp" 'check-parens
                    "cs" '(lambda () (interactive) (switch-to-buffer "*scratch*"))
                    "cB" 'my:new-blah-buffer
                    "cb" 'my:switch-to-blah-buffer
+                   "cp" 'check-parens
                    "de" 'toggle-debug-on-error
                    "dc" 'describe-char
                    "dtw" 'delete-trailing-whitespace
@@ -142,6 +142,7 @@
                    "md" 'my:rst-demote-section
                    "mp" 'my:rst-promote-section
                    "o" 'delete-blank-lines
+                   "pc" 'my:pandoc-reftex-cite
                    "r"  'jump-to-register
                    "sp" 'eval-print-last-sexp
                    "ts" 'toggle-color-theme
