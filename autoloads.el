@@ -398,7 +398,9 @@
                               (local-set-key "j" #'evil-next-line)
                               (local-set-key "k" #'evil-previous-line)))))
 
-        (:name markdown-mode)
+        (:name markdown-mode
+               :after (progn
+                        (my:add-citations-to-sentence-end)))
 
         (:name page-break-lines
                :after (progn

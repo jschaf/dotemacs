@@ -489,9 +489,31 @@ e.g. `HelloWorldString'."
 (new-date-defun my:insert-date-time-american "%D")
 (new-date-defun my:insert-date-time-iso "%Y-%m-%dT%T%z")
 (new-date-defun my:insert-date-time-military "%d%H%M%^b%y")
-;; Local Variables:
-;; lexical-binding: t
-;; End:
+
+(defun my:pandoc-reftex-cite ()
+  (interactive)
+
+  (require 'reftex)
+  (let* ((cite-key-raw (format "%s" (reftex-citation 'no-insert)))
+         (cite-key (substring cite-key-raw 1 (- (length cite-key-raw) 1))))
+
+    (insert (format "[@%s]" cite-key)))
+
+  (backward-char)
+  (insert ", ")
+  (when (boundp 'evil-mode)
+    (evil-insert-state 1)))
+
+(defun my:differentiate-color (name percent)
+  "Differentiate color NAME by PERCENT.
+If color is closer to white, darken by PERCENT.  If color is
+closer to black, lighten by PERCENT"
+  (require 'color)
+  (let ((white-distance (color-distance name "white"))
+        (black-distance  (color-distance name "black")))
+    (if (> white-distance black-distance)
+        (color-lighten-name name percent)
+      (color-darken-name name percent))))
 
 (provide 'functions)
 
