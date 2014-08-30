@@ -280,6 +280,16 @@ screen."
 
         (:name highlight-symbol
                :after (progn
+                        (after 'highlight-symbol
+                          (defun my:create-subtle-highlight ()
+                            (interactive)
+                            (set-face-attribute 'highlight-symbol-face nil
+                                                :foreground nil
+                                                :background (my:differentiate-color (face-background 'default) 7)
+                                                :underline t))
+
+                          (add-hook 'my:load-theme-hook 'my:create-subtle-highlight))
+
                         (setq highlight-symbol-idle-delay 0.4
                               highlight-symbol-colors
                               '("khaki1" "PaleVioletRed" "springgreen1"
