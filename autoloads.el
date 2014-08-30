@@ -170,6 +170,30 @@
         (:name fill-column-indicator
                :after
                (progn
+                 ;; Not entirely sure why I need to require it.
+                 ;; Adding autoloads for the fci-* functions I used
+                 ;; below didn't work
+                 (require 'fill-column-indicator)
+                 (defun my:create-subtle-fci-rule ()
+                   (interactive)
+                   (setq fci-rule-color (my:differentiate-color (face-background 'default) 9))
+                   ;; This is `fci-redraw-frame'.  Included here
+                   ;; because we need to call
+                   ;; `fci-make-overlay-strings' for `fci-rule-color'
+                   ;; to take effect.  But we can only call
+                   ;; `fci-make-overlay-strings' in buffers that have
+                   ;; `fci-mode'
+                   (let* ((wins (window-list (selected-frame) 'no-minibuf))
+                          (bufs (delete-dups (mapcar #'window-buffer wins))))
+                     (dolist (buf bufs)
+                       (with-current-buffer buf
+                         (when fci-mode
+                           (fci-make-overlay-strings)
+                           (fci-delete-unneeded)
+                           (fci-update-all-windows))))))
+
+                 (add-hook 'my:load-theme-hook 'my:create-subtle-fci-rule)
+
                  (defun my:show-column-80 ()
                    "Enable a rule at column 80."
                    (interactive)
@@ -177,26 +201,18 @@
                    (setq fci-rule-column 79
                          fci-rule-width 1
                          ;; fci-always-use-textual-rule t
-                         fci-rule-color "#E8E2D0"
                          ;; fci-rule-character ?│
                          )
-
                    (fci-mode 1))
+
                  (add-hook 'prog-mode-hook 'my:show-column-80)
 
-                 ;; Disable `fci-mode' when we have less than 80
-                 ;; chars.  This prevents those ugly line continuation
-                 ;; markers down the entire buffer.
-                 (defun my:auto-fci-mode (&optional unused)
-                   (when (derived-mode-p 'prog-mode)
-                     (if (> (window-width) fci-rule-column)
-                         (fci-mode 1)
-                       (fci-mode 0))))
-
-                 (add-hook 'after-change-major-mode-hook
-                           'my:auto-fci-mode)
-                 (add-hook 'window-configuration-change-hook
-                           'my:auto-fci-mode)))
+                 (defadvice fci-redraw-region (after fci-dont-redraw-if-narrow activate)
+                   "Don't draw fci-lines if the window isn't wide enough.
+Otherwise, we get the line continuation characters down the whole
+screen."
+                   (when (<= (window-width) (1+ fci-rule-column))
+                       (fci-delete-overlays-region start end)))))
 
         (:name flx
                :after (flx-ido-mode 1))

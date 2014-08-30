@@ -72,6 +72,15 @@
 (defvar my:light-theme 'solarized-light)
 (defvar my:current-theme my:light-theme)
 
+
+(defvar my:load-theme-hook nil
+  "Hook to run when a new theme is loaded.")
+
+(defadvice load-theme (after load-theme-hook)
+  "Add hook to load-theme."
+  (run-hooks 'my:load-theme-hook))
+(ad-activate 'load-theme)
+
 (defun toggle-color-theme ()
   "Switch between the `my:dark-theme' and `my:light-theme'."
   (interactive)
