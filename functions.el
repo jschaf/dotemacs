@@ -524,6 +524,17 @@ closer to black, lighten by PERCENT"
         (color-lighten-name name percent)
       (color-darken-name name percent))))
 
+
+(defun my:comment-newline-dwim ()
+  "Break line at point and indent, continuing comment if within one.
+On the first press: acts as `comment-indent-new-line'.
+On the second press: acts like `comment-indent-new-line' but with a space.
+On the third press: deletes added comment lines and inserts a newline."
+   (interactive)
+   ;; Saving this for later, there's too  much  interplay between
+   ;; different commands.
+   )
+
 (provide 'functions)
 
 ;;; functions.el ends here
