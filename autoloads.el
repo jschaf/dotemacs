@@ -32,18 +32,18 @@
         (:name anzu
                :after (global-anzu-mode 1))
 
-        (:name auctex
-               :after (progn
-                        (setq TeX-auto-save t)
-                        (setq TeX-parse-self t)
-                        (after 'latex
-                          ;; Remove the :trigger for a regular
-                          ;; double quote to insert LaTeX double
-                          ;; quotes.  Now smartparens will default
-                          ;; to normal double quotes.
-                          (sp-local-pair 'latex-mode "``" "''"
-                                         :trigger "\""
-                                         :actions :rem))))
+        ;; (:name auctex
+        ;;        :after (progn
+        ;;                 (setq TeX-auto-save t)
+        ;;                 (setq TeX-parse-self t)
+        ;;                 (after 'latex
+        ;;                   ;; Remove the :trigger for a regular
+        ;;                   ;; double quote to insert LaTeX double
+        ;;                   ;; quotes.  Now smartparens will default
+        ;;                   ;; to normal double quotes.
+        ;;                   (sp-local-pair 'latex-mode "``" "''"
+        ;;                                  :trigger "\""
+        ;;                                  :actions :rem))))
 
         (:name auto-complete
                :submodule nil
@@ -93,6 +93,7 @@
                         (add-hook 'css-mode-hook 'emmet-mode)))
 
         (:name evil
+               :build (("make" "all"))
                :after (my:evil-setup))
 
         (:name evil-leader
@@ -166,6 +167,11 @@
 
         (:name evil-surround
                :after (global-evil-surround-mode 1))
+
+        ;; (:name exec-path-from-shell
+        ;;        :after
+        ;;        (progn
+        ;;          (exec-path-from-shell-initialize)))
 
         (:name fill-column-indicator
                :after
@@ -308,7 +314,7 @@ screen."
                         (set-face-attribute 'hl-sentence-face nil
                                             :foreground "#444")))
 
-        (:name haskell-mode)
+       ;; (:name haskell-mode)
 
         (:name hungry-delete
                :after (global-hungry-delete-mode 1))
@@ -413,6 +419,8 @@ screen."
         (:name lorem-ipsum)
         (:name lua-mode)
         (:name magit
+               ;; :build `(("make" ,(format "EMACS=%s" el-get-emacs) "lisp"))
+               :build/windows-nt `((,el-get-emacs))
                :after
                (after 'magit
                  (defadvice magit-key-mode-popup-committing (after toggle-verbose-commits)
@@ -424,9 +432,9 @@ screen."
                               (local-set-key "j" #'evil-next-line)
                               (local-set-key "k" #'evil-previous-line)))))
 
-        (:name markdown-mode
-               :after (progn
-                        (my:add-citations-to-sentence-end)))
+        ;; (:name markdown-mode
+        ;;        :after (progn
+        ;;                 (my:add-citations-to-sentence-end)))
 
         (:name page-break-lines
                :after (progn
@@ -561,17 +569,16 @@ Otherwise deletes a character normally by calling
 (defvar el-get-packages
       (append
        '(
-         solarized-theme
+         solarized-emacs
          buffer-move
          dash
          el-get
-         flycheck
+        ; flycheck
 ;;         gist
          git-modes
          goto-chg
-         help-fns+
-         magit
-         moz-repl
+        ;; help-fns+
+        moz-repl
          projectile
 ;;         pymacs
          reftex
