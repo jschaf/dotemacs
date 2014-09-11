@@ -602,6 +602,13 @@ Otherwise deletes a character normally by calling
 ;; asynchronusly. Waaaay faster.
 (el-get nil el-get-packages)
 
+
+(require 'package)
+(package-initialize)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/")
+             'append)
+
 ;; Local Variables:
 ;; lexical-binding: t
 ;; End:
