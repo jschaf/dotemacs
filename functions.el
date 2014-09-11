@@ -76,10 +76,17 @@
 (defvar my:load-theme-hook nil
   "Hook to run when a new theme is loaded.")
 
-(defadvice load-theme (after load-theme-hook)
+(defadvice load-theme (after load-theme-hook activate)
   "Add hook to load-theme."
   (run-hooks 'my:load-theme-hook))
-(ad-activate 'load-theme)
+
+(defadvice el-get-build (around el-get-use-msys2-shell)
+  "Use Msys2 for shell on Windows"
+  (let ((system-type (or (and (eq system-type 'windows-nt)
+                              'fake-system-to-force-el-get-to-use-shell-file-name)
+                         system-type)))
+    (message "Sweet, the system-type is %s" system-type)
+    ad-do-it))
 
 (defun toggle-color-theme ()
   "Switch between the `my:dark-theme' and `my:light-theme'."
