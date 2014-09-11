@@ -155,10 +155,22 @@ Delete all whitespace on a succesive key press."
     (add-hook 'after-save-hook 'recompile nil 'local)
     (message "%s will compile when saved" (buffer-name))))
 
+(defun my:delete-trailing-whitespace-except-current-line ()
+  "Do `delete-trailing-whitespace', except for current line."
+  (interactive)
+  (let ((current-line (buffer-substring (line-beginning-position) (line-end-position)))
+        (backward (- (line-end-position) (point))))
+    (delete-trailing-whitespace)
+    (when (not (string-equal (buffer-substring (line-beginning-position) (line-end-position))
+                             current-line))
+      (delete-region (line-beginning-position) (line-end-position))
+      (insert current-line)
+      (backward-char backward))))
+
 (defun my:delete-trailing-whitespace-before-save ()
   "Add `delete-trailing-whitespace' to the local `after-save-hook'."
   (add-hook (make-local-variable 'before-save-hook)
-            'delete-trailing-whitespace))
+            'my:delete-trailing-whitespace-except-current-line))
 
 (defun my:highlight-long-lines ()
   "Highlight long lines."
