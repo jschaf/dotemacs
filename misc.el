@@ -63,14 +63,16 @@
 (setq-default bookmark-default-file "~/.emacs.d/private/bookmarks")
 
 
-(setq shell-file-name "C:/Users/benn.mccc.2020/AppData/Local/Programs/Git/bin/sh.exe")
-(setq explicit-shell-file-name shell-file-name)
-(setenv "PATH"
-    (concat ".:/usr/local/bin:/mingw/bin:/bin:"
-        (replace-regexp-in-string " " "\\\\ "
-            (replace-regexp-in-string "\\\\" "/"
-                (replace-regexp-in-string "\\([A-Za-z]\\):" "/\\1"
-                    (getenv "PATH"))))))
+;; (setq shell-file-name "C:/msys32/usr/bin/bash")
+;; (setq explicit-shell-file-name shell-file-name)
+;; (setq explicit-sh-args '("--login" "-i"))
+
+;; (setenv "PATH"
+;;     (concat ".:/usr/local/bin:/mingw/bin:/bin:"
+;;         (replace-regexp-in-string " " "\\\\ "
+;;             (replace-regexp-in-string "\\\\" "/"
+;;                 (replace-regexp-in-string "\\([A-Za-z]\\):" "/\\1"
+;;                     (getenv "PATH"))))))
 
 ;; Set the path
 ;; (when (string-equal system-type "windows-nt")
