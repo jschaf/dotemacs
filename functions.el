@@ -305,8 +305,8 @@ figuring out how to reload the package."
         (define-key evil-insert-state-map key func))
 
   ;; Leave python-mode alone because it does useful indentation stuff.
-  (evil-define-key 'normal python-mode-map [backspace] 'python-indent-dedent-line)
-  (evil-define-key 'insert python-mode-map [backspace] 'python-indent-dedent-line)
+  (evil-define-key 'normal python-mode-map [backspace] 'python-indent-dedent-line-backspace)
+  (evil-define-key 'insert python-mode-map [backspace] 'python-indent-dedent-line-backspace)
 
   (add-hook 'Info-mode-hook
             (lambda () (loop for (key . func) in
