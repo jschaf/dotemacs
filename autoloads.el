@@ -418,19 +418,20 @@ screen."
 
         (:name lorem-ipsum)
         (:name lua-mode)
-        (:name magit
-               ;; :build `(("make" ,(format "EMACS=%s" el-get-emacs) "lisp"))
-               :build/windows-nt `((,el-get-emacs))
-               :after
-               (after 'magit
-                 (defadvice magit-key-mode-popup-committing (after toggle-verbose-commits)
-                   "Enable the verbose option for commiting."
-                   (magit-key-mode-toggle-option 'committing "--verbose"))
-                 (ad-activate 'magit-key-mode-popup-committing)
-                 (add-hook 'magit-mode-hook
-                           '(lambda ()
-                              (local-set-key "j" #'evil-next-line)
-                              (local-set-key "k" #'evil-previous-line)))))
+        ;; (:name magit
+        ;;        ;; :build/windows-nt `(("make" ,(format "EMACS=%s" el-get-emacs) "docs"))
+        ;;        :build/windows-nt nil
+        ;;        :prepare nil
+        ;;        :after
+        ;;        (after 'magit
+        ;;          (defadvice magit-key-mode-popup-committing (after toggle-verbose-commits)
+        ;;            "Enable the verbose option for commiting."
+        ;;            (magit-key-mode-toggle-option 'committing "--verbose"))
+        ;;          (ad-activate 'magit-key-mode-popup-committing)
+        ;;          (add-hook 'magit-mode-hook
+        ;;                    '(lambda ()
+        ;;                       (local-set-key "j" #'evil-next-line)
+        ;;                       (local-set-key "k" #'evil-previous-line)))))
 
         ;; (:name markdown-mode
         ;;        :after (progn
