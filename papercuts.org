@@ -5,4 +5,8 @@
 * which-defun blinks every key press
 * G causes the display to lag out unless I press C-l
 * Close unused emacs buffers
-* don't delete trailing whitespace on current line
+* Create function to create repository and github remote origin in one step with README, LICENSE and .gitignore
+* Don't prompt to create new file, or use C-j to signify new file.
+* show interpreter when created
+* enter creates new comment unless pressed twice
+* Stupid double quotes
