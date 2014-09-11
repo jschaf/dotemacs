@@ -2,3 +2,7 @@
 * better highlight paren when matching is not on screen
 * highlight next positions for line-up and line down
 * join all lines until empty, .e.g "))))\n)\n) -> )))"
+* which-defun blinks every key press
+* G causes the display to lag out unless I press C-l
+* Close unused emacs buffers
+* don't delete trailing whitespace on current line
