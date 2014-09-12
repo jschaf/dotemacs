@@ -380,6 +380,83 @@ Primarily for use in .dir-locals.el")
 ;; (Mac App)
 (define-key key-translation-map (kbd "<f13>") 'iso-transl-ctl-x-8-map)
 
+
+
+;; (defvar my:mode-line-buffer-name
+;;     '(:eval (propertize "%b " 'face 'font-lock-keyword-face
+;;                         ;; use file name as tooltip
+;;                         'help-echo (buffer-file-name)))
+;;     "The mode-line format for the buffer name.")
+
+;; (defvar my:mode-line-modified
+;;   '(:eval (cond
+;;            (buffer-read-only "RO")
+;;            ((buffer-modified-p) "MO")
+;;            (t "YO")))
+;;   "The mode line format for the buffer modification status." )
+
+;; (setq mode-line-format
+;;   (list
+;;    "%e"
+;;    my:mode-line-buffer-name
+;;    my:mode-line-modified
+;;     ;; line and column
+;;     "(" ;; '%02' to set to 2 chars at least; prevents flickering
+;;       (propertize "%02l" 'face 'font-lock-type-face) ","
+;;       (propertize "%02c" 'face 'font-lock-type-face)
+;;     ") "
+
+;;     ;; relative position, size of file
+;;     "["
+;;     (propertize "%p" 'face 'font-lock-constant-face) ;; % above top
+;;     "/"
+;;     ;; size of the buffer
+;;     (propertize "%I" 'face 'font-lock-constant-face) ;; size
+;;     "] "
+
+;;     ;; the current major mode for the buffer.
+;;     "["
+
+;;     '(:eval (propertize "%m" 'face 'font-lock-string-face
+;;               'help-echo buffer-file-coding-system))
+;;     "] "
+
+
+;;     "[" ;; insert vs overwrite mode, input-method in a tooltip
+;;     '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
+;;               'face 'font-lock-preprocessor-face
+;;               'help-echo (concat "Buffer is in "
+;;                            (if overwrite-mode "overwrite" "insert") " mode")))
+
+;;     ;; was this buffer modified since the last save?
+;;     '(:eval (when (buffer-modified-p)
+;;               (concat ","  (propertize "Mod"
+;;                              'face 'font-lock-warning-face
+;;                              'help-echo "Buffer has been modified"))))
+
+;;     ;; is this buffer read-only?
+;;     '(:eval (when buffer-read-only
+;;               (concat ","  (propertize "RO"
+;;                              'face 'font-lock-type-face
+;;                              'help-echo "Buffer is read-only"))))
+;;     "] "
+
+;;     ;; add the time, with the date and the emacs uptime in the tooltip
+;;     '(:eval (propertize (format-time-string "%H:%M")
+;;               'help-echo
+;;               (concat (format-time-string "%c; ")
+;;                       (emacs-uptime "Uptime:%hh"))))
+;;     " --"
+;;     ;; i don't want to see minor-modes; but if you want, uncomment this:
+;;     minor-mode-alist  ;; list of minor modes
+
+;;     ))
+
+
+
+;; ("%e" mode-line-front-space mode-line-mule-info mode-line-client mode-line-modified mode-line-remote mode-line-frame-identification mode-line-buffer-identification "   " mode-line-position evil-mode-line-tag
+;;  (vc-mode vc-mode)
+;;  "  " mode-line-modes mode-line-misc-info mode-line-end-spaces)
 ;; Local Variables:
 ;; lexical-binding: t
 ;; End:
