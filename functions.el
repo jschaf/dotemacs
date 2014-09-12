@@ -540,6 +540,15 @@ closer to black, lighten by PERCENT"
         (color-lighten-name name percent)
       (color-darken-name name percent))))
 
+(defun my:python-add-format-to-string ()
+  "Add .format to function to current string.
+If not in a string, do nothing."
+  (interactive)
+  (let* ((string-start-point (nth 8 (syntax-ppss))))
+    (goto-char string-start-point)
+    (forward-sexp 1)
+    (insert ".format()")
+    (backward-char 1)))
 
 (defun my:comment-newline-dwim ()
   "Break line at point and indent, continuing comment if within one.
