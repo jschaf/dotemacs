@@ -22,8 +22,7 @@
       (eval-print-last-sexp))))
 
 (setq el-get-sources
-      '(
-        (:name ace-jump-mode
+      '((:name ace-jump-mode
                :after
                (after 'evil
                  (define-key evil-normal-state-map (kbd "SPC")
