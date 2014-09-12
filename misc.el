@@ -86,6 +86,12 @@
 (setq save-place t
       save-place-file "~/.emacs.d/private/save-place")
 
+(after 'windmove
+  (defadvice windmove-do-window-select (around my:windmove-catch-errors activate)
+    "Catch errors of `windmove' and just display the message."
+    (condition-case error-info
+        ad-do-it
+      (error (message (nth 1 error-info))))))
 
 (show-paren-mode 1)
 (setq-default show-paren-style 'mixed)
