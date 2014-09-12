@@ -34,6 +34,9 @@
   `(eval-after-load ,mode
      '(progn ,@body)))
 
+(defvar my:emacs-private-dir (locate-user-emacs-file "private/")
+  "Location to store personal customizations.")
+
 ;;; Code Load
 (load "misc")
 (setq custom-file "~/.emacs.d/private/emacs-custom.el")
