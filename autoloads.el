@@ -436,6 +436,11 @@ screen."
                         (add-hook 'compilation-mode-hook
                                   'page-break-lines-mode)))
 
+        (:name perspective
+               :after (progn
+                        (persp-mode)
+                        (require 'persp-projectile)))
+
         (:name popup
                :submodule nil)
 
