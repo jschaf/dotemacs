@@ -98,7 +98,8 @@
       '("\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./" "\\`b~")
       ido-use-filename-at-point nil)
 (setq ido-save-directory-list-file "~/.emacs.d/private/.ido.last")
-
+(add-to-list 'ido-ignore-buffers "*scratch*.*")
+(add-to-list 'ido-ignore-buffers "^\*Messages\*")
 ;; Turn off the bell
 (setq ring-bell-function 'ignore)
 
