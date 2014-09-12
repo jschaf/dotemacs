@@ -1,4 +1,4 @@
-;;; functions.el --- Personal functions for Emacs.
+;;; functions.el --- Personal functions for Emacs. -*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;;

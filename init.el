@@ -1,4 +1,4 @@
-;;; init.el --- Joe Schafer's .emacs
+;;; init.el --- Joe Schafer's .emacs -*- lexical-binding: t -*-
 
 ;;; Commentary:
 
@@ -55,10 +55,6 @@
 ;; to disable this message.  `inhibit-startup-echo-area-message' must
 ;; be set to $USERNAME and must be in the actual init-file.
 (setq inhibit-startup-echo-area-message "joe")
-
-;; Local Variables:
-;; lexical-binding: t
-;; End:
 
 (provide 'init)
 ;;; init.el ends here

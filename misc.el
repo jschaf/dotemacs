@@ -380,9 +380,5 @@ Primarily for use in .dir-locals.el")
 ;; (Mac App)
 (define-key key-translation-map (kbd "<f13>") 'iso-transl-ctl-x-8-map)
 
-;; Local Variables:
-;; lexical-binding: t
-;; End:
-
 (provide 'misc)
 ;;; misc.el ends here

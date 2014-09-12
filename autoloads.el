@@ -1,4 +1,5 @@
-;;; autoloads.el --- bootstrap packages to improve the Emacs experience.
+;;; autoloads.el --- bootstrap packages. -*- lexical-binding: t -*-
+
 
 ;;; Commentary:
 
@@ -620,10 +621,6 @@ Otherwise deletes a character normally by calling
 ;; nil, the second parameter means install all the packages
 ;; asynchronusly. Waaaay faster.
 (el-get nil el-get-packages)
-
-;; Local Variables:
-;; lexical-binding: t
-;; End:
 
 (provide 'autoloads)
 ;;; autoloads.el ends here
