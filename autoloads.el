@@ -234,7 +234,7 @@
 Otherwise, we get the line continuation characters down the whole
 screen."
                    (when (<= (window-width) (1+ fci-rule-column))
-                       (fci-delete-overlays-region start end)))))
+                     (fci-delete-overlays-region start end)))))
 
         (:name flx
                :after (flx-ido-mode 1))
