@@ -357,12 +357,12 @@ screen."
                  (setq jedi:complete-on-dot t)
 
                  (cl-loop for (key . func) in
-                       '(("g." . jedi:goto-definition)
-                         ("g," . jedi:goto-definition-pop-marker)
-                         ("gh" . jedi:show-doc))
-                       do
-                       (evil-define-key 'normal python-mode-map key func)
-                       (evil-define-key 'motion python-mode-map key func))))
+                          '(("g." . jedi:goto-definition)
+                            ("g," . jedi:goto-definition-pop-marker)
+                            ("gh" . jedi:show-doc))
+                          do
+                          (evil-define-key 'normal python-mode-map key func)
+                          (evil-define-key 'motion python-mode-map key func))))
 
         (:name jinja2-mode
                :after
