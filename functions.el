@@ -544,11 +544,14 @@ closer to black, lighten by PERCENT"
   "Add .format to function to current string.
 If not in a string, do nothing."
   (interactive)
-  (let* ((string-start-point (nth 8 (syntax-ppss))))
-    (goto-char string-start-point)
-    (forward-sexp 1)
-    (insert ".format()")
-    (backward-char 1)))
+  (let ((string-start-point (nth 8 (syntax-ppss))))
+    (if string-start-point
+        (progn
+          (goto-char string-start-point)
+          (forward-sexp 1)
+          (insert ".format()")
+          (backward-char 1))
+      (message "Not inside string.  Unable to add '.format()'"))))
 
 (defun my:comment-newline-dwim ()
   "Break line at point and indent, continuing comment if within one.
