@@ -63,7 +63,25 @@
                                                ac-source-words-in-buffer
                                                ac-source-words-in-same-mode-buffers
                                                ac-source-words-in-all-buffer)))))
-
+        (:name diminish
+               :after (progn
+                        (loop for (mode-to-diminish . replacement-string) in
+                              '((eldoc-mode . "")
+                                (magit-auto-revert-mode . "")
+                                (hs-minor-mode . "")
+                                (yas-minor-mode . "")
+                                (auto-complete-mode . "")
+                                (anzu-mode . "")
+                                (highlight-symbol-mode . "")
+                                (page-break-lines-mode . "")
+                                (helm-mode . "")
+                                (elisp-slime-nav-mode . "")
+                                (auto-fill-function . "")
+                                (smartparens-mode . "")
+                                (undo-tree-mode . "")
+                                (git-gutter-mode . ""))
+                              do
+                              (diminish mode-to-diminish replacement-string))))
         (:name ein)
         (:name esup
                :website "https://github.com/jschaf/esup"
