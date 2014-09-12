@@ -561,7 +561,7 @@ Otherwise deletes a character normally by calling
 (defvar el-get-packages
       (append
        '(
-         solarized-theme
+         solarized-emacs
          buffer-move
          dash
          el-get
