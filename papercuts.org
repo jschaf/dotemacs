@@ -10,3 +10,4 @@
 * show interpreter when created
 * enter creates new comment unless pressed twice
 * Stupid double quotes
+* git gutter update after git commit
