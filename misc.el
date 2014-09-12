@@ -280,14 +280,15 @@ Primarily for use in .dir-locals.el")
   '(hs-minor-mode
     my:pretty-lambdas))
 
-(defvar my:python-oh-command-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "f") 'my:python-add-format-to-string)
-    map)
+(after 'python
+  (defvar my:python-oh-command-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "f") 'my:python-add-format-to-string)
+      map)
     "A keymap for awesome Python shortcuts.")
-(fset 'my:python-oh-command-map my:python-oh-command-map)
+  (fset 'my:python-oh-command-map my:python-oh-command-map)
 
-(define-key python-mode-map (kbd "C-c C-o") 'my:python-oh-command-map)
+  (define-key python-mode-map (kbd "C-c C-o") 'my:python-oh-command-map))
 
 ;; (after 'python
 ;;   (setq python-shell-interpreter "ipython3"
