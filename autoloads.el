@@ -185,6 +185,10 @@
         (:name evil-surround
                :after (global-evil-surround-mode 1))
 
+        (:name fontawesome
+               :type github
+               :pkgname "syohex/emacs-fontawesome")
+
         (:name fill-column-indicator
                :after
                (progn
