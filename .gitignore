@@ -6,7 +6,7 @@ CVS/
 
 # Personal files
 private/*
-# need at least one file for git to keep it
+
 
 # Info
 # ignore huge info files
@@ -24,3 +24,4 @@ el-get/
 /ac-comphist.dat
 /request/
 /.DS_Store
+/private/emacs-custom.el

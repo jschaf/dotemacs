@@ -37,9 +37,34 @@
 (defvar my:emacs-private-dir (locate-user-emacs-file "private/")
   "Location to store personal customizations.")
 
+(setq custom-file "~/.emacs.d/private/emacs-custom.el")
+
+(defun my:write-string-to-file (string file)
+  "Write STRING to FILE.  Overwrites FILE."
+  (interactive "sEnter the string: \nFile to save to: ")
+  (with-temp-buffer
+    (insert string)
+    (when (file-writable-p file)
+      (write-region (point-min) (point-max) file))))
+
+(defun my:ensure-custom-file-exists ()
+  "Ensure a private directory and `custom-file' exist."
+  (let ((default-directory user-emacs-directory))
+    (unless (file-directory-p "private")
+      (message "Creating private directory")
+      (make-directory "private"))
+
+    (unless (file-exists-p custom-file)
+      (message "Creating custom-file at %s" custom-file)
+      (my:write-string-to-file "" custom-file)
+      ;; (custom-save-variables)
+      ;; fill it with default
+      )))
+
+(my:ensure-custom-file-exists)
+
 ;;; Code Load
 (load "misc")
-(setq custom-file "~/.emacs.d/private/emacs-custom.el")
 (load custom-file)
 (load "autoloads")
 (load "functions")
