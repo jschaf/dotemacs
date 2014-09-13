@@ -1,4 +1,4 @@
-;;; autoloads.el --- bootstrap packages. -*- lexical-binding: t -*-
+;;; autoloads.el --- bootstrap packages.
 
 
 ;;; Commentary:
@@ -98,6 +98,7 @@
                :after
                (progn
                  (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode)
+                 ;; TODO: this breaks with lexical-binding enabled.
                  (after 'evil
                    (cl-loop for (key . func) in
                             '(("g." . elisp-slime-nav-find-elisp-thing-at-point)
