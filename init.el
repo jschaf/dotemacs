@@ -34,11 +34,6 @@
   `(eval-after-load ,mode
      '(progn ,@body)))
 
-(defvar my:emacs-private-dir (locate-user-emacs-file "private/")
-  "Location to store personal customizations.")
-
-(setq custom-file "~/.emacs.d/private/emacs-custom.el")
-
 (defun my:write-string-to-file (string file)
   "Write STRING to FILE.  Overwrites FILE."
   (interactive "sEnter the string: \nFile to save to: ")
@@ -47,21 +42,40 @@
     (when (file-writable-p file)
       (write-region (point-min) (point-max) file))))
 
-(defun my:ensure-custom-file-exists ()
-  "Ensure a private directory and `custom-file' exist."
-  (let ((default-directory user-emacs-directory))
-    (unless (file-directory-p "private")
-      (message "Creating private directory")
-      (make-directory "private"))
+(defvar my:emacs-private-dir (locate-user-emacs-file "private/")
+  "Location to store personal customizations.")
 
-    (unless (file-exists-p custom-file)
-      (message "Creating custom-file at %s" custom-file)
-      (my:write-string-to-file "" custom-file)
-      ;; (custom-save-variables)
-      ;; fill it with default
-      )))
+(defun my:privatize (path)
+  "Return string of PATH in `my:emacs-private-dir'."
+  (let* ((private-dir (file-name-as-directory my:emacs-private-dir))
+         (default-directory private-dir))
+    (concat private-dir path)))
 
-(my:ensure-custom-file-exists)
+(defun my:create-private-file (path &optional directory-p)
+  "Create PATH in `my:emacs-private-dir' if it doesn't exit.
+If DIRECTORY-P is non-nil, make a directory instead of a file."
+  (let* ((private-dir (file-name-as-directory my:emacs-private-dir))
+         (default-directory private-dir)
+         (full-path (file-truename path)))
+
+    (cond
+     ((file-exists-p path)
+      (message "File exists at %s, skipping creation" full-path))
+
+     (directory-p
+      (make-directory path)
+      (message "Created private directory at %s" full-path))
+
+     (t
+      (if (file-regular-p path)
+          (message "File exists at %s, skipping creation" full-path)
+        (my:write-string-to-file "" path)
+        (message "Created private file at %s"  full-path))))))
+
+;; Ensure private directory and emacs-custom file exist
+(setq custom-file (my:privatize "emacs-custom.el"))
+(my:create-private-file (my:privatize "") 'dir)
+(my:create-private-file custom-file)
 
 ;;; Code Load
 (load "misc")
