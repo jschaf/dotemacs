@@ -6,7 +6,10 @@
 * G causes the display to lag out unless I press C-l
 * Close unused emacs buffers
 * ignore killed whitespace
+* exit magit commit buffer normally, gets weird because it uses emacs-daemon
 * Create function to create repository and github remote origin in one step with README, LICENSE and .gitignore
+* show foreground in region face
+* what are bookmarks
 * Don't prompt to create new file, or use C-j to signify new file.
 * show interpreter when created
 * enter creates new comment unless pressed twice
