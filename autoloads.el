@@ -55,7 +55,7 @@
                                  (add-to-list 'completion-at-point-functions 'auto-complete-mode-maybe))
                                (add-hook 'auto-complete-mode-hook
                                          'set-auto-complete-as-completion-at-point-function)
-                               (setq-default ac-comphist-file "~/.emacs.d/private/ac-comphist.dat")
+                               (setq-default ac-comphist-file (my:privatize "ac-comphist.dat"))
                                (setq-default ac-sources
                                              '(ac-source-yasnippet
                                                ac-source-imenu
@@ -479,8 +479,7 @@ screen."
         (:name python-environment
                :after (progn
                         (setq-default python-environment-directory
-                                      (concat my:emacs-private-dir
-                                              ".python-environments"))))
+                                      (my:privatize "python-environments"))))
         (:name rainbow-delimiters
                :after (add-hook 'emacs-lisp-mode-hook
                                 'rainbow-delimiters-mode))

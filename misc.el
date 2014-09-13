@@ -15,7 +15,7 @@
 
 ;; Recent file mode.  you must set `recentf-save-file' before
 ;; requiring `recentf'
-(setq-default recentf-save-file "~/.emacs.d/private/.recentf")
+(setq-default recentf-save-file (my:privatize ".recentf"))
 (require 'recentf)
 (recentf-mode 1)
 
@@ -23,7 +23,7 @@
 ;; file.
 (require 'saveplace)
 (setq-default save-place t)
-(setq save-place-file "~/.emacs.d/private/places")
+(setq save-place-file (my:privatize "places"))
 
 ;; UTF-8 everywhere
 (set-terminal-coding-system 'utf-8)
@@ -60,7 +60,7 @@
 ;; Disable cursor blinking
 (blink-cursor-mode 0)
 
-(setq-default bookmark-default-file "~/.emacs.d/private/bookmarks")
+(setq-default bookmark-default-file (my:privatize "bookmarks"))
 
 ;; Set the path
 ;; (when (string-equal system-type "windows-nt")
@@ -84,7 +84,7 @@
 ;; Store our the position we last visited.
 (require 'saveplace)
 (setq save-place t
-      save-place-file "~/.emacs.d/private/save-place")
+      save-place-file (my:privatize "save-place"))
 
 (after 'windmove
   (defadvice windmove-do-window-select (around my:windmove-catch-errors activate)
@@ -103,7 +103,7 @@
 (setq ido-ignore-files
       '("\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./" "\\`b~")
       ido-use-filename-at-point nil)
-(setq ido-save-directory-list-file "~/.emacs.d/private/.ido.last")
+(setq ido-save-directory-list-file (my:privatize "ido.last"))
 (add-to-list 'ido-ignore-buffers "*scratch*.*")
 (add-to-list 'ido-ignore-buffers "^\*Messages\*")
 ;; Turn off the bell
@@ -111,14 +111,14 @@
 
 ;; Tramp
 (setq tramp-default-method "ssh"
-      tramp-temp-name-prefix "~/.emacs.d/private/tramp.")
+      tramp-temp-name-prefix (my:privatize "tramp."))
 
 ;; Emacs backups
 (setq-default auto-save-list-file-prefix
-              "~/.emacs.d/private/auto-save-list/.saves-"
+              (my:privatize "auto-save-list/.saves-")
               backup-by-copying t
               backup-directory-alist
-              '(("." . "~/.emacs.d/private/.emacs-backups"))
+              `(("." . ,(my:privatize ".emacs-backups")))
               kept-new-versions 3
               delete-old-versions t
               version-control t)
@@ -328,7 +328,7 @@ Primarily for use in .dir-locals.el")
 (global-auto-revert-mode 1)
 
 ;; Eshell
-(setq-default eshell-directory-name "~/.emacs.d/private/eshell")
+(setq-default eshell-directory-name (my:privatize "eshell"))
 
 ;; Misc
 (global-set-key "\C-ha" 'apropos)
