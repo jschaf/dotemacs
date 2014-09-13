@@ -473,6 +473,11 @@ screen."
         (:name projectile
                :after (projectile-global-mode 1))
 
+        (:name python-environment
+               :after (progn
+                        (setq-default python-environment-directory
+                                      (concat my:emacs-private-dir
+                                              ".python-environments"))))
         (:name rainbow-delimiters
                :after (add-hook 'emacs-lisp-mode-hook
                                 'rainbow-delimiters-mode))
