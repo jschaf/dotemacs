@@ -341,12 +341,6 @@ Primarily for use in .dir-locals.el")
 (setq eval-expression-print-level nil
       eval-expression-print-length nil)
 
-;; TODO: make comment-out work for regions
-;; TODO: make jk exit isearch and evil movement commands (e.g. after
-;; pressing d)
-;; TODO: don't highlight parens in comments
-;; TODO: use normal quotes in comments in auctex
-
 (defvar my:mac-modifier-state 'built-in
   "Toggle between BUILT-IN and USB")
 
