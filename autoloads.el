@@ -63,25 +63,29 @@
                                                ac-source-words-in-buffer
                                                ac-source-words-in-same-mode-buffers
                                                ac-source-words-in-all-buffer)))))
+
         (:name diminish
                :after (progn
-                        (loop for (mode-to-diminish . replacement-string) in
-                              '((eldoc-mode . "")
-                                (magit-auto-revert-mode . "")
-                                (hs-minor-mode . "")
-                                (yas-minor-mode . "")
-                                (auto-complete-mode . "")
-                                (anzu-mode . "")
-                                (highlight-symbol-mode . "")
-                                (page-break-lines-mode . "")
-                                (helm-mode . "")
-                                (elisp-slime-nav-mode . "")
-                                (auto-fill-function . "")
-                                (smartparens-mode . "")
-                                (undo-tree-mode . "")
-                                (git-gutter-mode . ""))
+
+                        (loop for (mode-to-diminish . file-name) in
+                              '((eldoc-mode . "eldoc")
+                                (magit-auto-revert-mode . "magit")
+                                (hs-minor-mode . "hideshow")
+                                (yas-minor-mode . "yasnippet")
+                                (auto-complete-mode . "auto-complete")
+                                (anzu-mode . "anzu")
+                                (highlight-symbol-mode . "highlight-symbol")
+                                (page-break-lines-mode . "page-break-lines")
+                                (helm-mode . "helm-mode")
+                                (elisp-slime-nav-mode . "elisp-slime-nav")
+                                (auto-fill-function . "simple")
+                                (smartparens-mode . "smartparens")
+                                (undo-tree-mode . "undo-tree")
+                                (git-gutter-mode . "git-gutter"))
                               do
-                              (diminish mode-to-diminish replacement-string))))
+                              (eval-after-load file-name
+                                `(diminish ',mode-to-diminish)))))
+
         (:name ein)
         (:name esup
                :website "https://github.com/jschaf/esup"
