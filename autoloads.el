@@ -234,6 +234,7 @@
 
                  (add-hook 'prog-mode-hook 'my:show-column-80)
 
+                 ;; TODO: add to upstream
                  (defadvice fci-redraw-region (after fci-dont-redraw-if-narrow activate)
                    "Don't draw fci-lines if the window isn't wide enough.
 Otherwise, we get the line continuation characters down the whole
