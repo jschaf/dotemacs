@@ -29,3 +29,6 @@
 * don't highlight parens in comments
 * use normal quotes in comments in auctex
 * slime-nav open other window
+* get-rid of keydef
+* warn about el-get packages not listed
+* answer yes to loaddefs
