@@ -20,6 +20,7 @@
         (message "Bootstrapping el-get with master branch."))
       (goto-char (point-max))
       (eval-print-last-sexp))))
+
 (setq my:base-packages
       '((:name ace-jump-mode
                :after
@@ -158,13 +159,11 @@
                :submodule nil)
 
         (:name git-gutter
-               :after
-               (progn (add-hook 'prog-mode-hook 'git-gutter-mode)
-                      (after 'git-gutter
-                        ;; (add-hook 'git-gutter:update-hooks 'magit-revert-buffer-hook)
-                        ;; Turn off annoying "here is not git
-                        ;; repository" message
-                        (setq git-gutter:verbosity 0))))
+               :after (progn (add-hook 'prog-mode-hook 'git-gutter-mode)
+                      ;; (add-hook 'git-gutter:update-hooks 'magit-revert-buffer-hook)
+                      ;; Turn off annoying "here is not git
+                      ;; repository" message
+                      (setq git-gutter:verbosity 0)))
 
         (:name helm
                :after (progn
