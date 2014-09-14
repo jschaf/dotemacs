@@ -383,12 +383,12 @@ Apply ARGS normally."
 
 ;; Exit isearch by pressing jk, see
 ;; http://stackoverflow.com/questions/20926215
-(defun my:isearch-exit-chord-worker ()
+(defun my:isearch-exit-chord-worker (&optional arg)
   (interactive "p")
   ;; delete the j or k and accept the search
   (execute-kbd-macro (kbd "<backspace> <return>")))
 
-(defun my:isearch-exit-chord ()
+(defun my:isearch-exit-chord (arg)
   (interactive "p")
   (isearch-printing-char)
   (unless (fboundp 'smartrep-read-event-loop)
