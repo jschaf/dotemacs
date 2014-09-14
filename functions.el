@@ -385,12 +385,14 @@ Apply ARGS normally."
 ;; http://stackoverflow.com/questions/20926215
 (defun my:isearch-exit-chord-worker (&optional arg)
   (interactive "p")
+  arg ;; make the byte compilation errors go away
   ;; delete the j or k and accept the search
   (execute-kbd-macro (kbd "<backspace> <return>")))
 
 (defun my:isearch-exit-chord (arg)
   (interactive "p")
   (isearch-printing-char)
+  arg ;; make the byte compilation errors go away
   (unless (fboundp 'smartrep-read-event-loop)
     (require 'smartrep))
   ;; Manually signal quit because using `keyboard-quit' displays
