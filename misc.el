@@ -385,9 +385,10 @@ Primarily for use in .dir-locals.el")
 
   (defvar my:mode-line-modified
     '(:eval (cond
-             (buffer-read-only (fontawesome "lock"))
-             ((buffer-modified-p) "unlock")
-             (t (fontawesome "unlock"))))
+             (buffer-read-only (concat " " (fontawesome "lock")))
+             ((buffer-modified-p) " •")
+             (t "  ")))
+
     "The mode line format for the buffer modification status." )
 
   (defvar my:mode-line-remote
@@ -401,30 +402,35 @@ Primarily for use in .dir-locals.el")
                                              (if (file-remote-p default-directory)
                                                  "Current directory is remote: "
                                                "Current directory is local: ")
-                                             default-directory)))))))
+                                             default-directory))))))))
 
-    "Mode line construct to indicate a remote buffer.")
+    (defvar my:mode-line-buffer-identification
+      '(:eval (format "%s" (buffer-name)))
+      "Mode line construct to indicate a remote buffer.")
+
   (setq-default mode-line-format
         (list
          "%e"
          my:mode-line-front-space
+         my:mode-line-buffer-identification
+         my:mode-line-modified
+         "  "
+
          ;; mode-line-mule-info
          ;; mode-line-client
-         my:mode-line-modified
          my:mode-line-remote
-         mode-line-frame-identification
-         mode-line-buffer-identification
+         " "
          " "
          mode-line-position
-         evil-mode-line-tag
+         ;; evil-mode-line-tag
          smartrep-mode-line-string
-         (vc-mode vc-mode)
+         '(vc-mode)
          " "
          mode-line-modes
          mode-line-misc-info
          mode-line-end-spaces))
 
-  (force-mode-line-update)
+  (force-mode-line-update t)
   "wutup"
 
   )
