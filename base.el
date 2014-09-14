@@ -11,7 +11,6 @@
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
-
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
       (url-retrieve-synchronously
@@ -67,8 +66,6 @@
                               do
                               (eval-after-load file-name
                                 `(diminish ',mode-to-diminish)))))
-
-
 
         (:name elisp-slime-nav
                :after
@@ -151,14 +148,6 @@
                      "lis" 'Lorem-ipsum-insert-sentences
                      "lip" 'Lorem-ipsum-insert-paragraphs
                      "lil" 'Lorem-ipsum-insert-list))))
-
-
-
-
-
-
-
-
 
         (:name flx
                :after (flx-ido-mode 1))
@@ -270,10 +259,6 @@
                          ("/c" . goto-last-change))
                        do (key-chord-define-global key func))))
 
-
-
-
-
         (:name magit
                :after
                (after 'magit
@@ -313,7 +298,6 @@
 ;; TODO: make this not redundant
 (setq el-get-sources my:base-packages)
 (defvar my:base-package-names (mapcar 'el-get-source-name my:base-packages))
-
 
 ;; nil, the second parameter means install all the packages
 ;; asynchronusly. Waaaay faster.
