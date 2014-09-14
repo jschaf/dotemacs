@@ -175,7 +175,8 @@ Delete all whitespace on a succesive key press."
 (defun my:highlight-long-lines ()
   "Highlight long lines."
   (interactive)
-  (require 'whitespace)
+  (eval-when-compile
+    (require 'whitespace))
   (set (make-local-variable 'whitespace-style) '(face lines-tail))
   (set (make-local-variable 'whitespace-line-column) (max 80 fill-column))
   (whitespace-mode 1))
@@ -382,12 +383,12 @@ Apply ARGS normally."
 
 ;; Exit isearch by pressing jk, see
 ;; http://stackoverflow.com/questions/20926215
-(defun my:isearch-exit-chord-worker (&optional arg)
+(defun my:isearch-exit-chord-worker ()
   (interactive "p")
   ;; delete the j or k and accept the search
   (execute-kbd-macro (kbd "<backspace> <return>")))
 
-(defun my:isearch-exit-chord (arg)
+(defun my:isearch-exit-chord ()
   (interactive "p")
   (isearch-printing-char)
   (unless (fboundp 'smartrep-read-event-loop)
@@ -396,7 +397,7 @@ Apply ARGS normally."
   ;; "quit" in the echo-area, hiding the search text if you press 'j'
   ;; and another character besides 'k' in rapid succession.
   (run-at-time 0.3 nil '(lambda () (signal 'quit)))
-  (condition-case e
+  (condition-case nil
     (smartrep-read-event-loop
       '(("j" . my:isearch-exit-chord-worker)
         ("k" . my:isearch-exit-chord-worker)))
@@ -465,7 +466,7 @@ e.g. `hello_world_string', and camel case,
 e.g. `HelloWorldString'."
   (interactive)
   (let* ((symbol-pos (bounds-of-thing-at-point 'symbol))
-         case-fold-search symbol-at-point cstyle regexp func)
+         case-fold-search cstyle regexp func)
     (unless symbol-pos
       (error "No symbol at point"))
     (save-excursion
