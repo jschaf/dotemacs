@@ -194,6 +194,7 @@
 ;; Registers
 (set-register ?i '(file . "~/.emacs.d/init.el"))
 (set-register ?a '(file . "~/.emacs.d/autoloads.el"))
+(set-register ?b '(file . "~/.emacs.d/base.el"))
 (set-register ?f '(file . "~/.emacs.d/functions.el"))
 (set-register ?c '(file . "~/.emacs.d/misc.el"))
 (set-register ?p '(file . "~/.emacs.d/papercuts.org"))
