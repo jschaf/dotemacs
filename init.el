@@ -80,6 +80,7 @@ If DIRECTORY-P is non-nil, make a directory instead of a file."
 ;;; Code Load
 (load "misc")
 (load custom-file)
+(load "base")
 (load "autoloads")
 (load "functions")
 (load "evil-sp")
