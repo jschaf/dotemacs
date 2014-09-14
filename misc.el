@@ -74,6 +74,8 @@
 ;; Useful for regexps.
 (put 'narrow-to-region 'disabled nil)
 
+(put 'downcase-region 'disabled nil)
+
 ;; Helpful for csv files.
 (put 'scroll-left 'disabled nil)
 
