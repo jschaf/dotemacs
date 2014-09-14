@@ -217,7 +217,7 @@
                          (when fci-mode
                            (fci-make-overlay-strings)
                            (fci-delete-unneeded)
-                           (fci-update-all-windows))))))
+                           (fci-update-all-windows t))))))
 
                  (add-hook 'my:load-theme-hook 'my:create-subtle-fci-rule)
 
