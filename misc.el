@@ -424,7 +424,7 @@ Primarily for use in .dir-locals.el")
          mode-line-position
          ;; evil-mode-line-tag
          smartrep-mode-line-string
-         '(vc-mode)
+         '(vc-mode vc-mode)
          " "
          mode-line-modes
          mode-line-misc-info
