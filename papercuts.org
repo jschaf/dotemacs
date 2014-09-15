@@ -14,7 +14,7 @@
   Which calls `fci-put-overlays-region`
   Caused by `(while (search-forward "\n" end t))` in
   `fci-put-overlays-region`
-  
+  https://github.com/alpaker/Fill-Column-Indicator/issues/51 
 * Close unused emacs buffers
 * ignore killed whitespace
 * exit magit commit buffer normally, gets weird because it uses emacs-daemon
