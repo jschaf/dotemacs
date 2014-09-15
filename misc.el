@@ -371,7 +371,7 @@ Primarily for use in .dir-locals.el")
 ;; (Mac App)
 (define-key key-translation-map (kbd "<f13>") 'iso-transl-ctl-x-8-map)
 
-(progn
+(after 'fontawesome
 
   (defvar my:mode-line-front-space
     " "
