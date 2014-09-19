@@ -316,11 +316,11 @@ Otherwise deletes a character normally by calling
          buffer-move
          dash
          el-get
-         flycheck
+       ;;  flycheck
 ;;         gist
          git-modes
          goto-chg
-         help-fns+
+      ;;   help-fns+
          magit
          moz-repl
          projectile
