@@ -51,7 +51,7 @@
          (default-directory private-dir))
     (concat private-dir path)))
 
-(defun my:create-private-file (path &optional directory-p)
+(defun my:create-file (path &optional directory-p)
   "Create PATH in `my:emacs-private-dir' if it doesn't exit.
 If DIRECTORY-P is non-nil, make a directory instead of a file."
   (let* ((private-dir (file-name-as-directory my:emacs-private-dir))
@@ -74,8 +74,8 @@ If DIRECTORY-P is non-nil, make a directory instead of a file."
 
 ;; Ensure private directory and emacs-custom file exist
 (setq custom-file (my:privatize "emacs-custom.el"))
-(my:create-private-file (my:privatize "") 'dir)
-(my:create-private-file custom-file)
+(my:create-file (my:privatize "") 'dir)
+(my:create-file custom-file)
 
 ;;; Code Load
 (load "misc")
