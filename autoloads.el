@@ -7,18 +7,18 @@
         (:name anzu
                :after (global-anzu-mode 1))
 
-        (:name auctex
-               :after (progn
-                        (setq TeX-auto-save t)
-                        (setq TeX-parse-self t)
-                        (after 'latex
-                          ;; Remove the :trigger for a regular
-                          ;; double quote to insert LaTeX double
-                          ;; quotes.  Now smartparens will default
-                          ;; to normal double quotes.
-                          (sp-local-pair 'latex-mode "``" "''"
-                                         :trigger "\""
-                                         :actions :rem))))
+        ;; (:name auctex
+        ;;        :after (progn
+        ;;                 (setq TeX-auto-save t)
+        ;;                 (setq TeX-parse-self t)
+        ;;                 (after 'latex
+        ;;                   ;; Remove the :trigger for a regular
+        ;;                   ;; double quote to insert LaTeX double
+        ;;                   ;; quotes.  Now smartparens will default
+        ;;                   ;; to normal double quotes.
+        ;;                   (sp-local-pair 'latex-mode "``" "''"
+        ;;                                  :trigger "\""
+        ;;                                  :actions :rem))))
 
         (:name ein)
         (:name esup
