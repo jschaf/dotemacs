@@ -124,7 +124,9 @@ screen."
                         (set-face-attribute 'hl-sentence-face nil
                                             :foreground "#444")))
 
-        (:name haskell-mode)
+        ;; Doesn't compile on Windows because sed is missing.  El-get
+        ;; says haskell-mode is missing on el-get.
+        ;; (:name haskell-mode)
 
         (:name jedi
                :after
