@@ -88,6 +88,10 @@ If DIRECTORY-P is non-nil, make a directory instead of a file."
 (load-theme 'solarized-light)
 
 (require 'server)
+
+(setq server-auth-dir (my:privatize "server"))
+(my:create-file server-auth-dir 'dir)
+
 (defun my:maybe-start-server ()
   (unless (server-running-p)
     (server-start)))
