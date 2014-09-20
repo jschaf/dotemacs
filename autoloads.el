@@ -94,6 +94,8 @@ screen."
                    (when (<= (window-width) (1+ fci-rule-column))
                      (fci-delete-overlays-region start end)))))
 
+        (:name flycheck)
+
         (:name highlight-symbol
                :after (progn
                         (after 'highlight-symbol
