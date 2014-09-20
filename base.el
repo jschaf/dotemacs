@@ -238,7 +238,7 @@
                        `(("fh" . windmove-left)
                          ("fj" . windmove-down)
                          ("fk" . windmove-up)
-                         ("fl" . ,(not-in-minibuffer 'windmove-right))
+                         ("fl" . ,(not-in-minibuffer 'windmove-right "fl"))
                          ("vh" . buf-move-left)
                          ("vj" . buf-move-down)
                          ("vk" . buf-move-up)
@@ -247,7 +247,7 @@
                          ("jq" . delete-other-windows)
                          ("jw" . split-window-vertically)
                          ;; je is a substring of projectile.
-                         ("je" . ,(not-in-minibuffer 'split-window-horizontally))
+                         ("je" . ,(not-in-minibuffer 'split-window-horizontally "je"))
                          ("jx" . smex)
                          ("jt" . dabbrev-expand)
                          ("xb" . ido-switch-buffer)
