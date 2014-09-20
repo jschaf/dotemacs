@@ -263,16 +263,19 @@
                        do (key-chord-define-global key func))))
 
         (:name magit
-               :after
-               (after 'magit
-                 (defadvice magit-key-mode-popup-committing (after toggle-verbose-commits activate)
-                   "Enable the verbose option for commiting."
-                   (magit-key-mode-toggle-option 'committing "--verbose"))
-
-                 (add-hook 'magit-mode-hook
-                           '(lambda ()
-                              (local-set-key "j" #'evil-next-line)
-                              (local-set-key "k" #'evil-previous-line)))))
+               :website "https://github.com/magit/magit#readme"
+               :description "It's Magit! An Emacs mode for Git."
+               :type elpa
+               :pkgname "magit"
+               :depends (cl-lib git-modes)
+               :after (after 'magit
+                        (defadvice magit-key-mode-popup-committing (after toggle-verbose-commits activate)
+                          "Enable the verbose option for commiting."
+                          (magit-key-mode-toggle-option 'committing "--verbose"))
+                        (add-hook 'magit-mode-hook
+                                  '(lambda ()
+                                     (local-set-key "j" #'evil-next-line)
+                                     (local-set-key "k" #'evil-previous-line)))))
 
         (:name popup
                :submodule nil)

@@ -7,18 +7,18 @@
         (:name anzu
                :after (global-anzu-mode 1))
 
-        (:name auctex
-               :after (progn
-                        (setq TeX-auto-save t)
-                        (setq TeX-parse-self t)
-                        (after 'latex
-                          ;; Remove the :trigger for a regular
-                          ;; double quote to insert LaTeX double
-                          ;; quotes.  Now smartparens will default
-                          ;; to normal double quotes.
-                          (sp-local-pair 'latex-mode "``" "''"
-                                         :trigger "\""
-                                         :actions :rem))))
+        ;; (:name auctex
+        ;;        :after (progn
+        ;;                 (setq TeX-auto-save t)
+        ;;                 (setq TeX-parse-self t)
+        ;;                 (after 'latex
+        ;;                   ;; Remove the :trigger for a regular
+        ;;                   ;; double quote to insert LaTeX double
+        ;;                   ;; quotes.  Now smartparens will default
+        ;;                   ;; to normal double quotes.
+        ;;                   (sp-local-pair 'latex-mode "``" "''"
+        ;;                                  :trigger "\""
+        ;;                                  :actions :rem))))
 
         (:name ein)
         (:name esup
@@ -124,7 +124,9 @@ screen."
                         (set-face-attribute 'hl-sentence-face nil
                                             :foreground "#444")))
 
-        (:name haskell-mode)
+        ;; Doesn't compile on Windows because sed is missing.  El-get
+        ;; says haskell-mode is missing on el-get.
+        ;; (:name haskell-mode)
 
         (:name jedi
                :after
@@ -316,11 +318,11 @@ Otherwise deletes a character normally by calling
          buffer-move
          dash
          el-get
-         flycheck
+       ;;  flycheck
 ;;         gist
          git-modes
          goto-chg
-         help-fns+
+      ;;   help-fns+
          magit
          moz-repl
          projectile

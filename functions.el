@@ -483,7 +483,7 @@ e.g. `HelloWorldString'."
   `(defun ,name ()
      ,(format "Insert the date formated like %s."
               (format-time-string date-format
-                                  (date-to-time "1944-06-06 01:30:00 UTC")))
+                                  (date-to-time "1974-06-06 01:30:00 UTC")))
      (interactive)
      (my:insert-date ,date-format)))
 
