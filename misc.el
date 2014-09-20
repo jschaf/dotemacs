@@ -371,7 +371,7 @@ Primarily for use in .dir-locals.el")
 
 ;; Use F-13 as compose key which I have bound to End via Karabiner
 ;; (Mac App)
-(define-key key-translation-map (kbd "<f13>") 'iso-transl-ctl-x-8-map)
+;; (define-key key-translation-map (kbd "<f13>") 'iso-transl-ctl-x-8-map)
 
 (progn
 
