@@ -362,6 +362,8 @@ Primarily for use in .dir-locals.el")
            mac-command-modifier 'super)
      (message "Mac modifier keys set for USB keyboard."))))
 
+(global-set-key (kbd "S-SPC") '(lambda () (interactive) (insert "_")))
+
 (when (eq system-type 'darwin)
   ;; Don't use option to input special chars, use it as alt like it
   ;; was meant to be.
