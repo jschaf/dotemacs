@@ -373,7 +373,7 @@ Primarily for use in .dir-locals.el")
 ;; (Mac App)
 (define-key key-translation-map (kbd "<f13>") 'iso-transl-ctl-x-8-map)
 
-(after 'fontawesome
+(progn
 
   (defvar my:mode-line-front-space
     " "
@@ -387,7 +387,7 @@ Primarily for use in .dir-locals.el")
 
   (defvar my:mode-line-modified
     '(:eval (cond
-             (buffer-read-only (concat " " (fontawesome "lock")))
+             (buffer-read-only (concat " " "FAlock"))
              ((buffer-modified-p) " •")
              (t "  ")))
 
@@ -395,7 +395,7 @@ Primarily for use in .dir-locals.el")
 
   (defvar my:mode-line-remote
     (list (propertize
-           (fontawesome "link")
+           "FAlink"
            'mouse-face 'mode-line-highlight
            'help-echo (purecopy (lambda (window _object _point)
                                   (format "%s"
@@ -425,7 +425,7 @@ Primarily for use in .dir-locals.el")
          " "
          mode-line-position
          ;; evil-mode-line-tag
-         smartrep-mode-line-string
+         ;; smartrep-mode-line-string
          '(vc-mode vc-mode)
          " "
          mode-line-modes
