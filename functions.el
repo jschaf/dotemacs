@@ -34,6 +34,10 @@
   (unless (eq (current-buffer) (get-buffer "*scratch*"))
     (save-buffer args)))
 
+(defun my:helm-find-files ()
+  (interactive)
+  (funcall 'helm-find-files nil))
+
 (defun rename-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
