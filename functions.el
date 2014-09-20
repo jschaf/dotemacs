@@ -332,13 +332,16 @@ figuring out how to reload the package."
         do
         (add-hook mode hook)))
 
-(defun not-in-minibuffer (fn &rest args)
-  "Execute FN normally, but in the minibuffer, do nothing.
-Apply ARGS normally."
+(defun not-in-minibuffer (fn &optional else-fn)
+  "Execute FN normally, but in the minibuffer, execute ELSE-FN.
+If ELSE-FN is a string, insert string."
   `(lambda ()
      (interactive)
-     (unless (window-minibuffer-p)
-       (apply (quote ,fn) ,args))))
+     (if (window-minibuffer-p)
+         (if (stringp ,else-fn)
+             (insert ,else-fn)
+           (funcall ',else-fn))
+       (funcall ',fn))))
 
 (defun my:add-watchwords ()
   (font-lock-add-keywords
