@@ -332,21 +332,31 @@ figuring out how to reload the package."
         do
         (add-hook mode hook)))
 
-(defun not-in-minibuffer (fn &optional else-fn)
+(defun not-in-minibuffer (fn else-fn)
   "Execute FN normally, but in the minibuffer, execute ELSE-FN.
 If ELSE-FN is a string, insert string."
-  `(lambda ()
-     (interactive)
-     (if (window-minibuffer-p)
-         (if (stringp ,else-fn)
-             (insert ,else-fn)
-           (funcall ',else-fn))
-       (funcall ',fn))))
+  (let ((name (intern (concat "my:maybe-ignore-keychord-"
+                              (symbol-name fn)))))
+    (eval
+     `(defun ,name ()
+        (interactive)
+        (if (or (window-minibuffer-p)
+                (and (boundp 'evil-state)
+                     (eq evil-state 'insert)))
+            (if (stringp ,else-fn)
+                (insert ,else-fn)
+              (funcall ',else-fn))
+          (funcall ',fn))))
+    name))
 
 (defun my:add-watchwords ()
   (font-lock-add-keywords
    nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\|HACK\\|REFACTOR\\|NOCOMMIT\\)"
           1 font-lock-warning-face t))))
+
+(defun my:open-dired-here ()
+  (interactive)
+  (dired default-directory))
 
 (after 'evil
   (define-key evil-operator-state-map "j" 'my:evil-operator-state-j)

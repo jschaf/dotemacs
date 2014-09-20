@@ -234,6 +234,12 @@
                (progn
                  (key-chord-mode 1)
                  (setq key-chord-two-keys-delay 0.08)
+                 ;; Commands that should work in the minibuffer
+                 (loop for (key . func) in
+                       `(("jk" . my:esc))
+                       do (key-chord-define-global key func))
+
+                 ;; Commands that should NOT work in the minibuffer
                  (loop for (key . func) in
                        `(("fh" . windmove-left)
                          ("fj" . windmove-down)
@@ -251,15 +257,16 @@
                          ("jt" . dabbrev-expand)
                          ("xb" . ido-switch-buffer)
                          ("/f" . helm-find-files)
-                         ("/d" . (lambda () (interactive) (dired default-directory)))
+                         ("/d" . my:open-dired-here)
                          ("/s" . my:save-buffer)
                          ("nb" . bookmark-jump)
                          ("nm" . bookmark-set)
                          ("nl" . bookmark-bmenu-list)
-                         ("jk" . my:esc)
                          ("/x" . helm-mini)
                          ("/c" . goto-last-change))
-                       do (key-chord-define-global key (not-in-minibuffer func key)))))
+                       do (key-chord-define-global key (not-in-minibuffer func key)))
+
+                 ))
 
         (:name magit
                :website "https://github.com/magit/magit#readme"
