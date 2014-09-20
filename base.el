@@ -238,7 +238,7 @@
                        `(("fh" . windmove-left)
                          ("fj" . windmove-down)
                          ("fk" . windmove-up)
-                         ("fl" . ,(not-in-minibuffer 'windmove-right "fl"))
+                         ("fl" . windmove-right)
                          ("vh" . buf-move-left)
                          ("vj" . buf-move-down)
                          ("vk" . buf-move-up)
@@ -246,8 +246,7 @@
                          ("jr" . delete-window)
                          ("jq" . delete-other-windows)
                          ("jw" . split-window-vertically)
-                         ;; je is a substring of projectile.
-                         ("je" . ,(not-in-minibuffer 'split-window-horizontally "je"))
+                         ("je" . split-window-horizontally)
                          ("jx" . smex)
                          ("jt" . dabbrev-expand)
                          ("xb" . ido-switch-buffer)
@@ -260,7 +259,7 @@
                          ("jk" . my:esc)
                          ("/x" . helm-mini)
                          ("/c" . goto-last-change))
-                       do (key-chord-define-global key func))))
+                       do (key-chord-define-global key (not-in-minibuffer func key)))))
 
         (:name magit
                :website "https://github.com/magit/magit#readme"
