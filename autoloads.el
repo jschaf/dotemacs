@@ -206,6 +206,30 @@ screen."
                         (persp-mode)
                         (require 'persp-projectile)))
 
+        (:name python
+               :after (progn
+                        (defun my:configure-python-venv ()
+                          (interactive)
+                          (let* ((project-name (projectile-project-name))
+                                 (virtualenv-path
+                                  (concat "~/.virtualenvs/" project-name)))
+                            (when (file-directory-p virtualenv-path)
+                              (setq python-shell-virtualenv-path virtualenv-path))))
+
+
+                        (defun flycheck-python-set-executables ()
+                          (let ((exec-path (python-shell-calculate-exec-path)))
+                            (setq flycheck-python-pylint-executable (executable-find "pylint")
+                                  flycheck-python-flake8-executable (executable-find "flake8")))
+                          ;; Force Flycheck mode on
+                          (flycheck-mode))
+
+                        (defun flycheck-python-setup ()
+                          (add-hook 'hack-local-variables-hook #'flycheck-python-set-executables
+                                    nil 'local))
+                        (add-hook 'python-mode-hook 'my:configure-python-venv)
+                        (add-hook 'python-mode-hook #'flycheck-python-setup)))
+
         (:name python-environment
                :after (progn
                         (setq-default python-environment-directory
