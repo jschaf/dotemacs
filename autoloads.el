@@ -129,22 +129,24 @@ screen."
         (:name jedi
                :after
                (progn
-                 (defun my:jedi-setup-venv ()
-                   "Activates the virtualenv of the current buffer."
-                   (let ((project-name (projectile-project-name)))
-                     (when project-name (venv-workon project-name))))
 
-                 (add-hook 'python-mode-hook 'my:jedi-setup-venv)
-                 (add-hook 'python-mode-hook 'jedi:setup)
-                 (setq jedi:complete-on-dot t)
+                 ;; (defun my:jedi-setup-venv ()
+                 ;;   "Activates the virtualenv of the current buffer."
+                 ;;   (let ((project-name (projectile-project-name)))
+                 ;;     (when project-name (venv-workon project-name))))
 
-                 (cl-loop for (key . func) in
-                          '(("g." . jedi:goto-definition)
-                            ("g," . jedi:goto-definition-pop-marker)
-                            ("gh" . jedi:show-doc))
-                          do
-                          (evil-define-key 'normal python-mode-map key func)
-                          (evil-define-key 'motion python-mode-map key func))))
+                 ;; (add-hook 'python-mode-hook 'my:jedi-setup-venv)
+                 ;; (add-hook 'python-mode-hook 'jedi:setup)
+                 ;; (setq jedi:complete-on-dot t)
+
+                 ;; (cl-loop for (key . func) in
+                 ;;          '(("g." . jedi:goto-definition)
+                 ;;            ("g," . jedi:goto-definition-pop-marker)
+                 ;;            ("gh" . jedi:show-doc))
+                 ;;          do
+                 ;;          (evil-define-key 'normal python-mode-map key func))
+
+                 ))
 
         (:name jinja2-mode
                :after
