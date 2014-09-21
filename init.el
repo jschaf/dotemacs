@@ -103,5 +103,7 @@ If DIRECTORY-P is non-nil, make a directory instead of a file."
 ;; be set to $USERNAME and must be in the actual init-file.
 (setq inhibit-startup-echo-area-message "joe")
 
+(add-hook 'after-init-hook '(lambda () (message "")))
+
 (provide 'init)
 ;;; init.el ends here
