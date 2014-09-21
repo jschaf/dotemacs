@@ -223,10 +223,10 @@ screen."
                         (add-hook 'python-mode-hook 'my:configure-python-venv)
                         (add-hook 'python-mode-hook #'flycheck-python-setup)))
 
-        ;; (:name python-environment
-        ;;        :after (progn
-        ;;                 (setq-default python-environment-directory
-        ;;                               (my:privatize "python-environments"))))
+        (:name python-environment
+               :after (progn
+                        (setq-default python-environment-directory
+                                      (my:privatize "python-environments"))))
 
         (:name rst-mode
                :url "http://svn.code.sf.net/p/docutils/code/trunk/docutils/tools/editors/emacs/rst.el"
