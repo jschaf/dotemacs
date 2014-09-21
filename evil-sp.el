@@ -1,3 +1,6 @@
+(require 'smartparens)
+(require 'evil)
+
 (defun my:evilize-name (name)
    (intern (format "evil-%s" name)))
 
