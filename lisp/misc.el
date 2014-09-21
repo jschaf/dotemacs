@@ -192,13 +192,12 @@
 (column-number-mode 1)
 
 ;; Registers
-(set-register ?i '(file . "~/.emacs.d/init.el"))
-(set-register ?a '(file . "~/.emacs.d/autoloads.el"))
-(set-register ?b '(file . "~/.emacs.d/base.el"))
-(set-register ?f '(file . "~/.emacs.d/functions.el"))
-(set-register ?c '(file . "~/.emacs.d/misc.el"))
-(set-register ?p '(file . "~/.emacs.d/papercuts.org"))
-(set-register ?e '(file . "~/.emacs.d/el-get/esup/esup.el"))
+(set-register ?i '(file . "~/.emacs.d/lisp/init.el"))
+(set-register ?a '(file . "~/.emacs.d/lisp/autoloads.el"))
+(set-register ?b '(file . "~/.emacs.d/lisp/base.el"))
+(set-register ?f '(file . "~/.emacs.d/lisp/functions.el"))
+(set-register ?c '(file . "~/.emacs.d/lisp/misc.el"))
+(set-register ?p '(file . "~/.emacs.d/lisp/papercuts.org"))
 
 (after 'dired
   (setq dired-listing-switches "-Alhk")
