@@ -351,14 +351,17 @@ Otherwise deletes a character normally by calling
        (mapcar 'el-get-source-name my:primary-packages)))
 
 (setq el-get-sources (cl-concatenate 'list el-get-sources my:primary-packages))
+(setq my:package-names (append my:primary-package-names my:base-package-names))
 
-;; Delete locally installed packages that aren't listed in
-;; `el-get-sources'
-;; (el-get-cleanup el-get-packages)
 
 ;; nil, the second parameter means install all the packages
 ;; asynchronusly. Waaaay faster.
-(el-get nil my:primary-package-names)
+(el-get nil my:package-names)
+
+
+;; Delete locally installed packages that aren't listed in
+;; `el-get-sources'
+(el-get-cleanup my:package-names)
 
 (provide 'autoloads)
 ;;; autoloads.el ends here
