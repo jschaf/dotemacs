@@ -337,15 +337,10 @@ Otherwise deletes a character normally by calling
          buffer-move
          dash
          el-get
-       ;;  flycheck
-;;         gist
+         flycheck
          git-modes
          goto-chg
-      ;;   help-fns+
-         magit
-         moz-repl
          projectile
-;;         pymacs
          reftex
          s
          smex
