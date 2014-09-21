@@ -133,24 +133,12 @@ screen."
         (:name jedi
                :after
                (progn
+                 (add-hook 'python-mode-hook 'jedi:setup)
+                 (setq jedi:complete-on-dot t)
 
-                 ;; (defun my:jedi-setup-venv ()
-                 ;;   "Activates the virtualenv of the current buffer."
-                 ;;   (let ((project-name (projectile-project-name)))
-                 ;;     (when project-name (venv-workon project-name))))
-
-                 ;; (add-hook 'python-mode-hook 'my:jedi-setup-venv)
-                 ;; (add-hook 'python-mode-hook 'jedi:setup)
-                 ;; (setq jedi:complete-on-dot t)
-
-                 ;; (cl-loop for (key . func) in
-                 ;;          '(("g." . jedi:goto-definition)
-                 ;;            ("g," . jedi:goto-definition-pop-marker)
-                 ;;            ("gh" . jedi:show-doc))
-                 ;;          do
-                 ;;          (evil-define-key 'normal python-mode-map key func))
-
-                 ))
+                 (evil-define-key 'normal python-mode-map "g." 'jedi:goto-definition)
+                 (evil-define-key 'normal python-mode-map "g," 'jedi:goto-definition-pop-marker)
+                 (evil-define-key 'normal python-mode-map "gh" 'jedi:show-doc)))
 
         (:name jinja2-mode
                :after
@@ -230,10 +218,11 @@ screen."
                         (add-hook 'python-mode-hook 'my:configure-python-venv)
                         (add-hook 'python-mode-hook #'flycheck-python-setup)))
 
-        (:name python-environment
-               :after (progn
-                        (setq-default python-environment-directory
-                                      (my:privatize "python-environments"))))
+        ;; (:name python-environment
+        ;;        :after (progn
+        ;;                 (setq-default python-environment-directory
+        ;;                               (my:privatize "python-environments"))))
+
         (:name rst-mode
                :url "http://svn.code.sf.net/p/docutils/code/trunk/docutils/tools/editors/emacs/rst.el"
                :after (progn
@@ -247,7 +236,6 @@ screen."
                           (rst-adjust-adornment-work nil 'reverse))))
 
         (:name rust-mode
-
                :after
                (progn
                  (keydef (rust "C-c C-c") my:rust-save-compile)
