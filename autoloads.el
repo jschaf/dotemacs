@@ -12,6 +12,7 @@
         (:name anzu
                :after (global-anzu-mode 1))
 
+        ;; ;; This is a pain to install on Windows
         ;; (:name auctex
         ;;        :after (progn
         ;;                 (setq TeX-auto-save t)
