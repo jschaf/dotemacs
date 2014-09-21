@@ -48,6 +48,11 @@
         (:name evil-surround
                :after (global-evil-surround-mode 1))
 
+        (:name exec-path-from-shell
+               :after (progn
+                        (when (memq window-system '(mac ns))
+                          (exec-path-from-shell-initialize))))
+
         (:name fontawesome
                :type github
                :pkgname "syohex/emacs-fontawesome")
