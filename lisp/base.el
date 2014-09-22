@@ -63,6 +63,7 @@
                                 (auto-fill-function . "simple")
                                 (smartparens-mode . "smartparens")
                                 (undo-tree-mode . "undo-tree")
+                                (subword-mode . "subword")
                                 (git-gutter-mode . "git-gutter"))
                               do
                               (eval-after-load file-name
