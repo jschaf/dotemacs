@@ -49,6 +49,7 @@
                :after (global-evil-surround-mode 1))
 
         (:name exec-path-from-shell
+               :lazy nil
                :after (progn
                         (when (memq window-system '(mac ns))
                           (exec-path-from-shell-initialize))))
