@@ -3,7 +3,7 @@
 ;; Run :after code when the library is required.  We only do this for
 ;; autoloads.el because we need the packages in base.el to load right
 ;; away.
-(setq el-get-is-lazy t)
+;; (setq el-get-is-lazy t)
 
 (setq my:primary-packages
       '(
@@ -55,6 +55,7 @@
                           (exec-path-from-shell-initialize))))
 
         (:name fontawesome
+               :lazy nil
                :type github
                :pkgname "syohex/emacs-fontawesome")
 
@@ -282,6 +283,7 @@ screen."
                :after ())
 
         (:name yasnippet
+               :lazy nil
                :submodule nil
                :build nil
                :after
