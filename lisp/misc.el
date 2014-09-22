@@ -372,6 +372,15 @@ Primarily for use in .dir-locals.el")
 ;; (Mac App)
 ;; (define-key key-translation-map (kbd "<f13>") 'iso-transl-ctl-x-8-map)
 
+(defun my:fontawesome (text &optional color height)
+  "Propertize TEXT using FontAwesome and COLOR."
+  (propertize text
+              'font-lock-face
+              (append
+               (when color `(:foreground ,color))
+               (when height `(:height ,height))
+               '(:family "FontAwesome"))))
+
 (progn
 
   (defvar my:mode-line-front-space
@@ -386,15 +395,19 @@ Primarily for use in .dir-locals.el")
 
   (defvar my:mode-line-modified
     '(:eval (cond
-             (buffer-read-only (concat " " "FAlock"))
-             ((buffer-modified-p) " •")
+             (buffer-read-only
+              ;; FontAwesome Lock
+              (concat " " (my:fontawesome "")))
+             ((buffer-modified-p) (propertize "•" 'font-lock-face
+                                              '(:foreground "red")))
              (t "  ")))
-
     "The mode line format for the buffer modification status." )
 
   (defvar my:mode-line-remote
     (list (propertize
-           "FAlink"
+           (if (file-remote-p default-directory)
+               (my:fontawesome "" "#00ff00")
+             "")
            'mouse-face 'mode-line-highlight
            'help-echo (purecopy (lambda (window _object _point)
                                   (format "%s"
@@ -411,7 +424,7 @@ Primarily for use in .dir-locals.el")
 
   (setq-default mode-line-format
         (list
-         "%e"
+         "%e" ;; signals an out of memory error
          my:mode-line-front-space
          my:mode-line-buffer-identification
          my:mode-line-modified
