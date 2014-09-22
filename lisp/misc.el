@@ -192,7 +192,7 @@
 (column-number-mode 1)
 
 ;; Registers
-(set-register ?i '(file . "~/.emacs.d/lisp/init.el"))
+(set-register ?i '(file . "~/.emacs.d/init.el"))
 (set-register ?a '(file . "~/.emacs.d/lisp/autoloads.el"))
 (set-register ?b '(file . "~/.emacs.d/lisp/base.el"))
 (set-register ?f '(file . "~/.emacs.d/lisp/functions.el"))
