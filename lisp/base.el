@@ -145,11 +145,10 @@
                    "xh" 'mark-whole-buffer
                    "xc" 'copy-to-register
                    "xr " 'point-to-register)
-                 (after 'lorem-ipsum
-                   (evil-leader/set-key
-                     "lis" 'Lorem-ipsum-insert-sentences
-                     "lip" 'Lorem-ipsum-insert-paragraphs
-                     "lil" 'Lorem-ipsum-insert-list))))
+                 (evil-leader/set-key
+                   "lis" 'Lorem-ipsum-insert-sentences
+                   "lip" 'Lorem-ipsum-insert-paragraphs
+                   "lil" 'Lorem-ipsum-insert-list)))
 
         (:name flx
                :after (flx-ido-mode 1))
