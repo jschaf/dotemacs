@@ -197,7 +197,7 @@
 (set-register ?b '(file . "~/.emacs.d/lisp/base.el"))
 (set-register ?f '(file . "~/.emacs.d/lisp/functions.el"))
 (set-register ?c '(file . "~/.emacs.d/lisp/misc.el"))
-(set-register ?p '(file . "~/.emacs.d/lisp/papercuts.org"))
+(set-register ?p '(file . "~/.emacs.d/papercuts.org"))
 
 (after 'dired
   (setq dired-listing-switches "-Alhk")
