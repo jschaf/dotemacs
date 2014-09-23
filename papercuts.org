@@ -21,6 +21,5 @@
 * answer yes to loaddefs
 * test emacs before closing it.
 * Treat themes as safe
-* fix byte-compilation errors
 * how to select auto-complete entry
 * Python buffer void-variable key
