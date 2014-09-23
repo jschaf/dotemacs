@@ -85,7 +85,7 @@ If DIRECTORY-P is non-nil, make a directory instead of a file."
 (load "functions")
 (load "evil-sp")
 
-(load-theme 'solarized-light)
+;; (load-theme 'solarized-light)
 
 (require 'server)
 
