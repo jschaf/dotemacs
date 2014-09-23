@@ -448,5 +448,8 @@ Primarily for use in .dir-locals.el")
   "wutup")
 
 
+(when (version< emacs-version "24.4")
+  (global-set-key (kbd "M-SPC") 'cycle-spacing))
+
 (provide 'misc)
 ;;; misc.el ends here
