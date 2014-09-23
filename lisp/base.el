@@ -301,7 +301,8 @@
 
         (:name solarized-emacs
                :after (progn
-                        (load-theme 'solarized-light)
+                        (ignore-errors
+                          (load-theme 'solarized-light))
                         (defun my:create-subtle-region ()
                           (interactive)
                           (set-face-attribute
