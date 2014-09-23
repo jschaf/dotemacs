@@ -300,7 +300,17 @@
                         (smartparens-global-mode 1)
                         ))
 
-        (:name solarized-emacs)))
+        (:name solarized-emacs
+               :after (progn
+
+                        (defun my:create-subtle-region ()
+                          (interactive)
+                          (set-face-attribute
+                           'region nil
+                           :foreground nil
+                           :background (my:differentiate-color
+                                        (face-background 'default) 12)))
+                        (add-hook 'my:load-theme-hook 'my:create-subtle-region)))))
 
 ;; We can get whole repositories later if we want to hack on them.
 (defvar el-get-git-shallow-clone t)
