@@ -194,6 +194,9 @@ screen."
                :after (progn
                         (my:add-citations-to-sentence-end)))
 
+        (:name multiple-cursors
+               :after ())
+
         (:name page-break-lines
                :after (progn
                         (add-hook 'emacs-lisp-mode-hook
