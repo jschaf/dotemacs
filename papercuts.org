@@ -3,18 +3,6 @@
 * better highlight paren when matching is not on screen
 * highlight next positions for line-up and line down
 * join all lines until empty, .e.g "))))\n)\n) -> )))"
-* eldoc blinks every key press because of evil-mode
-  https://bitbucket.org/lyro/evil/issue/417/evil-mode-cause-eldoc-mode-to-flicker-with
-  http://stackoverflow.com/questions/25829232/emacs-evil-mode-causes-flicker-in-eldoc-mode
-* G causes the display to lag out unless I press C-l
-  fci-mode
-  Caused by `fci-update-window-for-scroll` in `window-scroll-functions`
-  Which calls `fci-redraw-window`
-  Which calls `fci-redraw-region`
-  Which calls `fci-put-overlays-region`
-  Caused by `(while (search-forward "\n" end t))` in
-  `fci-put-overlays-region`
-  https://github.com/alpaker/Fill-Column-Indicator/issues/51 
 * Close unused emacs buffers
 * ignore killed whitespace
 * exit magit commit buffer normally, gets weird because it uses emacs-daemon
