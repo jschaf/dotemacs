@@ -85,8 +85,6 @@ If DIRECTORY-P is non-nil, make a directory instead of a file."
 (load "functions")
 (load "evil-sp")
 
-;; (load-theme 'solarized-light)
-
 (require 'server)
 
 (setq server-auth-dir (my:privatize "server"))
@@ -103,6 +101,8 @@ If DIRECTORY-P is non-nil, make a directory instead of a file."
 ;; be set to $USERNAME and must be in the actual init-file.
 (setq inhibit-startup-echo-area-message "joe")
 
+
+;; Clear the echo area
 (add-hook 'after-init-hook '(lambda () (message "")))
 
 (provide 'init)
