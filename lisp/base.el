@@ -65,11 +65,14 @@
                                 (auto-fill-function . "simple")
                                 (smartparens-mode . "smartparens")
                                 (undo-tree-mode . "undo-tree")
-                                (subword-mode . "subword")
                                 (git-gutter-mode . "git-gutter"))
                               do
                               (eval-after-load file-name
-                                `(diminish ',mode-to-diminish)))))
+                                `(diminish ',mode-to-diminish)))
+                        (when (eval-when-compile (string< "24.3.1" emacs-version))
+                          ;; https://github.com/purcell/emacs.d/issues/138
+                          (after-load 'subword
+                                      (diminish 'subword-mode)))))
 
         (:name elisp-slime-nav
                :after
