@@ -103,7 +103,10 @@ screen."
                    (when (<= (window-width) (1+ fci-rule-column))
                      (fci-delete-overlays-region start end)))))
 
-        (:name flycheck)
+        (:name flycheck
+               ;; flycheck only 'builds' info.
+               :build/windows-nt nil
+               :build nil)
 
         (:name highlight-symbol
                :after (progn
