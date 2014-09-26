@@ -368,6 +368,9 @@ Primarily for use in .dir-locals.el")
   ;; was meant to be.
   (my:toggle-mac-modifiers))
 
+(when (eq system-type 'windows-nt)
+  (add-to-list 'exec-path "~/bin"))
+
 ;; Use F-13 as compose key which I have bound to End via Karabiner
 ;; (Mac App)
 ;; (define-key key-translation-map (kbd "<f13>") 'iso-transl-ctl-x-8-map)
