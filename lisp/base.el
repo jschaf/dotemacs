@@ -11,6 +11,8 @@
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
+(require 'cl)
+
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
       (url-retrieve-synchronously
