@@ -11,7 +11,8 @@
 ;;; Code:
 
 ;; Use a decent font.
-;; (set-face-attribute 'default nil :font "Consolas 12")
+(when (member "Consolas" (font-family-list))
+  (set-face-attribute 'default nil :font "Consolas 11"))
 
 ;; Remove distractions.
 (menu-bar-mode -1)
