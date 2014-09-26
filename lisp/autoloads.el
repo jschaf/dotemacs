@@ -280,6 +280,10 @@ screen."
                  ;; (add-to-list 'compilation-finish-functions 'my:run-in-eshell)
                  ))
 
+        (:name smart-newline
+               :type github
+               :pkgname "jschaf/smart-newline.el")
+
         (:name scss-mode
                :after (progn
                         (setq scss-compile-at-save nil)))
