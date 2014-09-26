@@ -139,7 +139,7 @@ screen."
                                             :foreground "#444")))
 
         ;; Doesn't compile on Windows because sed is missing.  El-get
-        ;; says haskell-mode is missing on el-get.
+        ;; says haskell-mode is missing on melpa.
         ;; (:name haskell-mode)
 
         (:name jedi
