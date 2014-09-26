@@ -210,6 +210,8 @@ screen."
                         (require 'persp-projectile)))
 
         (:name python
+               ;; repo.or.cz is blocked on work network
+               :url "https://raw.githubusercontent.com/emacs-mirror/emacs/master/lisp/progmodes/python.el"
                :after (progn
                         (defun my:configure-python-venv ()
                           (interactive)
