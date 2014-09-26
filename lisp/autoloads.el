@@ -55,11 +55,6 @@
                         (when (memq window-system '(mac ns))
                           (exec-path-from-shell-initialize))))
 
-        (:name fontawesome
-               :lazy nil
-               :type github
-               :pkgname "syohex/emacs-fontawesome")
-
         (:name fill-column-indicator
                :after
                (progn
