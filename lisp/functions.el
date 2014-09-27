@@ -85,6 +85,17 @@
   (run-hooks 'my:load-theme-hook))
 (ad-activate 'load-theme)
 
+(defun my:create-subtle-show-paren-match ()
+  (interactive)
+  (set-face-attribute 'show-paren-match nil
+                      :foreground nil
+                      :weight 'normal
+                      :background (my:differentiate-color (face-background 'default) 3)))
+
+(after 'paren
+  (add-hook 'my:load-theme-hook 'my:create-subtle-show-paren-match)
+  (my:create-subtle-show-paren-match))
+
 (defun toggle-color-theme ()
   "Switch between the `my:dark-theme' and `my:light-theme'."
   (interactive)

@@ -93,7 +93,7 @@
       (error (message (nth 1 error-info))))))
 
 (show-paren-mode 1)
-(setq-default show-paren-style 'mixed)
+(setq-default show-paren-style 'expression)
 ;; Ido
 (require 'ido)
 (ido-mode t)
