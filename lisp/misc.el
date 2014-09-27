@@ -31,9 +31,6 @@
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
-;; Highlight when mark is active
-(setq transient-mark-mode t)
-
 ;; Ignore all safe local variables.  The endless prompting is
 ;; annoying.
 (setq-default enable-local-variables t)
