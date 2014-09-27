@@ -31,7 +31,7 @@
 (scroll-bar-mode -1)
 
 ;; Add the Emacs directory to the load path.
-(setq load-path (add-to-list 'load-path (locate-user-emacs-file "lisp/")))
+(add-to-list 'load-path (locate-user-emacs-file "lisp/"))
 
 ;; Adjust GC threshold to 20 megabytes.  This dramatically improves
 ;; startup time and helps with the overall speed of Emacs.
