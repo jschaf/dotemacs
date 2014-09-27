@@ -80,6 +80,7 @@
                            (fci-delete-unneeded)
                            (fci-update-all-windows t))))))
 
+                 (my:create-subtle-fci-rule)
                  (add-hook 'my:load-theme-hook 'my:create-subtle-fci-rule)
 
                  (defun my:show-column-80 ()
