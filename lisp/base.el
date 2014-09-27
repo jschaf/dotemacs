@@ -72,7 +72,7 @@
                         (when (eval-when-compile (string< "24.3.1" emacs-version))
                           ;; https://github.com/purcell/emacs.d/issues/138
                           (after 'subword
-                                      (diminish 'subword-mode)))))
+                            (diminish 'subword-mode)))))
 
         (:name elisp-slime-nav
                :after
