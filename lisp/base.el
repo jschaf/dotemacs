@@ -114,10 +114,14 @@
                    "ff" 'find-function
                    "fp" 'my:find-function-at-point-this-window
                    "fP" 'find-function-at-point
-                   "gc" 'goto-char
+                   "gc" 'my:magit-verbose-commit
                    "gj" 'next-error
                    "gk" 'previous-error
                    "gh" '(lambda () (interactive) (find-file "~/"))
+                   "gn" 'git-gutter:next-hunk
+                   "gp" 'git-gutter:previous-hunk
+                   "gr" 'git-gutter:revert-hunk
+                   "gs" 'git-gutter:stage-hunk
                    "hs" 'highlight-symbol-at-point
                    "hn" 'highlight-symbol-next
                    "hp" 'highlight-symbol-prev
@@ -282,6 +286,12 @@
                         (defadvice magit-key-mode-popup-committing (after toggle-verbose-commits activate)
                           "Enable the verbose option for commiting."
                           (magit-key-mode-toggle-option 'committing "--verbose"))
+
+                        (defun my:magit-verbose-commit (&optional amend)
+                          (interactive "P")
+                          (let ((magit-custom-options (add-to-list 'magit-custom-options "--verbose")))
+                            (magit-commit amend)))
+
                         (add-hook 'magit-mode-hook
                                   '(lambda ()
                                      (local-set-key "j" #'evil-next-line)
