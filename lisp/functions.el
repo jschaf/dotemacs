@@ -80,10 +80,9 @@
 (defvar my:load-theme-hook nil
   "Hook to run when a new theme is loaded.")
 
-(defadvice load-theme (after load-theme-hook)
+(defadvice load-theme (after load-theme-hook activate)
   "Add hook to load-theme."
   (run-hooks 'my:load-theme-hook))
-(ad-activate 'load-theme)
 
 (defun my:create-subtle-show-paren-match ()
   (interactive)
