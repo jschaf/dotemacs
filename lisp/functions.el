@@ -23,6 +23,7 @@
       (indent-region (region-beginning) (region-end) nil)))
 
 (defadvice yank-pop (after indent-region activate)
+  "Auto indent yanked code."
   (if (member major-mode '(emacs-lisp-mode scheme-mode lisp-mode
 					   c-mode c++-mode objc-mode ada-mode
 					   latex-mode plain-tex-mode))
@@ -81,7 +82,7 @@
   "Hook to run when a new theme is loaded.")
 
 (defadvice load-theme (after load-theme-hook activate)
-  "Add hook to load-theme."
+  "Add hook to `load-theme'."
   (run-hooks 'my:load-theme-hook))
 
 (defun my:create-subtle-show-paren-match ()
@@ -198,7 +199,7 @@ Delete all whitespace on a succesive key press."
 (defun my:new-blah-buffer ()
   "Open up a guaranteed new blah (scratch) buffer."
   (interactive)
-  (switch-to-buffer (loop for num from 0
+  (switch-to-buffer (cl-loop for num from 0
                           for name = (format "blah-%03i" num)
                           while (get-buffer name)
                           finally return name)))
@@ -206,7 +207,7 @@ Delete all whitespace on a succesive key press."
 (defun my:switch-to-blah-buffer ()
   "Switch to a blah buffer, or create a new one."
   (interactive)
-  (loop for buffer in (buffer-list)
+  (cl-loop for buffer in (buffer-list)
       if (string-match "blah-.+" (buffer-name buffer))
          return (switch-to-buffer buffer)
       finally do (my:new-blah-buffer)))
@@ -217,6 +218,7 @@ Delete all whitespace on a succesive key press."
 This is separated into a function so I can edit it without
 figuring out how to reload the package."
   (interactive)
+  (eval-when-compile (require 'evil-vars))
   (evil-mode 1)
 
   ;; We need to add text before we can edit it.
@@ -274,7 +276,7 @@ figuring out how to reload the package."
   (setq-default evil-cross-lines t)
 
   ;; Commands for both the normal, motion and visual state
-  (loop for (key . func) in
+  (cl-loop for (key . func) in
         `(("J" . my:evil-next-visual-line-5)
           ("K" . my:evil-previous-visual-line-5)
           ("\M-j" . my:evil-next-visual-line-3)
@@ -304,7 +306,7 @@ figuring out how to reload the package."
    (define-key evil-normal-state-map (kbd "C-SPC") 'my:evil-insert-one-char)
 
   ;; Commands for only the normal state map
-  (loop for (key . func) in
+  (cl-loop for (key . func) in
         `((,(kbd "<tab>")  . indent-for-tab-command)
           ([backspace] . my:hungry-delete-backward)
           ("z," . comment-dwim)
@@ -314,7 +316,7 @@ figuring out how to reload the package."
         (define-key evil-normal-state-map key func))
 
   ;; Command for `evil-insert-mode-map'
-  (loop for (key . func) in
+  (cl-loop for (key . func) in
         `(([backspace] . my:hungry-delete-backward))
         do
         (define-key evil-insert-state-map key func))
@@ -324,7 +326,7 @@ figuring out how to reload the package."
   (evil-define-key 'insert python-mode-map [backspace] 'python-indent-dedent-line-backspace)
 
   (add-hook 'Info-mode-hook
-            (lambda () (loop for (key . func) in
+            (lambda () (cl-loop for (key . func) in
                         '(("H" . Info-history-back)
                           ("L" . Info-history-forward))
                         do (define-key Info-mode-map key func)))))
@@ -504,6 +506,9 @@ e.g. `HelloWorldString'."
     (insert (format-time-string "%-e %B %Y"))))
 
 (defmacro new-date-defun (name date-format)
+  "Create a new interactive date function.
+NAME is the created defun name.
+DATE-FORMAT is the format string for `format-time-string.'"
   `(defun ,name ()
      ,(format "Insert the date formated like %s."
               (format-time-string date-format
