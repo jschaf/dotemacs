@@ -1,3 +1,5 @@
+* add rebase to evil emacs state
+* Warn about el-get packages not in autoloads
 * keep searches highlighted
 * prefer vertical split
 * better highlight paren when matching is not on screen
