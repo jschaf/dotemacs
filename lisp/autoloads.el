@@ -395,7 +395,7 @@ Otherwise deletes a character normally by calling
 
 ;; Delete locally installed packages that aren't listed in
 ;; `el-get-sources'
-(el-get-cleanup my:package-names)
+;; (el-get-cleanup my:package-names)
 
 (provide 'autoloads)
 ;;; autoloads.el ends here
