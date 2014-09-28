@@ -457,6 +457,14 @@ If ELSE-FN is a string, insert string."
   (let ((magit-custom-options (add-to-list 'magit-custom-options "--verbose")))
     (magit-commit amend)))
 
+(defun my:git-gutter:stage-hunk ()
+  (interactive)
+  (git-gutter:awhen (git-gutter:search-here-diffinfo git-gutter:diffinfos)
+    (save-window-excursion
+      (git-gutter:popup-hunk it)
+      (git-gutter:do-stage-hunk it)
+      (git-gutter))))
+
 (defun my:add-citations-to-sentence-end ()
   "Add support for pandoc citations to `sentence-end'.
 e.g. 'This is a sentence. [@euler, 2]' The main point is now

@@ -121,7 +121,8 @@
                    "gn" 'git-gutter:next-hunk
                    "gp" 'git-gutter:previous-hunk
                    "gr" 'git-gutter:revert-hunk
-                   "gs" 'git-gutter:stage-hunk
+                   "gs" 'my:git-gutter:stage-hunk
+                   "gv" 'git-gutter:revert-hunk
                    "hs" 'highlight-symbol-at-point
                    "hn" 'highlight-symbol-next
                    "hp" 'highlight-symbol-prev
