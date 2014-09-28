@@ -89,7 +89,7 @@
   (set-face-attribute 'show-paren-match nil
                       :foreground nil
                       :weight 'normal
-                      :background (my:differentiate-color (face-background 'default) 3)))
+                      :background (my:differentiate-color (face-background 'default) 2)))
 
 (after 'paren
   (add-hook 'my:load-theme-hook 'my:create-subtle-show-paren-match)
@@ -536,16 +536,19 @@ e.g. `HelloWorldString'."
   (when (boundp 'evil-mode)
     (evil-insert-state 1)))
 
-(defun my:differentiate-color (name percent)
+(defun my:differentiate-color (name lighten-percent &optional darken-percent)
   "Differentiate color NAME by PERCENT.
 If color is closer to white, darken by PERCENT.  If color is
 closer to black, lighten by PERCENT"
   (require 'color)
   (let ((white-distance (color-distance name "white"))
-        (black-distance  (color-distance name "black")))
+        (black-distance  (color-distance name "black"))
+        ;; Percuptually, it takes more darkening to get the same
+        ;; effect so add a little extra oompf.
+        (darken-percent (or darken-percent (+ 2 lighten-percent))))
     (if (> white-distance black-distance)
-        (color-lighten-name name percent)
-      (color-darken-name name percent))))
+        (color-lighten-name name lighten-percent)
+      (color-darken-name name darken-percent))))
 
 (defun my:python-add-format-to-string ()
   "Add .format to function to current string.
