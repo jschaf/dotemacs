@@ -289,6 +289,13 @@ screen."
                  ;; (add-to-list 'compilation-finish-functions 'my:run-in-eshell)
                  ))
 
+        (:name smart-mode-line
+               :after
+               (progn
+                 (require 'smart-mode-line)
+                 (sml/setup)
+                 (sml/apply-theme 'respectful)))
+
         (:name smart-newline
                :type github
                :pkgname "jschaf/smart-newline.el")
