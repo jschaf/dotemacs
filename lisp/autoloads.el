@@ -119,6 +119,7 @@ screen."
 
         (:name highlight-symbol
                :after (progn
+                        (require 'highlight-symbol)
                         (defun my:create-subtle-highlight ()
                           (interactive)
                           (set-face-attribute 'highlight-symbol-face nil
