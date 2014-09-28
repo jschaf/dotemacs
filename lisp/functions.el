@@ -422,7 +422,7 @@ If ELSE-FN is a string, insert string."
   (interactive "p")
   (isearch-printing-char)
   arg ;; make the byte compilation errors go away
-  (unless (fboundp 'smartrep-read-event-loop)
+  (eval-when-compile
     (require 'smartrep))
   ;; Manually signal quit because using `keyboard-quit' displays
   ;; "quit" in the echo-area, hiding the search text if you press 'j'
