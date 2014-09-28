@@ -237,6 +237,8 @@ figuring out how to reload the package."
   (setq evil-want-visual-char-semi-exclusive t)
   (setq evil-move-cursor-back nil)
 
+  (add-to-list 'evil-emacs-state-modes 'git-rebase-mode)
+
   (defmacro my:make-evil-line-move-motion (name multiplier)
     `(evil-define-motion ,name (count)
        ,(format "Move the cursor (COUNT * %s) lines down." multiplier)
