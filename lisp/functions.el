@@ -451,6 +451,12 @@ If ELSE-FN is a string, insert string."
           (evil-define-key state keymap k d)
           (message "defined state %s in %s of %s:%s" state keymap k d))))))
 
+(defun my:magit-verbose-commit (&optional amend)
+  (interactive "P")
+  (require 'magit)
+  (let ((magit-custom-options (add-to-list 'magit-custom-options "--verbose")))
+    (magit-commit amend)))
+
 (defun my:add-citations-to-sentence-end ()
   "Add support for pandoc citations to `sentence-end'.
 e.g. 'This is a sentence. [@euler, 2]' The main point is now

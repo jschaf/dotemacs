@@ -287,11 +287,6 @@
                           "Enable the verbose option for commiting."
                           (magit-key-mode-toggle-option 'committing "--verbose"))
 
-                        (defun my:magit-verbose-commit (&optional amend)
-                          (interactive "P")
-                          (let ((magit-custom-options (add-to-list 'magit-custom-options "--verbose")))
-                            (magit-commit amend)))
-
                         (add-hook 'magit-mode-hook
                                   '(lambda ()
                                      (local-set-key "j" #'evil-next-line)
