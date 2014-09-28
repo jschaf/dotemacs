@@ -1,7 +1,16 @@
+;;; evil-sp.el --- Evil bindings to smartparens
+
+
+;;; Commentary:
+;;
+
 (require 'smartparens)
 (require 'evil)
 
+;;; Code:
+
 (defun my:evilize-name (name)
+  "Return an interned symbol NAME prefixed with 'evil-'."
    (intern (format "evil-%s" name)))
 
 (defmacro my:make-evil-sp-movement (name)
@@ -12,13 +21,17 @@
        :type inclusive
        :jump t
        (,name count))))
+
 (defun my:beginning-of-previous-sexp (&optional arg)
+  "Goto beginning of previous sexp.
+If ARG is non-nil, go back ARG sexps."
   (interactive "P")
   (setq arg (or arg 1))
   (sp-previous-sexp arg)
   (sp-backward-sexp))
 
 (defun my:smartparens-config ()
+  "Bind smarparens commands."
   (interactive)
   (let ((sexp-motions '(("zh" . sp-backward-sexp)
                         ("zj" . sp-down-sexp)
@@ -84,3 +97,6 @@
           (define-key evil-normal-state-map key func))))
 
 (my:smartparens-config)
+
+(provide 'evil-sp)
+;;; evil-sp.el ends here
