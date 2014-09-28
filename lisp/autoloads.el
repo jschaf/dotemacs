@@ -107,7 +107,15 @@ screen."
         (:name flycheck
                ;; flycheck only 'builds' info.
                :build/windows-nt nil
-               :build nil)
+               :build nil
+               :after
+               (progn
+                 (add-hook 'emacs-lisp-mode-hook 'flycheck-mode)))
+
+        (:name flycheck-cask
+               :after (progn
+                        (after 'flycheck
+                          (add-hook 'flycheck-mode-hook #'flycheck-cask-setup))))
 
         (:name highlight-symbol
                :after (progn
