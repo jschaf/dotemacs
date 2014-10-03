@@ -2,6 +2,7 @@
 * update highlight-symbol when theme changes
 * ignore keywords, number and other unintersting symbols in highlight-symbol 
 * exclude most block based languages from highlight paren
+* use jk to exit y-or-no-p
 * Warn about el-get packages not in autoloads
 * keep searches highlighted
 * prefer vertical split
