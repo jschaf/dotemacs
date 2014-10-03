@@ -145,9 +145,15 @@ screen."
                :branch "master"
                :pkgname "milkypostman/hl-sentence"
                :after (progn
+                        (defun my:create-subtle-sentence-highlight ()
+                          (interactive)
+                          (set-face-attribute 'hl-sentence-face nil
+                                              :foreground nil
+                                              :background (my:differentiate-color (face-background 'default) 4)))
                         (add-hook 'markdown-mode-hook 'hl-sentence-mode)
-                        (set-face-attribute 'hl-sentence-face nil
-                                            :foreground "#444")))
+
+                        (run-with-idle-timer 0.01 nil 'my:create-subtle-sentence-highlight)
+                        (add-hook 'my:load-theme-hook 'my:create-subtle-sentence-highlight)))
 
         ;; Doesn't compile on Windows because sed is missing.  El-get
         ;; says haskell-mode is missing on melpa.
