@@ -394,50 +394,6 @@ If ELSE-FN is a string, insert string."
               ;; process any other key pressed within 0.5 seconds
               (push evt unread-command-events))))))))
 
-(defun my:esc ()
-  "Functionality for escaping generally."
-  (interactive)
-
-  (cond
-   ;; If we're in one of the Evil states return to the normal-state
-   ((or (evil-insert-state-p) (evil-normal-state-p) (evil-replace-state-p)
-        (evil-operator-state-p) (evil-visual-state-p))
-    (evil-force-normal-state))
-
-   ((window-minibuffer-p)
-    (abort-recursive-edit))
-
-   ((string-prefix-p "*magit-key" (buffer-name))
-    (magit-key-mode-command nil))
-
-   (t (keyboard-quit))))
-
-;; Exit isearch by pressing jk, see
-;; http://stackoverflow.com/questions/20926215
-(defun my:isearch-exit-chord-worker (&optional arg)
-  (interactive "p")
-  arg ;; make the byte compilation errors go away
-  ;; delete the j or k and accept the search
-  (execute-kbd-macro (kbd "<backspace> <return>")))
-
-(defun my:isearch-exit-chord (arg)
-  (interactive "p")
-  (isearch-printing-char)
-  arg ;; make the byte compilation errors go away
-  (eval-when-compile
-    (require 'smartrep))
-  ;; Manually signal quit because using `keyboard-quit' displays
-  ;; "quit" in the echo-area, hiding the search text if you press 'j'
-  ;; and another character besides 'k' in rapid succession.
-  (run-at-time 0.3 nil '(lambda () (signal 'quit)))
-  (condition-case nil
-    (smartrep-read-event-loop
-      '(("j" . my:isearch-exit-chord-worker)
-        ("k" . my:isearch-exit-chord-worker)))
-    (quit nil)))
-(define-key isearch-mode-map "j" 'my:isearch-exit-chord)
-(define-key isearch-mode-map "k" 'my:isearch-exit-chord)
-
 (defun my:evil-define-keys (states keymaps key def &rest bindings)
   "Run `evil-define-key' over all STATES and KEYMAPS."
   (let* ( ;; Keep bindings unmodified to use for all iterations

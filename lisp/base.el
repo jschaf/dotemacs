@@ -319,6 +319,12 @@
         (:name projectile
                :after (projectile-global-mode 1))
 
+        (:name quit-chord
+               :description "Quit chord mode"
+               :type github
+               :pkgname "jschaf/quit-chord"
+               :after (quit-chord-global-mode 1))
+
         (:name rainbow-delimiters
                :after (add-hook 'emacs-lisp-mode-hook
                                 'rainbow-delimiters-mode))
