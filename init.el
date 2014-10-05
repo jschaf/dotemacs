@@ -115,7 +115,8 @@ If DIRECTORY-P is non-nil, make a directory instead of a file."
 
 
 ;; Clear the echo area
-(add-hook 'after-init-hook '(lambda () (message "")))
+(add-hook 'after-init-hook '(lambda () (message "Emacs load time: %s"
+                                           (emacs-init-time))))
 
 (provide 'init)
 ;;; init.el ends here
