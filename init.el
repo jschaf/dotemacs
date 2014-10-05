@@ -30,7 +30,7 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-;; Add the Emacs directory to the load path.
+;; Add the Emacs lisp directory to the load path.
 (add-to-list 'load-path (locate-user-emacs-file "lisp/"))
 
 ;; Adjust GC threshold to 20 megabytes.  This dramatically improves
