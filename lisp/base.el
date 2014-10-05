@@ -23,6 +23,26 @@
       (goto-char (point-max))
       (eval-print-last-sexp))))
 
+(defmacro with-timer-callback (callback &rest forms)
+  "Evaluate FORMS and call CALLBACK with the elapsed time."
+  (declare (indent 1))
+  (let ((nowvar (make-symbol "now")))
+    `(let ((,nowvar (current-time)))
+       (prog1 (progn ,@forms)
+         (let ((elapsed (float-time (time-subtract (current-time) ,nowvar))))
+           (funcall ,callback elapsed))))))
+
+(defadvice el-get-run-package-support (around time-el-get activate)
+  "Time how long el-get takes to run package support."
+  (with-timer-callback
+      (lambda (time-passed)
+        (when (and (equal "after" (ad-get-arg 1))
+                   (> time-passed 0.05))
+          (message "el-get support for %s took %s seconds"
+                   (el-get-package-name (ad-get-arg 2))
+                   time-passed)))
+    ad-do-it))
+
 (setq my:base-packages
       '((:name ace-jump-mode
                :after
