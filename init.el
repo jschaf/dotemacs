@@ -113,7 +113,6 @@ If DIRECTORY-P is non-nil, make a directory instead of a file."
 ;; be set to $USERNAME and must be in the actual init-file.
 (setq inhibit-startup-echo-area-message "joe")
 
-
 ;; Clear the echo area
 (add-hook 'after-init-hook '(lambda () (message "Emacs load time: %s"
                                            (emacs-init-time))))
