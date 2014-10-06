@@ -386,7 +386,6 @@ Otherwise deletes a character normally by calling
          s
          smex
          smartparens
-         smartrep
          zencoding-mode
          zotelo)
        (mapcar 'el-get-source-name my:primary-packages)))

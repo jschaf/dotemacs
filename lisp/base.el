@@ -324,11 +324,14 @@
                :description "Quit chord mode"
                :type github
                :pkgname "jschaf/quit-chord"
+               :depends (smartrep key-chord)
                :after (quit-chord-global-mode 1))
 
         (:name rainbow-delimiters
                :after (add-hook 'emacs-lisp-mode-hook
                                 'rainbow-delimiters-mode))
+
+        (:name smartrep)
 
         (:name smartparens
                :after (progn
