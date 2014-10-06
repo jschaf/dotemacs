@@ -85,6 +85,7 @@
                                 (auto-fill-function . "simple")
                                 (smartparens-mode . "smartparens")
                                 (undo-tree-mode . "undo-tree")
+                                (quit-chord-mode . "quit-chord")
                                 (git-gutter-mode . "git-gutter"))
                               do
                               (eval-after-load file-name
