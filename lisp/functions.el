@@ -492,7 +492,7 @@ DATE-FORMAT is the format string for `format-time-string.'"
 (new-date-defun my:insert-date-american "%D")
 (new-date-defun my:insert-date-iso "%Y-%m-%d")
 (new-date-defun my:insert-date-military-short "%d %^b %y")
-(new-date-defun my:insert-date-military-long "%d %B %y")
+(new-date-defun my:insert-date-military-long "%d %B %Y")
 
 (new-date-defun my:insert-date-time-civilian "%B %-e, %Y")
 (new-date-defun my:insert-date-time-american "%D")
