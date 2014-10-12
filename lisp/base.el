@@ -120,6 +120,7 @@
                  (global-evil-leader-mode)
                  (evil-leader/set-leader ",")
                  (evil-leader/set-key
+                   "bup" 'browse-url-at-point
                    "ci" 'ido-goto-symbol
                    "cs" '(lambda () (interactive) (switch-to-buffer "*scratch*"))
                    "cB" 'my:new-blah-buffer
