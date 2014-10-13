@@ -52,8 +52,13 @@
         (:name exec-path-from-shell
                :lazy nil
                :after (progn
-                        (when (memq window-system '(mac ns))
-                          (exec-path-from-shell-initialize))))
+                        (defun my:initialize-exec-path-from-shell ()
+                          (when (memq window-system '(mac ns))
+                            (exec-path-from-shell-initialize)))
+                        (run-with-idle-timer
+                         0.01
+                         nil
+                         'my:initialize-exec-path-from-shell)))
 
         (:name fill-column-indicator
                :after

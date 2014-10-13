@@ -320,7 +320,10 @@
                :submodule nil)
 
         (:name projectile
-               :after (projectile-global-mode 1))
+               :after (progn
+                        (defun my:start-projectile ()
+                          (projectile-global-mode 1))
+                        (run-with-idle-timer 0.01 nil 'my:start-projectile)))
 
         (:name quit-chord
                :description "Quit chord mode"
