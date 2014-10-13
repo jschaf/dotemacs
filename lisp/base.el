@@ -146,6 +146,7 @@
                    "gs" 'my:git-gutter:stage-hunk
                    "gv" 'git-gutter:revert-hunk
                    "hs" 'highlight-symbol-at-point
+                   "hll" 'helm-locate-library
                    "hn" 'highlight-symbol-next
                    "hp" 'highlight-symbol-prev
                    "ht" 'describe-text-properties
