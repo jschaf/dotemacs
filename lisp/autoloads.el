@@ -190,22 +190,10 @@ screen."
                                 :post-handlers '(:add my-jinja2-block)
                                 :trigger "jji")))
 
-        (:name keydef
-               :description "A simpler way to define keys in Emacs."
-               :type github
-               :pkgname "jschaf/keydef.el"
-               :after (progn (keydef "C-M-j" bs-cycle-next)
-                             (keydef "C-M-k" bs-cycle-previous)
-
-                             ;; Help
-                             (keydef (help "k") (scroll-down 1))
-                             (keydef (help "L") help-go-back)
-                             (keydef (help "H") help-go-back)
-                             (keydef (help "<tab>") forward-button)
-                             (keydef (help "<shift>-<tab>") backward-button)))
-
         (:name lorem-ipsum)
+
         (:name lua-mode)
+
         (:name markdown-mode
                :after (progn
                         (my:add-citations-to-sentence-end)))
@@ -273,8 +261,6 @@ screen."
         (:name rust-mode
                :after
                (progn
-                 (keydef (rust "C-c C-c") my:rust-save-compile)
-
                  (defvar my:rust-compiled-buffer nil)
 
                  (defun my:rust-save-compile (&optional arg)
@@ -282,6 +268,8 @@ screen."
                    (save-buffer)
                    (compile (concat "rustc " (buffer-file-name)))
                    (setq my:rust-compiled-buffer (current-buffer)))
+
+                 (define-key rust-mode-map (kbd "C-c C-c") 'my:rust-save-compile)
 
                  (defun my:run-in-eshell (buffer msg)
                    (when (string-match "^finished" msg)

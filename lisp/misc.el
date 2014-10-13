@@ -337,6 +337,15 @@ Primarily for use in .dir-locals.el")
 (autoload 'toggle-uniquify-buffer-names "uniquify" nil t)
 (toggle-uniquify-buffer-names)
 
+(global-set-key (kbd "C-M-j") 'bs-cycle-next)
+(global-set-key (kbd "C-M-k") 'bs-cycle-previous)
+
+(after 'help-mode
+  (define-key help-mode-map (kbd "L") 'help-go-back)
+  (define-key help-mode-map (kbd "H") 'help-go-back)
+  (define-key help-mode-map (kbd "<tab>") 'forward-button)
+  (define-key help-mode-map (kbd "<shift>-<tab>") 'backward-button))
+
 (setq eval-expression-print-level nil
       eval-expression-print-length nil)
 
