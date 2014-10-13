@@ -234,7 +234,8 @@ screen."
                           (interactive)
                           (let* ((project-name (projectile-project-name))
                                  (virtualenv-path
-                                  (concat "~/.virtualenvs/" project-name)))
+                                  (file-truename
+                                   (concat "~/.virtualenvs/" project-name))))
                             (when (file-directory-p virtualenv-path)
                               (setq python-shell-virtualenv-path virtualenv-path))))
 
