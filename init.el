@@ -106,7 +106,8 @@ If DIRECTORY-P is non-nil, make a directory instead of a file."
   (unless (server-running-p)
     (server-start)))
 
-(defvar my:server-timer (run-with-idle-timer 0 10 'my:maybe-start-server))
+;; Check for server existence every 10 seconds
+(defvar my:server-timer (run-with-idle-timer 10 t 'my:maybe-start-server))
 
 ;; This would go in misc.el, but Emacs purposefully makes it difficult
 ;; to disable this message.  `inhibit-startup-echo-area-message' must
