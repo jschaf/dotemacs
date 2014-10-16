@@ -60,7 +60,15 @@
                                  (add-to-list 'completion-at-point-functions 'auto-complete-mode-maybe))
                                (add-hook 'auto-complete-mode-hook
                                          'set-auto-complete-as-completion-at-point-function)
+
+                               (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
+                               (add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
+                               (add-hook 'ruby-mode-hook 'ac-ruby-mode-setup)
+                               (add-hook 'css-mode-hook 'ac-css-mode-setup)
+                               (add-hook 'auto-complete-mode-hook 'ac-common-setup)
+
                                (setq-default ac-comphist-file (my:privatize "ac-comphist.dat"))
+                               (setq-default ac-quick-help-delay 0.5)
                                (setq-default ac-sources
                                              '(ac-source-yasnippet
                                                ac-source-imenu
