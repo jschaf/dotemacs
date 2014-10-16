@@ -174,13 +174,18 @@ Delete all whitespace on a succesive key press."
   "Do `delete-trailing-whitespace', except for current line."
   (interactive)
   (let ((current-line (buffer-substring (line-beginning-position) (line-end-position)))
-        (backward (- (line-end-position) (point))))
+        (backward (- (line-end-position) (point)))
+        (newlines (looking-back "\n\n" (- (point) 2 ))))
     (delete-trailing-whitespace)
     (when (not (string-equal (buffer-substring (line-beginning-position) (line-end-position))
                              current-line))
       (delete-region (line-beginning-position) (line-end-position))
       (insert current-line)
-      (backward-char backward))))
+      (backward-char backward))
+    ;; It's annoying to add a couple newlines to the end of a file and
+    ;; hit save and then watch them disappear.
+    (when newlines
+        (insert "\n"))))
 
 (defun my:delete-trailing-whitespace-before-save ()
   "Add `delete-trailing-whitespace' to the local `after-save-hook'."
