@@ -156,6 +156,7 @@ screen."
                                               :foreground nil
                                               :background (my:differentiate-color (face-background 'default) 4)))
                         (add-hook 'markdown-mode-hook 'hl-sentence-mode)
+                        (add-hook 'rst-mode-hook 'hl-sentence-mode)
 
                         (run-with-idle-timer 0.01 nil 'my:create-subtle-sentence-highlight)
                         (add-hook 'my:load-theme-hook 'my:create-subtle-sentence-highlight)))
