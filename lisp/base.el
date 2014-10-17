@@ -136,6 +136,7 @@
                    "cp" 'check-parens
                    "de" 'toggle-debug-on-error
                    "dc" 'describe-char
+                   "df" 'describe-face
                    "dtw" 'delete-trailing-whitespace
                    "eb" 'eval-buffer
                    "ed" 'eval-defun
