@@ -277,11 +277,6 @@
                  (key-chord-mode 1)
                  (setq key-chord-two-keys-delay 0.08)
 
-                 ;; Commands that should work in the minibuffer
-                 (loop for (key . func) in
-                       `(("jk" . my:esc))
-                       do (key-chord-define-global key func))
-
                  ;; Commands that should NOT work in the minibuffer
                  (loop for (key . func) in
                        `(("fh" . windmove-left)
