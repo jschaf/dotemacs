@@ -356,6 +356,7 @@
 
         (:name solarized-emacs
                :after (progn
+                        (setq solarized-use-less-bold t)
                         (ignore-errors
                           (load-theme 'solarized-light))
                         (defun my:create-subtle-region ()
@@ -364,7 +365,7 @@
                            'region nil
                            :foreground nil
                            :background (my:differentiate-color
-                                        (face-background 'default) 12)))
+                                        (face-background 'default) 2)))
                         (add-hook 'my:load-theme-hook 'my:create-subtle-region)))))
 
 ;; We can get whole repositories later if we want to hack on them.
