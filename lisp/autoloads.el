@@ -287,7 +287,7 @@ screen."
                    (compile (concat "rustc " (buffer-file-name)))
                    (setq my:rust-compiled-buffer (current-buffer)))
 
-                 (define-key rust-mode-map (kbd "C-c C-c") 'my:rust-save-compile)
+                 ;; (define-key rust-mode-map (kbd "C-c C-c") 'my:rust-save-compile)
 
                  (defun my:run-in-eshell (buffer msg)
                    (when (string-match "^finished" msg)
