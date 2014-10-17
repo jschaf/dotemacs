@@ -127,8 +127,8 @@ screen."
                           (interactive)
                           (set-face-attribute 'highlight-symbol-face nil
                                               :foreground nil
-                                              :background (my:differentiate-color (face-background 'default) 7)
-                                              :underline t))
+                                              :background (my:differentiate-color (face-background 'default) 5)
+                                              :underline nil))
 
                         ;; Not sure why this didn't work in `after-init-hook'
                         (run-with-idle-timer 0.01 nil 'my:create-subtle-highlight)
