@@ -244,6 +244,8 @@ figuring out how to reload the package."
 
   (add-to-list 'evil-emacs-state-modes 'git-rebase-mode)
 
+  (add-to-list 'evil-overriding-maps '(iedit-mode-map))
+
   (defmacro my:make-evil-line-move-motion (name multiplier)
     `(evil-define-motion ,name (count)
        ,(format "Move the cursor (COUNT * %s) lines down." multiplier)
