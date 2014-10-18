@@ -190,6 +190,9 @@
 (set-register ?c '(file . "~/.emacs.d/lisp/misc.el"))
 (set-register ?p '(file . "~/.emacs.d/papercuts.org"))
 
+(setq split-height-threshold nil)
+(setq split-width-threshold 0)
+
 (after 'dired
   (setq dired-listing-switches "-Alhk")
   (local-set-key "\C-\M-k" 'dired-kill-subdir))
