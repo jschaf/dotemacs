@@ -184,7 +184,7 @@ Delete all whitespace on a succesive key press."
       (backward-char backward))
     ;; It's annoying to add a couple newlines to the end of a file and
     ;; hit save and then watch them disappear.
-    (when newlines
+    (when (and (eobp) newlines)
         (insert "\n"))))
 
 (defun my:delete-trailing-whitespace-before-save ()
