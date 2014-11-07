@@ -201,7 +201,7 @@
                :submodule nil)
 
         (:name git-gutter
-               :after (progn (add-hook 'prog-mode-hook 'git-gutter-mode)
+               :after (progn (global-git-gutter-mode)
                              ;; (add-hook 'git-gutter:update-hooks 'magit-revert-buffer-hook)
                              ;; Turn off annoying "here is not git
                              ;; repository" message

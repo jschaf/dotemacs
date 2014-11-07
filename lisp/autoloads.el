@@ -208,6 +208,9 @@ screen."
                                 :post-handlers '(:add my-jinja2-block)
                                 :trigger "jji")))
 
+        (:name js2-mode
+               :after (progn
+                       (add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-mode))))
         (:name lorem-ipsum)
 
         (:name lua-mode)
