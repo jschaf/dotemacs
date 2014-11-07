@@ -402,6 +402,8 @@ Otherwise deletes a character normally by calling
        (mapcar 'el-get-source-name my:primary-packages)))
 
 (setq el-get-sources (cl-concatenate 'list el-get-sources my:primary-packages))
+
+(defvar my:package-names nil)
 (setq my:package-names (append my:primary-package-names my:base-package-names))
 
 
