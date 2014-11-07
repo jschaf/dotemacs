@@ -12,6 +12,10 @@
         (:name anzu
                :after (global-anzu-mode 1))
 
+        (:name applescript-mode
+               :after (progn
+                        (add-to-list 'auto-mode-alist
+                                     '("\\.applescript$" . applescript-mode))))
         ;; ;; This is a pain to install on Windows
         ;; (:name auctex
         ;;        :after (progn
