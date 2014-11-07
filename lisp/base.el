@@ -305,11 +305,11 @@
                        do (key-chord-define-global key (not-in-minibuffer func key)))))
 
         (:name magit
-               :website "https://github.com/magit/magit#readme"
-               :description "It's Magit! An Emacs mode for Git."
-               :type elpa
-               :pkgname "magit"
-               :depends (cl-lib git-modes)
+               ;; :website "https://github.com/magit/magit#readme"
+               ;; :description "It's Magit! An Emacs mode for Git."
+               ;; :type elpa
+               ;; :pkgname "magit"
+               ;; :depends (cl-lib git-modes)
                :after (progn
                         (defadvice magit-key-mode-popup-committing (after toggle-verbose-commits activate)
                           "Enable the verbose option for commiting."
