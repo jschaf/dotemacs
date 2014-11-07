@@ -389,6 +389,7 @@ Otherwise deletes a character normally by calling
          dash
          el-get
          flycheck
+         log4e
          git-modes
          goto-chg
          projectile
