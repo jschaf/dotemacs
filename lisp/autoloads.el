@@ -31,11 +31,7 @@
         ;;                                  :actions :rem))))
 
         (:name esup
-               :website "https://github.com/jschaf/esup"
-               :description "Emacs Start Up Profiler"
-               :type "github"
-               :branch "master"
-               :pkgname "jschaf/esup")
+               :after (progn))
 
         (:name emmet-mode
                :after (progn
