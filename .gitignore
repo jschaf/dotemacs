@@ -25,3 +25,6 @@ el-get/
 /request/
 /.DS_Store
 /private/emacs-custom.el
+/project-explorer-cache/
+/url/
+/.cask/
