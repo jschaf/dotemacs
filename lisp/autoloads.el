@@ -118,7 +118,8 @@ screen."
         (:name flycheck-cask
                :after (progn
                         (after 'flycheck
-                          (add-hook 'flycheck-mode-hook #'flycheck-cask-setup))))
+                          (require 'flycheck-cask)
+                          (add-hook 'flycheck-mode-hook 'flycheck-cask-setup))))
 
         (:name highlight-symbol
                :after (progn
