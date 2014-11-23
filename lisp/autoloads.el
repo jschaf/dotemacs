@@ -210,7 +210,8 @@ screen."
 
         (:name js2-mode
                :after (progn
-                       (add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-mode))))
+                       (add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-mode))
+                       (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))))
         (:name lorem-ipsum)
 
         (:name lua-mode)
