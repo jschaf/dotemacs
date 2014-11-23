@@ -327,6 +327,11 @@ screen."
 
         (:name yasnippet
                :lazy nil
+        (:name tss
+               :after (progn
+                        (add-to-list 'auto-mode-alist
+                                     '("\\.ts$" . typescript-mode))))
+
                :submodule nil
                :build nil
                :after
