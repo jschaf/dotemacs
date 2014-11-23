@@ -237,6 +237,10 @@ screen."
                         (persp-mode)
                         (require 'persp-projectile)))
 
+        (:name project-explorer
+               :after (progn
+                        (add-to-list 'evil-emacs-state-modes 'project-explorer-mode)))
+
         (:name python
                ;; repo.or.cz is blocked on work network
                :url "https://raw.githubusercontent.com/emacs-mirror/emacs/master/lisp/progmodes/python.el"
