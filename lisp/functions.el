@@ -243,6 +243,7 @@ figuring out how to reload the package."
   (setq evil-move-cursor-back nil)
 
   (add-to-list 'evil-emacs-state-modes 'git-rebase-mode)
+  (add-to-list 'evil-emacs-state-modes 'image-mode)
 
   (add-to-list 'evil-overriding-maps '(iedit-mode-map))
 
