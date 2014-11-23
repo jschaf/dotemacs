@@ -190,8 +190,8 @@
 (set-register ?c '(file . "~/.emacs.d/lisp/misc.el"))
 (set-register ?p '(file . "~/.emacs.d/papercuts.org"))
 
-(setq split-height-threshold nil)
-(setq split-width-threshold 0)
+(setq split-height-threshold 80)
+(setq split-width-threshold 160)
 
 (after 'dired
   (setq dired-listing-switches "-Alhk")
