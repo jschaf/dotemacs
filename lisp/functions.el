@@ -88,9 +88,10 @@
 (defun my:create-subtle-show-paren-match ()
   (interactive)
   (set-face-attribute 'show-paren-match nil
-                      :foreground nil
+                      :foreground (face-foreground 'default)
                       :weight 'normal
-                      :background (my:differentiate-color (face-background 'default) 2)))
+                      :background (my:differentiate-color
+                                   (face-background 'default) 15)))
 
 (after 'paren
   (add-hook 'my:load-theme-hook 'my:create-subtle-show-paren-match)
