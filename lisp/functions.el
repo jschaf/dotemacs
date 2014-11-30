@@ -174,11 +174,13 @@ Delete all whitespace on a succesive key press."
 (defun my:delete-trailing-whitespace-except-current-line ()
   "Do `delete-trailing-whitespace', except for current line."
   (interactive)
-  (let ((current-line (buffer-substring (line-beginning-position) (line-end-position)))
+  (let ((current-line (buffer-substring (line-beginning-position)
+                                        (line-end-position)))
         (backward (- (line-end-position) (point)))
         (newlines (looking-back "\n\n" (- (point) 2 ))))
     (delete-trailing-whitespace)
-    (when (not (string-equal (buffer-substring (line-beginning-position) (line-end-position))
+    (when (not (string-equal (buffer-substring (line-beginning-position)
+                                               (line-end-position))
                              current-line))
       (delete-region (line-beginning-position) (line-end-position))
       (insert current-line)
@@ -333,8 +335,10 @@ figuring out how to reload the package."
         (define-key evil-insert-state-map key func))
 
   ;; Leave python-mode alone because it does useful indentation stuff.
-  (evil-define-key 'normal python-mode-map [backspace] 'python-indent-dedent-line-backspace)
-  (evil-define-key 'insert python-mode-map [backspace] 'python-indent-dedent-line-backspace)
+  (evil-define-key 'normal python-mode-map [backspace]
+    'python-indent-dedent-line-backspace)
+  (evil-define-key 'insert python-mode-map [backspace]
+    'python-indent-dedent-line-backspace)
 
   (add-hook 'Info-mode-hook
             (lambda () (cl-loop for (key . func) in

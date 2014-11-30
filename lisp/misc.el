@@ -80,7 +80,9 @@
       save-place-file (my:privatize "save-place"))
 
 (after 'windmove
-  (defadvice windmove-do-window-select (around my:windmove-catch-errors activate)
+  (defadvice windmove-do-window-select (around
+                                        my:windmove-catch-errors
+                                        activate)
     "Catch errors of `windmove' and just display the message."
     (condition-case error-info
         ad-do-it
