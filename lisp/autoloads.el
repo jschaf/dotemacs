@@ -62,57 +62,6 @@
                     nil
                     'my:initialize-exec-path-from-shell)))
 
-   (:name
-    fill-column-indicator
-    :after
-    (progn
-      ;; Not entirely sure why I need to require it.
-      ;; Adding autoloads for the fci-* functions I used
-      ;; below didn't work
-      (require 'fill-column-indicator)
-      (defun my:create-subtle-fci-rule ()
-        (interactive)
-        (setq fci-rule-color (my:differentiate-color
-                              (face-background 'default) 9))
-        ;; This is `fci-redraw-frame'.  Included here
-        ;; because we need to call
-        ;; `fci-make-overlay-strings' for `fci-rule-color'
-        ;; to take effect.  But we can only call
-        ;; `fci-make-overlay-strings' in buffers that have
-        ;; `fci-mode'
-        (let* ((wins (window-list (selected-frame) 'no-minibuf))
-               (bufs (delete-dups (mapcar #'window-buffer wins))))
-          (dolist (buf bufs)
-            (with-current-buffer buf
-              (when fci-mode
-                (fci-make-overlay-strings)
-                (fci-delete-unneeded)
-                (fci-update-all-windows t))))))
-
-      (my:create-subtle-fci-rule)
-      (add-hook 'my:load-theme-hook 'my:create-subtle-fci-rule)
-
-      (defun my:show-column-80 ()
-        "Enable a rule at column 80."
-        (interactive)
-        (require 'fill-column-indicator)
-        (setq fci-rule-column 79
-              fci-rule-width 1
-              ;; fci-always-use-textual-rule t
-              ;; fci-rule-character ?│
-              )
-        (fci-mode 1))
-
-      (add-hook 'prog-mode-hook 'my:show-column-80)
-
-      ;; TODO: add to upstream
-      (defadvice fci-redraw-region (after fci-dont-redraw-if-narrow activate)
-        "Don't draw fci-lines if the window isn't wide enough.
-Otherwise, we get the line continuation characters down the whole
-screen."
-        (when (<= (window-width) (1+ fci-rule-column))
-          (fci-delete-overlays-region start end)))))
-
    (:name flycheck
           ;; flycheck only 'builds' info.
           :build/windows-nt nil
