@@ -39,11 +39,14 @@
                    (add-hook 'sgml-mode-hook 'emmet-mode)
                    (add-hook 'css-mode-hook 'emmet-mode)))
 
-   (:name evil-numbers
-          :after
-          (progn
-            (define-key evil-normal-state-map (kbd "M-<up>") 'evil-numbers/inc-at-pt)
-            (define-key evil-normal-state-map (kbd "M-<down>") 'evil-numbers/dec-at-pt)))
+   (:name
+    evil-numbers
+    :after
+    (progn
+      (define-key evil-normal-state-map (kbd "M-<up>")
+        'evil-numbers/inc-at-pt)
+      (define-key evil-normal-state-map (kbd "M-<down>")
+        'evil-numbers/dec-at-pt)))
 
    (:name evil-surround
           :after (global-evil-surround-mode 1))
@@ -59,54 +62,56 @@
                     nil
                     'my:initialize-exec-path-from-shell)))
 
-   (:name fill-column-indicator
-          :after
-          (progn
-            ;; Not entirely sure why I need to require it.
-            ;; Adding autoloads for the fci-* functions I used
-            ;; below didn't work
-            (require 'fill-column-indicator)
-            (defun my:create-subtle-fci-rule ()
-              (interactive)
-              (setq fci-rule-color (my:differentiate-color (face-background 'default) 9))
-              ;; This is `fci-redraw-frame'.  Included here
-              ;; because we need to call
-              ;; `fci-make-overlay-strings' for `fci-rule-color'
-              ;; to take effect.  But we can only call
-              ;; `fci-make-overlay-strings' in buffers that have
-              ;; `fci-mode'
-              (let* ((wins (window-list (selected-frame) 'no-minibuf))
-                     (bufs (delete-dups (mapcar #'window-buffer wins))))
-                (dolist (buf bufs)
-                  (with-current-buffer buf
-                    (when fci-mode
-                      (fci-make-overlay-strings)
-                      (fci-delete-unneeded)
-                      (fci-update-all-windows t))))))
+   (:name
+    fill-column-indicator
+    :after
+    (progn
+      ;; Not entirely sure why I need to require it.
+      ;; Adding autoloads for the fci-* functions I used
+      ;; below didn't work
+      (require 'fill-column-indicator)
+      (defun my:create-subtle-fci-rule ()
+        (interactive)
+        (setq fci-rule-color (my:differentiate-color
+                              (face-background 'default) 9))
+        ;; This is `fci-redraw-frame'.  Included here
+        ;; because we need to call
+        ;; `fci-make-overlay-strings' for `fci-rule-color'
+        ;; to take effect.  But we can only call
+        ;; `fci-make-overlay-strings' in buffers that have
+        ;; `fci-mode'
+        (let* ((wins (window-list (selected-frame) 'no-minibuf))
+               (bufs (delete-dups (mapcar #'window-buffer wins))))
+          (dolist (buf bufs)
+            (with-current-buffer buf
+              (when fci-mode
+                (fci-make-overlay-strings)
+                (fci-delete-unneeded)
+                (fci-update-all-windows t))))))
 
-            (my:create-subtle-fci-rule)
-            (add-hook 'my:load-theme-hook 'my:create-subtle-fci-rule)
+      (my:create-subtle-fci-rule)
+      (add-hook 'my:load-theme-hook 'my:create-subtle-fci-rule)
 
-            (defun my:show-column-80 ()
-              "Enable a rule at column 80."
-              (interactive)
-              (require 'fill-column-indicator)
-              (setq fci-rule-column 79
-                    fci-rule-width 1
-                    ;; fci-always-use-textual-rule t
-                    ;; fci-rule-character ?│
-                    )
-              (fci-mode 1))
+      (defun my:show-column-80 ()
+        "Enable a rule at column 80."
+        (interactive)
+        (require 'fill-column-indicator)
+        (setq fci-rule-column 79
+              fci-rule-width 1
+              ;; fci-always-use-textual-rule t
+              ;; fci-rule-character ?│
+              )
+        (fci-mode 1))
 
-            (add-hook 'prog-mode-hook 'my:show-column-80)
+      (add-hook 'prog-mode-hook 'my:show-column-80)
 
-            ;; TODO: add to upstream
-            (defadvice fci-redraw-region (after fci-dont-redraw-if-narrow activate)
-              "Don't draw fci-lines if the window isn't wide enough.
+      ;; TODO: add to upstream
+      (defadvice fci-redraw-region (after fci-dont-redraw-if-narrow activate)
+        "Don't draw fci-lines if the window isn't wide enough.
 Otherwise, we get the line continuation characters down the whole
 screen."
-              (when (<= (window-width) (1+ fci-rule-column))
-                (fci-delete-overlays-region start end)))))
+        (when (<= (window-width) (1+ fci-rule-column))
+          (fci-delete-overlays-region start end)))))
 
    (:name flycheck
           ;; flycheck only 'builds' info.
@@ -122,44 +127,50 @@ screen."
                      (require 'flycheck-cask)
                      (add-hook 'flycheck-mode-hook 'flycheck-cask-setup))))
 
-   (:name highlight-symbol
-          :after (progn
-                   (require 'highlight-symbol)
-                   (defun my:create-subtle-highlight ()
-                     (interactive)
-                     (set-face-attribute 'highlight-symbol-face nil
-                                         :foreground nil
-                                         :background (my:differentiate-color (face-background 'default) 5)
-                                         :underline nil))
+   (:name
+    highlight-symbol
+    :after
+    (progn
+      (require 'highlight-symbol)
+      (defun my:create-subtle-highlight ()
+        (interactive)
+        (set-face-attribute 'highlight-symbol-face nil
+                            :foreground nil
+                            :background (my:differentiate-color
+                                         (face-background 'default) 5)
+                            :underline nil))
 
-                   ;; Not sure why this didn't work in `after-init-hook'
-                   (run-with-idle-timer 0.01 nil 'my:create-subtle-highlight)
-                   (add-hook 'my:load-theme-hook 'my:create-subtle-highlight)
+      ;; Not sure why this didn't work in `after-init-hook'
+      (run-with-idle-timer 0.01 nil 'my:create-subtle-highlight)
+      (add-hook 'my:load-theme-hook 'my:create-subtle-highlight)
 
-                   (setq highlight-symbol-idle-delay 0.4
-                         highlight-symbol-colors
-                         '("khaki1" "PaleVioletRed" "springgreen1"
-                           "MediumPurple1" "SpringGreen1" "orange"
-                           "plum2" "skyblue1" "seagreen1"))
-                   (add-hook 'prog-mode-hook 'highlight-symbol-mode)))
+      (setq highlight-symbol-idle-delay 0.4
+            highlight-symbol-colors
+            '("khaki1" "PaleVioletRed" "springgreen1"
+              "MediumPurple1" "SpringGreen1" "orange"
+              "plum2" "skyblue1" "seagreen1"))
+      (add-hook 'prog-mode-hook 'highlight-symbol-mode)))
 
-   (:name hl-sentence
-          :website "https://github.com/milkypostman/hl-sentence"
-          :description "Highlight sentences in Emacs with a custom face. Very nice."
-          :type "github"
-          :branch "master"
-          :pkgname "milkypostman/hl-sentence"
-          :after (progn
-                   (defun my:create-subtle-sentence-highlight ()
-                     (interactive)
-                     (set-face-attribute 'hl-sentence-face nil
-                                         :foreground nil
-                                         :background (my:differentiate-color (face-background 'default) 4)))
-                   (add-hook 'markdown-mode-hook 'hl-sentence-mode)
-                   (add-hook 'rst-mode-hook 'hl-sentence-mode)
+   (:name
+    hl-sentence
+    :website "https://github.com/milkypostman/hl-sentence"
+    :description "Highlight sentences in Emacs with a custom face. Very nice."
+    :type "github"
+    :branch "master"
+    :pkgname "milkypostman/hl-sentence"
+    :after
+    (progn
+      (defun my:create-subtle-sentence-highlight ()
+        (interactive)
+        (set-face-attribute
+         'hl-sentence-face nil
+         :foreground nil
+         :background (my:differentiate-color (face-background 'default) 4)))
+      (add-hook 'markdown-mode-hook 'hl-sentence-mode)
+      (add-hook 'rst-mode-hook 'hl-sentence-mode)
 
-                   (run-with-idle-timer 0.01 nil 'my:create-subtle-sentence-highlight)
-                   (add-hook 'my:load-theme-hook 'my:create-subtle-sentence-highlight)))
+      (run-with-idle-timer 0.01 nil 'my:create-subtle-sentence-highlight)
+      (add-hook 'my:load-theme-hook 'my:create-subtle-sentence-highlight)))
 
    ;; Doesn't compile on Windows because sed is missing.  El-get
    ;; says haskell-mode is missing on melpa.
@@ -179,15 +190,16 @@ screen."
             (run-with-idle-timer 0.01 nil 'my:create-subtle-iedit-face)
             (add-hook 'my:load-theme-hook 'my:create-subtle-iedit-face)))
 
-   (:name jedi
-          :after
-          (progn
-            (add-hook 'python-mode-hook 'jedi:setup)
-            (setq jedi:complete-on-dot t)
-
-            (evil-define-key 'normal python-mode-map "g." 'jedi:goto-definition)
-            (evil-define-key 'normal python-mode-map "g," 'jedi:goto-definition-pop-marker)
-            (evil-define-key 'normal python-mode-map "gh" 'jedi:show-doc)))
+   (:name
+    jedi
+    :after
+    (progn
+      (add-hook 'python-mode-hook 'jedi:setup)
+      (setq jedi:complete-on-dot t)
+      (evil-define-key 'normal python-mode-map "g." 'jedi:goto-definition)
+      (evil-define-key 'normal python-mode-map "g,"
+        'jedi:goto-definition-pop-marker)
+      (evil-define-key 'normal python-mode-map "gh" 'jedi:show-doc)))
 
    (:name jinja2-mode
           :after
@@ -239,8 +251,9 @@ screen."
                    (require 'persp-projectile)))
 
    (:name project-explorer
-          :after (progn
-                   (add-to-list 'evil-emacs-state-modes 'project-explorer-mode)))
+          :after
+          (progn
+            (add-to-list 'evil-emacs-state-modes 'project-explorer-mode)))
 
    (:name
     python
@@ -344,53 +357,59 @@ screen."
    (:name virtualenvwrapper
           :after ())
 
-   (:name yasnippet
-          :lazy nil
-          :submodule nil
-          :build nil
-          :after
-          (progn
-            (defun my:load-yasnippet ()
-              (require 'yasnippet)
-              (setq yas-verbosity 0)
-              (yas-global-mode 1)
-              ;; Trying use to tab for everything is confusing
-              ;; and fragile.  So, let `auto-complete-mode' have
-              ;; tab, and use \C-o for yasnippet.
-              (define-key yas-minor-mode-map  [(tab)] nil)
-              (define-key yas-minor-mode-map (kbd "TAB") nil)
-              (define-key yas-minor-mode-map (kbd "\C-o") 'yas-expand)
-              (define-key evil-insert-state-map (kbd "\C-o") nil)
+   (:name
+    yasnippet
+    :lazy nil
+    :submodule nil
+    :build nil
+    :after
+    (progn
+      (defun my:load-yasnippet ()
+        (require 'yasnippet)
+        (setq yas-verbosity 0)
+        (yas-global-mode 1)
+        ;; Trying use to tab for everything is confusing
+        ;; and fragile.  So, let `auto-complete-mode' have
+        ;; tab, and use \C-o for yasnippet.
+        (define-key yas-minor-mode-map  [(tab)] nil)
+        (define-key yas-minor-mode-map (kbd "TAB") nil)
+        (define-key yas-minor-mode-map (kbd "\C-o") 'yas-expand)
+        (define-key evil-insert-state-map (kbd "\C-o") nil)
 
-              (define-key yas-keymap [(tab)] nil)
-              (define-key yas-keymap (kbd "TAB") nil)
-              (define-key yas-keymap (kbd "\C-o") 'yas-next-field-or-maybe-expand)
+        (define-key yas-keymap [(tab)] nil)
+        (define-key yas-keymap (kbd "TAB") nil)
+        (define-key yas-keymap (kbd "\C-o")
+          'yas-next-field-or-maybe-expand)
 
-              (defun my:yas-skip-and-clear-or-backspace-char (&optional field)
-                "Clears unmodified field if at field start, skips to next tab.
+        (defun my:yas-skip-and-clear-or-backspace-char (&optional field)
+          "Clears unmodified field if at field start, skips to next tab.
 
 Otherwise deletes a character normally by calling
 `my:hungry-delete-backward'."
-                (interactive)
-                (let ((field (or field
-                                 (and yas--active-field-overlay
-                                      (overlay-buffer yas--active-field-overlay)
-                                      (overlay-get yas--active-field-overlay 'yas--field)))))
-                  (cond ((and field
-                              (not (yas--field-modified-p field))
-                              (eq (point) (marker-position (yas--field-start field))))
-                         (yas--skip-and-clear field)
-                         (yas-next-field 1))
-                        (t
-                         (call-interactively 'my:hungry-delete-backward)))))
+          (interactive)
+          (let ((field
+                 (or field
+                     (and yas--active-field-overlay
+                          (overlay-buffer yas--active-field-overlay)
+                          (overlay-get yas--active-field-overlay
+                                       'yas--field)))))
+            (cond ((and field
+                        (not (yas--field-modified-p field))
+                        (eq (point) (marker-position
+                                     (yas--field-start field))))
+                   (yas--skip-and-clear field)
+                   (yas-next-field 1))
+                  (t
+                   (call-interactively 'my:hungry-delete-backward)))))
 
-              (define-key yas-keymap [(backspace)] 'my:yas-skip-and-clear-or-backspace-char)
+        (define-key yas-keymap [(backspace)]
+          'my:yas-skip-and-clear-or-backspace-char)
 
-              ;; Clear message buffer
-              (message nil))
-            ;; Run after emacs is done loading because yasnippet
-            ;; adds about 1 second to load time.
-            (run-with-idle-timer 0.01 nil 'my:load-yasnippet)))
+        ;; Clear message buffer
+        (message nil))
+      ;; Run after emacs is done loading because yasnippet
+      ;; adds about 1 second to load time.
+      (run-with-idle-timer 0.01 nil 'my:load-yasnippet)))
 
    (:name yasnippet-snippets
           :website "https://github.com/jschaf/yasnippet-snippets"
@@ -400,7 +419,8 @@ Otherwise deletes a character normally by calling
           :pkgname "jschaf/yasnippet-snippets"
           :depends (yasnippet)
           :post-init (after 'yasnippet
-                       (add-to-list 'yas-snippet-dirs "~/.emacs.d/el-get/yasnippet-snippets")))))
+                       (add-to-list 'yas-snippet-dirs
+                                    "~/.emacs.d/el-get/yasnippet-snippets")))))
 
 (defvar my:primary-package-names
       (append
