@@ -50,33 +50,6 @@
                  (define-key evil-normal-state-map (kbd "SPC")
                    'ace-jump-mode)))
 
-        (:name auto-complete
-               :submodule nil
-
-               :after (progn (require 'auto-complete-config)
-                             (global-auto-complete-mode 1)
-                             (after 'auto-complete-config
-                               (defun set-auto-complete-as-completion-at-point-function ()
-                                 (add-to-list 'completion-at-point-functions 'auto-complete-mode-maybe))
-                               (add-hook 'auto-complete-mode-hook
-                                         'set-auto-complete-as-completion-at-point-function)
-
-                               (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
-                               (add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
-                               (add-hook 'ruby-mode-hook 'ac-ruby-mode-setup)
-                               (add-hook 'css-mode-hook 'ac-css-mode-setup)
-                               (add-hook 'auto-complete-mode-hook 'ac-common-setup)
-
-                               (setq-default ac-comphist-file (my:privatize "ac-comphist.dat"))
-                               (setq-default ac-quick-help-delay 0.5)
-                               (setq-default ac-sources
-                                             '(ac-source-yasnippet
-                                               ac-source-imenu
-                                               ac-source-dictionary
-                                               ac-source-words-in-buffer
-                                               ac-source-words-in-same-mode-buffers
-                                               ac-source-words-in-all-buffer)))))
-
         (:name diminish
                :after (progn
                         (loop for (mode-to-diminish . file-name) in
