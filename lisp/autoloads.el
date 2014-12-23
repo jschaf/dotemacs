@@ -245,28 +245,33 @@ screen."
                ;; repo.or.cz is blocked on work network
                :url "https://raw.githubusercontent.com/emacs-mirror/emacs/master/lisp/progmodes/python.el"
                :after (progn
+                        (defvar my:virtualenv-directory "~/.virtualenvs/"
+                          "The directory of virtualenvs.")
+
                         (defun my:configure-python-venv ()
+                          "Set `python-shell-virtualenv-path' to the virtualenv directory."
                           (interactive)
                           (let* ((project-name (projectile-project-name))
                                  (virtualenv-path
                                   (file-truename
-                                   (concat "~/.virtualenvs/" project-name))))
+                                   (concat my:virtualenv-directory project-name))))
                             (when (file-directory-p virtualenv-path)
                               (setq python-shell-virtualenv-path virtualenv-path))))
 
-
-                        (defun flycheck-python-set-executables ()
+                        (defun my:flycheck-python-set-executables ()
+                          "Set flycheck python executables for the current virtualenv."
                           (let ((exec-path (python-shell-calculate-exec-path)))
-                            (setq flycheck-python-pylint-executable (executable-find "pylint")
-                                  flycheck-python-flake8-executable (executable-find "flake8")))
-                          ;; Force Flycheck mode on
-                          (flycheck-mode))
+                            (setq-local flycheck-python-pylint-executable (executable-find "pylint"))
+                            (setq-local flycheck-python-flake8-executable (executable-find "flake8"))))
 
-                        (defun flycheck-python-setup ()
-                          (add-hook 'hack-local-variables-hook #'flycheck-python-set-executables
+                        (defun my:flycheck-python-setup ()
+                          "Setup flycheck for Python with virtualenvs. "
+                          ;; my:flycheck-python-set-executables uses buffer-local variables
+                          (add-hook 'hack-local-variables-hook #'my:flycheck-python-set-executables
                                     nil 'local))
-                        (add-hook 'python-mode-hook 'my:configure-python-venv)
-                        (add-hook 'python-mode-hook #'flycheck-python-setup)))
+
+                        (add-hook 'python-mode-hook #'my:configure-python-venv)
+                        (add-hook 'python-mode-hook #'my:flycheck-python-setup)))
 
         (:name python-environment
                :after (progn
