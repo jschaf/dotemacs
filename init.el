@@ -25,8 +25,10 @@
 ;; Fontify current frame
 (fontify-frame nil)
 
-;; Remove distractions.
-(menu-bar-mode -1)
+;; Remove distractions.  Since the menu bar is permanent in Mac OS X,
+;; we might as well show it.
+(unless (eq system-type 'darwin)
+  (menu-bar-mode -1))
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
