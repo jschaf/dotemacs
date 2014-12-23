@@ -564,5 +564,4 @@ On the third press: deletes added comment lines and inserts a newline."
    )
 
 (provide 'functions)
-
 ;;; functions.el ends here

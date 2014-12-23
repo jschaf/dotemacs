@@ -375,3 +375,6 @@
 ;; nil, the second parameter means install all the packages
 ;; asynchronusly. Waaaay faster.
 (el-get nil my:base-package-names)
+
+(provide 'base)
+;;; base.el ends here
