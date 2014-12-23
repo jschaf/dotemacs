@@ -337,17 +337,15 @@ screen."
    (:name scss-mode
           :after (progn
                    (setq scss-compile-at-save nil)))
-
+   (:name tss
+          :after (progn
+                   (add-to-list 'auto-mode-alist
+                                '("\\.ts$" . typescript-mode))))
    (:name virtualenvwrapper
           :after ())
 
    (:name yasnippet
           :lazy nil
-          (:name tss
-                 :after (progn
-                          (add-to-list 'auto-mode-alist
-                                       '("\\.ts$" . typescript-mode))))
-
           :submodule nil
           :build nil
           :after
