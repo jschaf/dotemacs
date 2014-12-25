@@ -348,7 +348,7 @@ Primarily for use in .dir-locals.el")
 (setq eval-expression-print-level nil
       eval-expression-print-length nil)
 
-(defvar my:mac-modifier-state 'built-in
+(defvar my:mac-modifier-state 'usb
   "Toggle between BUILT-IN and USB")
 
 (defun my:toggle-mac-modifiers ()
