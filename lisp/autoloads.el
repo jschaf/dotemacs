@@ -1,10 +1,17 @@
 ;;; autoloads.el --- bootstrap packages.
 
+;;; Commentary:
+
 ;; Run :after code when the library is required.  We only do this for
 ;; autoloads.el because we need the packages in base.el to load right
 ;; away.
 ;; (setq el-get-is-lazy t)
 
+;;; Code:
+
+(require 'base)
+
+(defvar my:primary-packages nil "Secondary level of packages to install.")
 (setq
  my:primary-packages
  '(

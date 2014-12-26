@@ -1,3 +1,4 @@
+;;; base.el --- base packages for Emacs
 
 ;;; Commentary:
 
@@ -11,7 +12,8 @@
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
-(require 'cl)
+(eval-when-compile
+  (require 'cl-lib))
 
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
@@ -24,7 +26,7 @@
       (eval-print-last-sexp))))
 
 (defmacro with-timer-callback (callback &rest forms)
-  "Evaluate FORMS and call CALLBACK with the elapsed time."
+  "Run CALLBACK with elapsed time after evaluating FORMS."
   (declare (indent 1))
   (let ((nowvar (make-symbol "now")))
     `(let ((,nowvar (current-time)))
@@ -43,6 +45,7 @@
                    time-passed)))
     ad-do-it))
 
+(defvar my:base-packages nil "The base packages for Emacs.")
 (setq my:base-packages
       '((:name ace-jump-mode
                :after
