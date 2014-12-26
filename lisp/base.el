@@ -183,7 +183,6 @@
 
         (:name git-gutter
                :after (progn (global-git-gutter-mode)
-                             ;; (add-hook 'git-gutter:update-hooks 'magit-revert-buffer-hook)
                              ;; Turn off annoying "here is not git
                              ;; repository" message
                              (setq git-gutter:verbosity 0)))
