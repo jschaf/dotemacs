@@ -20,7 +20,7 @@
     (when window-system
       (if (> (display-pixel-width) 2000)
           (set-frame-parameter frame 'font (format "%s 12" font-family))
-        (set-frame-parameter frame 'font (format "%s 11" font-family))))))
+        (set-frame-parameter frame 'font (format "%s 12" font-family))))))
 
 ;; Fontify current frame
 (fontify-frame nil)
