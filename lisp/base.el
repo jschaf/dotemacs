@@ -55,7 +55,8 @@
          (progn
            (add-hook 'after-init-hook 'global-company-mode)
            ;; Doesn't work
-           ;; (evil-define-key 'insert company-active-map (kbd "C-.") 'company-show-location))
+           ;; (evil-define-key 'insert company-active-map
+           ;;   (kbd "C-.") 'company-show-location))
            ))
 
         (:name diminish
@@ -79,26 +80,32 @@
                               do
                               (eval-after-load file-name
                                 `(diminish ',mode-to-diminish)))
-                        (when (eval-when-compile (string< "24.3.1" emacs-version))
+                        (when (eval-when-compile
+                                (string< "24.3.1" emacs-version))
                           ;; https://github.com/purcell/emacs.d/issues/138
                           (after 'subword
                             (diminish 'subword-mode)))))
 
-        (:name elisp-slime-nav
-               :after
-               (progn
-                 (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode)
-                 ;; TODO: this breaks with lexical-binding enabled.
-                 (after 'evil
-                   (cl-loop for (key . func) in
-                            '(("g." . elisp-slime-nav-find-elisp-thing-at-point)
-                              ("g," . pop-tag-mark)
-                              ("gh" . elisp-slime-nav-describe-elisp-thing-at-point))
-                            do
-                            (evil-define-key 'normal emacs-lisp-mode-map key func)
-                            (evil-define-key 'normal lisp-interaction-mode-map key func)
-                            (evil-define-key 'motion emacs-lisp-mode-map key func)
-                            (evil-define-key 'motion lisp-interaction-mode-map key func)))))
+        (:name
+         elisp-slime-nav
+         :after
+         (progn
+           (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode)
+           ;; TODO: this breaks with lexical-binding enabled.
+           (after 'evil
+             (cl-loop for (key . func) in
+                      '(("g." . elisp-slime-nav-find-elisp-thing-at-point)
+                        ("g," . pop-tag-mark)
+                        ("gh" . elisp-slime-nav-describe-elisp-thing-at-point))
+                      do
+                      (evil-define-key 'normal emacs-lisp-mode-map
+                        key func)
+                      (evil-define-key 'normal lisp-interaction-mode-map
+                        key func)
+                      (evil-define-key 'motion emacs-lisp-mode-map
+                        key func)
+                      (evil-define-key 'motion lisp-interaction-mode-map
+                        key func)))))
 
         (:name evil
                :after (my:evil-setup))
@@ -187,53 +194,92 @@
                              ;; repository" message
                              (setq git-gutter:verbosity 0)))
 
-        (:name helm
-               :after (progn
-                        (helm-mode 1)
+        (:name
+         helm
+         :after
+         (progn
+           (helm-mode 1)
 
-                        (loop for ext in '("\\.swf$" "\\.elc$" "\\.pyc$")
-                              do (add-to-list 'helm-boring-file-regexp-list ext))
-                        (setq
-                         ;; use curl for async, instead of emacs url synchronus
-                         helm-google-suggest-use-curl-p t
-                         helm-scroll-amount 4 ; scroll 4 lines other window using M-<next>/M-<prior>
-                         helm-quick-update t ; do not display invisible candidates
-                         helm-idle-delay 0.01 ; be idle for this many seconds, before updating in delayed sources.
-                         helm-input-idle-delay 0.01 ; be idle for this many seconds, before updating candidate buffer
-                         helm-ff-search-library-in-sexp t ; search for library in `require' and `declare-function' sexp.
+           (loop for ext in '("\\.swf$" "\\.elc$" "\\.pyc$")
+                 do (add-to-list 'helm-boring-file-regexp-list ext))
 
-                         ;; you can customize helm-do-grep to execute ack-grep
-                         ;; helm-grep-default-command "ack-grep -Hn --smart-case --no-group --no-color %e %p %f"
-                         ;; helm-grep-default-recurse-command "ack-grep -H --smart-case --no-group --no-color %e %p %f"
-                         helm-split-window-default-side 'other ;; open helm buffer in another window
-                         helm-split-window-in-side-p t ;; open helm buffer inside current window, not occupy whole other window
-                         helm-buffers-favorite-modes (append helm-buffers-favorite-modes
-                                                             '(picture-mode artist-mode))
-                         helm-candidate-number-limit 200 ; limit the number of displayed canidates
-                         helm-M-x-requires-pattern 0 ; show all candidates when set to 0
-                         helm-ff-file-name-history-use-recentf t
-                         ;; move to end or beginning of source when
-                         ;; reaching top or bottom of source.
-                         helm-move-to-line-cycle-in-source t
-                         ido-use-virtual-buffers t ; Needed in helm-buffers-list
-                         ;; fuzzy matching buffer names when non--nil
-                         ;; useful in helm-mini that lists buffers
-                         helm-buffers-fuzzy-matching t)
+           ;; use curl for async, instead of emacs url synchronus
+           (setq helm-google-suggest-use-curl-p t)
 
-                        ;; rebind tab to do persistent action
-                        (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-                        (define-key helm-find-files-map (kbd "<tab>") 'helm-execute-persistent-action)
-                        ;; make TAB works in terminal
-                        (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
-                        (define-key helm-find-files-map (kbd "C-i") 'helm-execute-persistent-action)
-                        ;; list actions using C-z
-                        (define-key helm-map (kbd "C-z") 'helm-select-action)
-                        (define-key helm-find-files-map (kbd "C-z") 'helm-select-action)
+           ;; scroll 4 lines other window using M-<next>/M-<prior>
+           (setq helm-scroll-amount 4)
 
-                        ;; mimic Ido
-                        (define-key helm-map (kbd "C-s") 'helm-next-line)
-                        (define-key helm-find-files-map (kbd "C-s") 'helm-next-line)
-                        (define-key helm-find-files-map (kbd "C-r") 'helm-previous-line)))
+           ;; do not display invisible candidates
+           (setq helm-quick-update t)
+
+           ;; be idle for this many seconds, before updating in
+           ;; delayed sources.
+           (setq helm-idle-delay 0.01)
+
+           ;; be idle for this many seconds, before updating candidate
+           ;; buffer
+           (setq helm-input-idle-delay 0.01)
+
+           ;; search for library in `require' and `declare-function'
+           ;; sexp.
+           (setq helm-ff-search-library-in-sexp t)
+
+           ;; you can customize helm-do-grep to execute ack-grep
+           ;; (setq helm-grep-default-command
+           ;;       "ack-grep -Hn --smart-case --no-group --no-color %e %p %f")
+           ;; (setq helm-grep-default-recurse-command
+           ;;       "ack-grep -H --smart-case --no-group --no-color %e %p %f")
+
+           ;; open helm buffer in another window
+           (setq helm-split-window-default-side 'other)
+
+           ;; open helm buffer inside current window, not occupy whole
+           ;; other window
+           (setq helm-split-window-in-side-p t)
+
+           (setq helm-buffers-favorite-modes
+                 (append helm-buffers-favorite-modes
+                         '(picture-mode artist-mode)))
+
+           ;; limit the number of displayed canidates
+           (setq helm-candidate-number-limit 200)
+
+           ;; show all candidates when set to 0
+           (setq helm-M-x-requires-pattern 0)
+
+           (setq helm-ff-file-name-history-use-recentf t)
+
+           ;; move to end or beginning of source when
+           ;; reaching top or bottom of source.
+           (setq helm-move-to-line-cycle-in-source t)
+
+           ;; Needed in helm-buffers-list
+           (setq ido-use-virtual-buffers t)
+
+           ;; fuzzy matching buffer names when non--nil
+           ;; useful in helm-mini that lists buffers
+           (setq helm-buffers-fuzzy-matching t)
+
+           ;; rebind tab to do persistent action
+           (define-key helm-map (kbd "<tab>")
+             'helm-execute-persistent-action)
+
+           (define-key helm-find-files-map (kbd "<tab>")
+             'helm-execute-persistent-action)
+
+           ;; make TAB works in terminal
+           (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+           (define-key helm-find-files-map (kbd "C-i")
+             'helm-execute-persistent-action)
+
+           ;; list actions using C-z
+           (define-key helm-map (kbd "C-z") 'helm-select-action)
+           (define-key helm-find-files-map (kbd "C-z") 'helm-select-action)
+
+           ;; mimic Ido
+           (define-key helm-map (kbd "C-s") 'helm-next-line)
+           (define-key helm-find-files-map (kbd "C-s") 'helm-next-line)
+           (define-key helm-find-files-map (kbd "C-r") 'helm-previous-line)))
 
         (:name hungry-delete
                :after (global-hungry-delete-mode 1))
@@ -282,18 +328,22 @@
                          ("nl" . bookmark-bmenu-list)
                          ("/x" . helm-mini)
                          ("/c" . goto-last-change))
-                       do (key-chord-define-global key (not-in-minibuffer func key)))))
+                       do (key-chord-define-global
+                           key (not-in-minibuffer func key)))))
 
-        (:name magit
-               :after (progn
-                        (defadvice magit-key-mode-popup-committing (after toggle-verbose-commits activate)
-                          "Enable the verbose option for commiting."
-                          (magit-key-mode-toggle-option 'committing "--verbose"))
+        (:name
+         magit
+         :after
+         (progn
+           (defadvice magit-key-mode-popup-committing
+               (after toggle-verbose-commits activate)
+             "Enable the verbose option for commiting."
+             (magit-key-mode-toggle-option 'committing "--verbose"))
 
-                        (add-hook 'magit-mode-hook
-                                  '(lambda ()
-                                     (local-set-key "j" #'evil-next-line)
-                                     (local-set-key "k" #'evil-previous-line)))))
+           (add-hook 'magit-mode-hook
+                     '(lambda ()
+                        (local-set-key "j" #'evil-next-line)
+                        (local-set-key "k" #'evil-previous-line)))))
 
         (:name popup
                :submodule nil)
@@ -324,19 +374,21 @@
                         (smartparens-global-mode 1)
                         ))
 
-        (:name solarized-emacs
-               :after (progn
-                        (setq solarized-use-less-bold t)
-                        (ignore-errors
-                          (load-theme 'solarized-light))
-                        (defun my:create-subtle-region ()
-                          (interactive)
-                          (set-face-attribute
-                           'region nil
-                           :foreground nil
-                           :background (my:differentiate-color
-                                        (face-background 'default) 2)))
-                        (add-hook 'my:load-theme-hook 'my:create-subtle-region)))))
+        (:name
+         solarized-emacs
+         :after
+         (progn
+           (setq solarized-use-less-bold t)
+           (ignore-errors
+             (load-theme 'solarized-light))
+           (defun my:create-subtle-region ()
+             (interactive)
+             (set-face-attribute
+              'region nil
+              :foreground nil
+              :background (my:differentiate-color
+                           (face-background 'default) 2)))
+           (add-hook 'my:load-theme-hook 'my:create-subtle-region)))))
 
 ;; We can get whole repositories later if we want to hack on them.
 (defvar el-get-git-shallow-clone t)
