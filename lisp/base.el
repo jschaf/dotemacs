@@ -294,8 +294,6 @@
                :after (ido-vertical-mode 1))
 
         (:name key-chord
-               ;; Use my package until the maintainer says we can make
-               ;; this canonical
                :type github
                :pkgname "jschaf/key-chord"
                :after
