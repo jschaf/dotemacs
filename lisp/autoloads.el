@@ -137,12 +137,14 @@
           (progn
             (defun my:create-subtle-iedit-face ()
               (interactive)
-              (set-face-attribute iedit-occurrence-face nil
-                                  :foreground nil
-                                  ;; negative arg for :box draws inside the char
-                                  ;; box so the line-height is preserved
-                                  :box -1
-                                  :background (my:differentiate-color (face-background 'default) 9)))
+              (set-face-attribute
+               iedit-occurrence-face nil
+               :foreground nil
+               ;; negative arg for :box draws inside the char
+               ;; box so the line-height is preserved
+               :box -1
+               :background (my:differentiate-color (face-background 'default)
+                                                   9)))
             (run-with-idle-timer 0.01 nil 'my:create-subtle-iedit-face)
             (add-hook 'my:load-theme-hook 'my:create-subtle-iedit-face)))
 
