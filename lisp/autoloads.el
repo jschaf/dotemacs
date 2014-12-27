@@ -75,7 +75,7 @@
           :build nil
           :after
           (progn
-            (add-hook 'emacs-lisp-mode-hook 'flycheck-mode)))
+            (global-flycheck-mode)))
 
    (:name flycheck-cask
           :after (progn
