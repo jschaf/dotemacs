@@ -52,15 +52,6 @@
                (after 'evil
                  (define-key evil-normal-state-map (kbd "SPC")
                    'ace-jump-mode)))
-        (:name
-         company-mode
-         :after
-         (progn
-           (add-hook 'after-init-hook 'global-company-mode)
-           ;; Doesn't work
-           ;; (evil-define-key 'insert company-active-map
-           ;;   (kbd "C-.") 'company-show-location))
-           ))
 
         (:name auto-complete
                :submodule nil
