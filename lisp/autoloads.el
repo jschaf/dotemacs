@@ -390,6 +390,7 @@ Otherwise deletes a character normally by calling
          log4e
          git-modes
          goto-chg
+         json-mode
          projectile
          reftex
          s
