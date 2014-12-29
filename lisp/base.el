@@ -344,7 +344,8 @@
            (add-hook 'magit-mode-hook
                      '(lambda ()
                         (local-set-key "j" #'evil-next-line)
-                        (local-set-key "k" #'evil-previous-line)))))
+                        (local-set-key "k" #'evil-previous-line)))
+           (setq-default magit-diff-refine-hunk 'all)))
 
         (:name popup
                :submodule nil)
