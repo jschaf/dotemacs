@@ -333,8 +333,8 @@ Primarily for use in .dir-locals.el")
 (global-set-key "\C-h\C-w" 'where-is)
 (global-set-key (kbd "<f1>") 'menu-bar-mode)
 
-(autoload 'toggle-uniquify-buffer-names "uniquify" nil t)
-(toggle-uniquify-buffer-names)
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 
 (global-set-key (kbd "C-M-j") 'bs-cycle-next)
 (global-set-key (kbd "C-M-k") 'bs-cycle-previous)
