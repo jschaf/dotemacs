@@ -311,7 +311,19 @@
    (:name tss
           :after (progn
                    (add-to-list 'auto-mode-alist
-                                '("\\.ts$" . typescript-mode))))
+                                '("\\.ts$" . typescript-mode))
+                   (after 'flycheck
+                     (require 'flycheck)
+
+                     (flycheck-define-checker typescript
+                       "A TypeScript syntax checker using tsc command."
+                       :command ("tsc" "--noemit" source-inplace)
+                       :error-patterns
+                       ((error line-start (file-name) "(" line "," column "): error " (message) line-end))
+                       :mode typescript-mode)
+
+                     (add-to-list 'flycheck-checkers 'typescript))))
+
    (:name virtualenvwrapper
           :after ())
 
