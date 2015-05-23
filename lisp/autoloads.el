@@ -322,7 +322,32 @@
                        ((error line-start (file-name) "(" line "," column "): error " (message) line-end))
                        :mode typescript-mode)
 
-                     (add-to-list 'flycheck-checkers 'typescript))))
+                     (add-to-list 'flycheck-checkers 'typescript))
+
+                   (after 'typescript
+                     (define-key typescript-mode-map (kbd "C-c C-c")
+                       (lambda () (interactive)
+                         (projectile-with-default-dir (projectile-project-root)
+                           (compile "make typescript"))))
+
+                     (define-key typescript-mode-map (kbd "C-c C-l")
+                       (lambda () (interactive)
+                         (projectile-with-default-dir (projectile-project-root)
+                           (compile "make tslint")))))
+
+                   (add-to-list 'compilation-error-regexp-alist 'typescript)
+                   (add-to-list 'compilation-error-regexp-alist-alist
+                                '(typescript "^\\(.+?\\)(\\([[:digit:]]+\\),\\([[:digit:]]+\\)): \\(.*\\)$"
+                                  1 2 3 nil 1))
+
+
+                   (add-to-list 'compilation-error-regexp-alist 'typescript-lint)
+;; ornament/static/js/main.ts[176, 34]: expected parameter: 'error' to have a typedef
+                   (add-to-list 'compilation-error-regexp-alist-alist
+                                '(typescript-lint "^\\(.+?\\)\\[\\([[:digit:]]+\\), \\([[:digit:]]+\\)\\]: \\(.*\\)$"
+                                                  1 2 3 nil 1))
+
+                   ))
 
    (:name virtualenvwrapper
           :after ())
