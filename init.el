@@ -91,6 +91,8 @@ If DIRECTORY-P is non-nil, make a directory instead of a file."
 (my:create-file (my:privatize "") 'dir)
 (my:create-file custom-file)
 
+(package-initialize)
+
 ;;; Code Load
 (load "misc")
 (load custom-file)
